@@ -1,7 +1,7 @@
-http://simon-zj1.github.io/about/index.html
-http://simon-zj1.github.io/tags/index.html
-http://simon-zj1.github.io/link/index.html
-http://simon-zj1.github.io/categories/index.html
-http://simon-zj1.github.io/posts/de374c34.html
-http://simon-zj1.github.io/posts/4a17b156.html
-http://simon-zj1.github.io/
+https://simon-zj1.github.io/posts/4a17b156.html
+https://simon-zj1.github.io/posts/de374c34.html
+https://simon-zj1.github.io/about/index.html
+https://simon-zj1.github.io/tags/index.html
+https://simon-zj1.github.io/link/index.html
+https://simon-zj1.github.io/categories/index.html
+https://simon-zj1.github.io/
