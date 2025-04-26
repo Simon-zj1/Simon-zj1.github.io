@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://simon-zj1.github.io/sitemap.xml
-Sitemap: https://simon-zj1.github.io/baidusitemap.xml
+Sitemap: https://www.simon-zj.top/sitemap.xml
+Sitemap: https://www.simon-zj.top/baidusitemap.xml
