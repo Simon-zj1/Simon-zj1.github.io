@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.simon-zj.top/posts/5ec7e920</loc>
+    
+    <lastmod>2025-05-03</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.simon-zj.top/posts/de374c34</loc>
     
     <lastmod>2025-04-30</lastmod>
@@ -76,11 +85,18 @@
 
   <url>
     <loc>https://www.simon-zj.top/</loc>
-    <lastmod>2025-04-30</lastmod>
+    <lastmod>2025-05-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
+  
+  <url>
+    <loc>https://www.simon-zj.top/tags/Hexo-Github-%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA/</loc>
+    <lastmod>2025-05-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
   
 
   
