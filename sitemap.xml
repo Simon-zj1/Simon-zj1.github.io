@@ -2,18 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://www.simon-zj.top/about/</loc>
-    
-    <lastmod>2025-05-14</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.simon-zj.top/posts/5ec7e920</loc>
     
-    <lastmod>2025-05-14</lastmod>
+    <lastmod>2025-05-15</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -21,6 +12,24 @@
   
   <url>
     <loc>https://www.simon-zj.top/posts/de374c34</loc>
+    
+    <lastmod>2025-05-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.simon-zj.top/categories/</loc>
+    
+    <lastmod>2025-05-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.simon-zj.top/about/</loc>
     
     <lastmod>2025-05-14</lastmod>
     
@@ -64,15 +73,6 @@
     <priority>0.6</priority>
   </url>
   
-  <url>
-    <loc>https://www.simon-zj.top/categories/</loc>
-    
-    <lastmod>2025-04-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
 
   <url>
     <loc>https://www.simon-zj.top/</loc>
@@ -83,5 +83,19 @@
 
   
 
+  
+  <url>
+    <loc>https://www.simon-zj.top/categories/gallery/</loc>
+    <lastmod>2025-05-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.simon-zj.top/categories/hexo/</loc>
+    <lastmod>2025-05-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
   
 </urlset>
