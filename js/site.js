@@ -3,6 +3,142 @@
 
   const root = document.documentElement
   const body = document.body
+  const translations = {
+    zh: {
+      'nav.home': '首页',
+      'nav.tech': '技术',
+      'nav.papers': '论文',
+      'nav.experience': '面经',
+      'nav.about': '关于',
+      'nav.search': '搜索',
+      'home.browse': '浏览主题',
+      'home.about': '关于我',
+      'home.enter': '进入专栏',
+      'home.read': '阅读文章',
+      'home.email': '发邮件',
+      'post.created': '创建于',
+      'post.updated': '更新于',
+      'post.pageViews': '阅读',
+      'post.copyright.author': '文章作者',
+      'post.copyright.link': '文章链接',
+      'post.copyright.notice': '版权声明',
+      'pagination.prev': '上一篇',
+      'pagination.next': '下一篇',
+      'footer.framework': '框架',
+      'footer.theme': '主题',
+      'experience.unsupported': '当前浏览器不支持安全解锁，请使用最新版浏览器。',
+      'experience.validating': '正在验证...',
+      'experience.incorrect': '密码不正确，请重新输入。',
+      'experience.password': '请输入访问密码',
+      'experience.unlock': '解锁'
+    },
+    en: {
+      'nav.home': 'Home',
+      'nav.tech': 'Technology',
+      'nav.papers': 'Papers',
+      'nav.experience': 'Career Notes',
+      'nav.about': 'About',
+      'nav.search': 'Search',
+      'home.browse': 'Explore',
+      'home.about': 'About',
+      'home.enter': 'Enter',
+      'home.read': 'Read note',
+      'home.email': 'Email',
+      'post.created': 'Created',
+      'post.updated': 'Updated',
+      'post.pageViews': 'Views',
+      'post.copyright.author': 'Author',
+      'post.copyright.link': 'Article link',
+      'post.copyright.notice': 'License',
+      'pagination.prev': 'Previous',
+      'pagination.next': 'Next',
+      'footer.framework': 'Framework',
+      'footer.theme': 'Theme',
+      'experience.unsupported': 'Secure unlocking is not supported in this browser. Please use a current browser.',
+      'experience.validating': 'Verifying...',
+      'experience.incorrect': 'Incorrect password. Please try again.',
+      'experience.password': 'Enter access password',
+      'experience.unlock': 'Unlock'
+    }
+  }
+  let currentLanguage = root.dataset.language === 'en' ? 'en' : 'zh'
+
+  function t(key) {
+    return translations[currentLanguage][key] || translations.zh[key] || key
+  }
+
+  function applyLanguage(language, persist = true) {
+    currentLanguage = language === 'en' ? 'en' : 'zh'
+    const htmlLanguage = currentLanguage === 'en' ? 'en' : 'zh-CN'
+
+    root.lang = htmlLanguage
+    root.dataset.language = currentLanguage
+    body.dataset.language = currentLanguage
+
+    document.querySelectorAll('[data-i18n]').forEach((element) => {
+      const value = translations[currentLanguage][element.dataset.i18n]
+      if (!value) return
+      const leadingSpace = /^\s/.test(element.textContent) ? ' ' : ''
+      element.textContent = leadingSpace + value
+    })
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach((element) => {
+      const value = translations[currentLanguage][element.dataset.i18nPlaceholder]
+      if (value) element.setAttribute('placeholder', value)
+    })
+
+    document.querySelectorAll('[data-i18n-zh]').forEach((element) => {
+      const value = element.getAttribute(`data-i18n-${currentLanguage}`)
+      if (value) element.textContent = value
+    })
+
+    document.querySelectorAll('[data-lang-content]').forEach((element) => {
+      element.hidden = element.dataset.langContent !== currentLanguage
+    })
+
+    document.querySelectorAll('[data-language-option]').forEach((button) => {
+      const isActive = button.dataset.languageOption === currentLanguage
+      button.setAttribute('aria-pressed', String(isActive))
+      button.classList.toggle('is-active', isActive)
+    })
+
+    const zhTitle = body.dataset.pageTitleZh || document.title
+    const enTitle = body.dataset.pageTitleEn || zhTitle
+    const isHomePage = body.classList.contains('home')
+    document.title =
+      currentLanguage === 'en' && !isHomePage ? `${enTitle} | Simon` : zhTitle
+
+    const description =
+      currentLanguage === 'en'
+        ? body.dataset.pageDescriptionEn || body.dataset.pageDescriptionZh
+        : body.dataset.pageDescriptionZh || body.dataset.pageDescriptionEn
+    const descriptionMeta = document.querySelector('meta[name="description"]')
+    const openGraphMeta = document.querySelector('meta[property="og:description"]')
+    if (description && descriptionMeta) descriptionMeta.setAttribute('content', description)
+    if (description && openGraphMeta) openGraphMeta.setAttribute('content', description)
+
+    if (persist) {
+      try {
+        localStorage.setItem('simon-language', currentLanguage)
+      } catch (error) {
+        // Storage may be unavailable in private browsing; the page still works.
+      }
+    }
+
+    document.dispatchEvent(
+      new CustomEvent('site-language-change', { detail: { language: currentLanguage } })
+    )
+  }
+
+  function setupLanguageSwitch() {
+    const buttons = document.querySelectorAll('[data-language-option]')
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        applyLanguage(button.dataset.languageOption)
+      })
+    })
+    applyLanguage(currentLanguage, false)
+  }
 
   function renderIcons() {
     if (window.lucide && typeof window.lucide.createIcons === 'function') {
@@ -116,12 +252,12 @@
       if (!input.value) return
 
       if (!window.crypto || !crypto.subtle) {
-        status.textContent = '当前浏览器不支持安全解锁，请使用最新版浏览器。'
+        status.textContent = t('experience.unsupported')
         status.dataset.state = 'error'
         return
       }
 
-      status.textContent = '正在验证…'
+      status.textContent = t('experience.validating')
       status.dataset.state = 'loading'
 
       try {
@@ -142,7 +278,7 @@
         renderIcons()
         content.scrollIntoView({ behavior: 'smooth', block: 'start' })
       } catch (error) {
-        status.textContent = '密码不正确，请重新输入。'
+        status.textContent = t('experience.incorrect')
         status.dataset.state = 'error'
         input.select()
       }
@@ -203,6 +339,7 @@
   function boot() {
     setupFavicon()
     setupThemeSync()
+    setupLanguageSwitch()
     setupReveal()
     setupFilters()
     setupExperienceGate()
