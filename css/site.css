@@ -192,6 +192,24 @@ body.post {
   color: #171717;
 }
 
+.language-switch--sidebar {
+  display: flex;
+  width: max-content;
+  margin: 0 auto 20px;
+  border-color: var(--site-line);
+  background: var(--site-surface-soft);
+  backdrop-filter: none;
+}
+
+.language-switch--sidebar .language-switch__button {
+  color: var(--site-muted);
+}
+
+.language-switch--sidebar .language-switch__button.is-active {
+  background: var(--site-ink);
+  color: var(--site-bg);
+}
+
 #page-header.full_page {
   height: 92vh;
   min-height: 680px;
