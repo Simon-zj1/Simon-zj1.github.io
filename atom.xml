@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Simon&#39;s world</title>
+  <title>Zhou Jun / Simon</title>
   
-  
+  <subtitle>Robotics, Embodied AI &amp; Agent Systems</subtitle>
   <link href="https://www.simon-zj.top/atom.xml" rel="self"/>
   
   <link href="https://www.simon-zj.top/"/>
@@ -10,7 +10,7 @@
   <id>https://www.simon-zj.top/</id>
   
   <author>
-    <name>Simon</name>
+    <name>Zhou Jun</name>
     
   </author>
   
