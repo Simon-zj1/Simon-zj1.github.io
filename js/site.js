@@ -141,8 +141,8 @@
   }
 
   function renderIcons() {
-    if (window.lucide && typeof window.lucide.createIcons === 'function') {
-      window.lucide.createIcons()
+    if (window.SimonIcons && typeof window.SimonIcons.render === 'function') {
+      window.SimonIcons.render()
     }
   }
 
