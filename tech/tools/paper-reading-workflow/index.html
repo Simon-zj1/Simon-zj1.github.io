@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><script>(() => {
+  try {
+    const requestedLanguage = new URLSearchParams(window.location.search).get('lang')
+    const storedLanguage = localStorage.getItem('simon-language')
+    const language = requestedLanguage === 'en' || requestedLanguage === 'zh'
+      ? requestedLanguage
+      : storedLanguage === 'en' ? 'en' : 'zh'
+    document.documentElement.lang = language === 'en' ? 'en' : 'zh-CN'
+    document.documentElement.dataset.language = language
+  } catch (error) {
+    document.documentElement.lang = 'zh-CN'
+    document.documentElement.dataset.language = 'zh'
+  }
+})()</script><title>结构化论文阅读 | Simon</title><meta name="author" content="Simon"><meta name="copyright" content="Simon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一套面向机器人、具身智能与 Agent 的结构化论文阅读工作流。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="结构化论文阅读">
+<meta property="og:url" content="https://www.simon-zj.top/tech/tools/paper-reading-workflow/">
+<meta property="og:site_name" content="Simon">
+<meta property="og:description" content="一套面向机器人、具身智能与 Agent 的结构化论文阅读工作流。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg">
+<meta property="article:published_time" content="2026-09-15T17:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-15T17:17:49.884Z">
+<meta property="article:author" content="Simon">
+<meta property="article:tag" content="机器人,具身智能,Agent,ROS,论文阅读,知识漫游,AI提效,面经,Robotics,Embodied AI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg"><link rel="shortcut icon" href="/img/favicon-robot-v3.ico"><link rel="canonical" href="https://www.simon-zj.top/tech/tools/paper-reading-workflow/"><meta name="google-site-verification" content="v8upAgqbj73wNa2JwNefCRjNHGTmyXKN1v9xIx-xsTY"/><meta name="msvalidate.01" content="998791418970E8CF5EBDB5F160F2BD89"/><meta name="baidu-site-verification" content="codeva-ePm0SowACw"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: '/pluginsSrc/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '结构化论文阅读',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><script type="speculationrules">{"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"a[target='_blank'],a[href^='#'],a[href^='mailto:'],a[download]"}}]},"eagerness":"moderate"}]}</script><link rel="stylesheet" href="/css/site.css"><link rel="manifest" href="/site.webmanifest"><link rel="icon" type="image/svg+xml" href="/img/favicon-robot-v3.svg"><link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-robot-v3-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-robot-v3-16.png"><link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon-robot-v3.png"><link rel="mask-icon" href="/img/favicon-robot-v3.svg" color="#151515"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Simon" type="application/atom+xml">
+</head><body class="page type-tech-tools-paper-reading page" data-page-title-zh="结构化论文阅读" data-page-title-en="Structured Paper Reading" data-page-description-zh="一套面向机器人、具身智能与 Agent 的结构化论文阅读工作流。" data-page-description-en="A structured paper-reading workflow for robotics, embodied AI and agents."><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/optimized/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-house"></i><span data-i18n="nav.home"> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tech/"><i class="fa-fw fas fa-lightbulb"></i><span data-i18n="nav.tech"> 技术</span></a></div><div class="menus_item"><a class="site-page" href="/knowledge/"><i class="fa-fw fas fa-compass"></i><span data-i18n="nav.knowledge"> 知识漫游</span></a></div><div class="menus_item"><a class="site-page" href="/experience/"><i class="fa-fw fas fa-lock"></i><span data-i18n="nav.experience"> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span data-i18n="nav.about"> 关于</span></a></div></div></div></div><div class="page type-tech-tools-paper-reading" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Simon</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span data-i18n="nav.search"> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-house"></i><span data-i18n="nav.home"> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tech/"><i class="fa-fw fas fa-lightbulb"></i><span data-i18n="nav.tech"> 技术</span></a></div><div class="menus_item"><a class="site-page" href="/knowledge/"><i class="fa-fw fas fa-compass"></i><span data-i18n="nav.knowledge"> 知识漫游</span></a></div><div class="menus_item"><a class="site-page" href="/experience/"><i class="fa-fw fas fa-lock"></i><span data-i18n="nav.experience"> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span data-i18n="nav.about"> 关于</span></a></div></div><div class="language-switch" role="group" aria-label="Language"><button class="language-switch__button" type="button" data-language-option="zh" aria-pressed="true">中文</button><button class="language-switch__button" type="button" data-language-option="en" aria-pressed="false">EN</button></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav></header><main class="layout hide-aside" id="content-inner"><div class="page-masthead"><div class="page-masthead__grid"><div class="page-masthead__meta"><span class="page-masthead__eyebrow">AI Productivity / Research Workflow</span><div class="page-masthead__rule"></div><p data-i18n-zh="一套面向机器人、具身智能与 Agent 的结构化论文阅读工作流。" data-i18n-en="A structured paper-reading workflow for robotics, embodied AI and agents.">一套面向机器人、具身智能与 Agent 的结构化论文阅读工作流。</p></div><div class="page-masthead__body"><h1 data-i18n-zh="结构化论文阅读" data-i18n-en="Structured Paper Reading">结构化论文阅读</h1><p class="page-masthead__caption" data-i18n-zh="把论文读成可以验证、比较和迁移的研究材料。" data-i18n-en="Reading papers into research material that can be verified, compared and reused.">把论文读成可以验证、比较和迁移的研究材料。</p></div><div class="page-masthead__art" aria-hidden="true"><span class="page-masthead__index">01.4.1</span><div class="page-masthead__marks"><i></i><i></i><i></i></div><span class="page-masthead__note">Evidence over Summary</span></div></div></div><div id="page"><div class="container" id="article-container"><div class="editorial-page paper-reading-page">
+  <nav class="topic-breadcrumb" aria-label="当前位置">
+    <a href="/tech/"><span data-lang-content="zh">技术笔记</span><span data-lang-content="en">Technology Notes</span></a>
+    <span>/</span>
+    <a href="/tech/tools/"><span data-lang-content="zh">AI 提效</span><span data-lang-content="en">AI Productivity</span></a>
+    <span>/</span>
+    <span><span data-lang-content="zh">结构化论文阅读</span><span data-lang-content="en">Structured Paper Reading</span></span>
+  </nav>
+  <div class="content-index">
+    <span class="content-index__label" data-lang-content="zh">目录</span>
+    <span class="content-index__label" data-lang-content="en">Contents</span>
+    <a href="#why"><span data-lang-content="zh">为什么做</span><span data-lang-content="en">Why</span></a>
+    <a href="#problem"><span data-lang-content="zh">针对什么问题</span><span data-lang-content="en">Problem</span></a>
+    <a href="#use"><span data-lang-content="zh">可以用来做什么</span><span data-lang-content="en">Use cases</span></a>
+    <a href="#how"><span data-lang-content="zh">怎么使用</span><span data-lang-content="en">How to use</span></a>
+    <a href="#workflow"><span data-lang-content="zh">五步工作流</span><span data-lang-content="en">Five-step workflow</span></a>
+    <a href="#quality"><span data-lang-content="zh">质量门槛</span><span data-lang-content="en">Quality gates</span></a>
+  </div>
+  <section id="why" class="workflow-section">
+    <h2 data-lang-content="zh">为什么做</h2>
+    <h2 data-lang-content="en">Why this workflow exists</h2>
+    <p data-lang-content="zh">普通摘要很容易丢掉页码、实验条件和失败边界。读完之后，我们往往记得一句结论，却说不清它由什么证据支持、能否迁移到自己的系统。</p>
+    <p data-lang-content="en">A conventional summary easily loses page references, experimental conditions and failure boundaries. After reading, we may remember a claim but cannot explain what supports it or whether it can transfer into our own system.</p>
+    <div class="quote-panel"><p data-lang-content="zh">这套流程的目标，是让论文阅读从“看过”变成“可以验证、比较和继续积累”。</p><p data-lang-content="en">The goal is to move from having read a paper to being able to verify, compare and build on it.</p></div>
+  </section>
+  <section id="problem" class="workflow-section">
+    <h2 data-lang-content="zh">针对什么问题</h2>
+    <h2 data-lang-content="en">Problems it addresses</h2>
+    <ol class="editorial-list">
+      <li><span class="editorial-list__index">01</span><div><h3 data-lang-content="zh">结论缺少证据定位</h3><h3 data-lang-content="en">Claims without evidence</h3><p data-lang-content="zh">核心结论没有回到页码、章节、公式、图或表。</p><p data-lang-content="en">Key claims are not tied back to pages, sections, equations, figures or tables.</p></div></li>
+      <li><span class="editorial-list__index">02</span><div><h3 data-lang-content="zh">条件和边界被省略</h3><h3 data-lang-content="en">Missing conditions and limits</h3><p data-lang-content="zh">看不到基线是否公平、消融是否充分、成本是否可以接受。</p><p data-lang-content="en">Baseline fairness, ablations, cost and deployment limits remain unclear.</p></div></li>
+      <li><span class="editorial-list__index">03</span><div><h3 data-lang-content="zh">多篇论文无法累积</h3><h3 data-lang-content="en">No accumulation across papers</h3><p data-lang-content="zh">每篇笔记格式不同，后续无法比较方法、数据和结论。</p><p data-lang-content="en">Inconsistent notes make it hard to compare methods, data and conclusions later.</p></div></li>
+      <li><span class="editorial-list__index">04</span><div><h3 data-lang-content="zh">输出只有一种形态</h3><h3 data-lang-content="en">One output for every purpose</h3><p data-lang-content="zh">组会、复现、方法迁移和方向综述需要不同结构。</p><p data-lang-content="en">Group meetings, reproduction, method transfer and surveys require different structures.</p></div></li>
+    </ol>
+  </section>
+  <section id="use" class="workflow-section">
+    <h2 data-lang-content="zh">可以用来做什么</h2>
+    <h2 data-lang-content="en">What it can produce</h2>
+    <div class="editorial-grid">
+      <article class="editorial-card"><h3 data-lang-content="zh">快速筛选</h3><h3 data-lang-content="en">Quick screening</h3><p data-lang-content="zh">判断一篇论文是否值得继续投入时间。</p><p data-lang-content="en">Decide whether a paper deserves deeper time.</p></article>
+      <article class="editorial-card"><h3 data-lang-content="zh">标准深读</h3><h3 data-lang-content="en">Deep reading</h3><p data-lang-content="zh">重建问题、方法、实验、消融、失败与复现风险。</p><p data-lang-content="en">Reconstruct the problem, method, experiments, ablations, failures and reproducibility risks.</p></article>
+      <article class="editorial-card"><h3 data-lang-content="zh">方法迁移</h3><h3 data-lang-content="en">Method transfer</h3><p data-lang-content="zh">提炼可以进入自己系统的机制和最小验证实验。</p><p data-lang-content="en">Extract mechanisms that can enter another system and define a minimum validation experiment.</p></article>
+      <article class="editorial-card"><h3 data-lang-content="zh">多篇综述</h3><h3 data-lang-content="en">Multi-paper synthesis</h3><p data-lang-content="zh">用统一矩阵比较共识、分歧、方法演化和研究空白。</p><p data-lang-content="en">Compare consensus, disagreement, method evolution and research gaps in one matrix.</p></article>
+    </div>
+  </section>
+  <section id="how" class="workflow-section">
+    <h2 data-lang-content="zh">怎么使用</h2>
+    <h2 data-lang-content="en">How to use it</h2>
+    <p data-lang-content="zh">输入可以是 arXiv 链接、DOI、本地 PDF、论文题目，也可以是一组论文。把来源交给 Codex 后，再选择阅读模式即可。</p>
+    <p data-lang-content="en">Inputs can be an arXiv link, DOI, local PDF, title or a collection of papers. Give the source to Codex, then choose the reading mode.</p>
+    <div class="prompt-examples">
+      <code data-lang-content="zh">读：https://arxiv.org/abs/2210.03629</code>
+      <code data-lang-content="en">Read: https://arxiv.org/abs/2210.03629</code>
+      <code data-lang-content="zh">深读这三篇并做横向综述</code>
+      <code data-lang-content="en">Deep-read these three papers and create a synthesis</code>
+      <code data-lang-content="zh">把这篇论文做成 12 页 PPT，重点讲方法和真机实验</code>
+      <code data-lang-content="en">Turn this paper into a 12-page deck focused on the method and real-robot experiments</code>
+    </div>
+  </section>
+  <section id="workflow" class="workflow-section">
+    <h2 data-lang-content="zh">五步工作流</h2>
+    <h2 data-lang-content="en">Five-step workflow</h2>
+    <div class="workflow-figure workflow-figure--five" aria-label="Paper reading workflow">
+      <div class="workflow-figure__line"></div>
+      <div class="workflow-figure__step"><span>01</span><strong data-lang-content="zh">来源审计</strong><strong data-lang-content="en">Source audit</strong><small data-lang-content="zh">版本、作者、图表完整性</small><small data-lang-content="en">Version, authors, completeness</small></div>
+      <div class="workflow-figure__step"><span>02</span><strong data-lang-content="zh">证据抽取</strong><strong data-lang-content="en">Evidence</strong><small data-lang-content="zh">绑定页码、章节、图与表</small><small data-lang-content="en">Bind claims to pages and figures</small></div>
+      <div class="workflow-figure__step"><span>03</span><strong data-lang-content="zh">结构化深读</strong><strong data-lang-content="en">Deep read</strong><small data-lang-content="zh">问题、方法、实验、边界</small><small data-lang-content="en">Problem, method, evidence, limits</small></div>
+      <div class="workflow-figure__step"><span>04</span><strong data-lang-content="zh">批判复核</strong><strong data-lang-content="en">Critique</strong><small data-lang-content="zh">基线、消融与复现风险</small><small data-lang-content="en">Baselines, ablations, reproducibility</small></div>
+      <div class="workflow-figure__step"><span>05</span><strong data-lang-content="zh">复用输出</strong><strong data-lang-content="en">Reuse</strong><small data-lang-content="zh">笔记、矩阵、汇报与方案</small><small data-lang-content="en">Notes, matrix, deck and plan</small></div>
+    </div>
+  </section>
+  <section id="quality" class="workflow-section">
+    <h2 data-lang-content="zh">质量门槛</h2>
+    <h2 data-lang-content="en">Quality gates</h2>
+    <ul>
+      <li data-lang-content="zh">核心结论有页码、章节或图表定位。</li>
+      <li data-lang-content="en">Key claims have page, section, figure or table references.</li>
+      <li data-lang-content="zh">明确区分作者主张与独立判断。</li>
+      <li data-lang-content="en">Paper claims and independent assessments stay separate.</li>
+      <li data-lang-content="zh">复述实验设置、基线、指标和数据规模。</li>
+      <li data-lang-content="en">Experiment setup, baselines, metrics and data scale are reconstructed.</li>
+      <li data-lang-content="zh">指出失败案例、适用边界、成本和复现风险。</li>
+      <li data-lang-content="en">Failure cases, limits, cost and reproducibility risks are explicit.</li>
+    </ul>
+  </section>
+  <div class="editorial-actions">
+    <a class="button button--dark" href="https://github.com/Simon-zj1/paper-reading-workflow" target="_blank" rel="noopener external nofollow noreferrer"><i data-lucide="github" aria-hidden="true"></i><span data-lang-content="zh">查看 GitHub 项目</span><span data-lang-content="en">View GitHub project</span></a>
+  </div>
+</div>
+</div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By Simon</div><div class="framework-info"><span data-i18n="footer.framework">框架</span><span>&nbsp;</span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span data-i18n="footer.theme">主题</span><span>&nbsp;</span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div><div class="footer_custom_text"><span data-lang-content="zh">把复杂技术讲清楚，也把它做成可验证的系统。</span><span data-lang-content="en">Explain complex systems clearly, then make them verifiable.</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><div class="js-pjax"></div><script src="/js/icons.js" defer></script><script src="/js/site.js" defer></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

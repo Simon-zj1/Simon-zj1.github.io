@@ -7,7 +7,7 @@
     zh: {
       'nav.home': '首页',
       'nav.tech': '技术',
-      'nav.papers': '论文',
+      'nav.knowledge': '知识漫游',
       'nav.experience': '面经',
       'nav.about': '关于',
       'nav.search': '搜索',
@@ -35,7 +35,7 @@
     en: {
       'nav.home': 'Home',
       'nav.tech': 'Technology',
-      'nav.papers': 'Papers',
+      'nav.knowledge': 'Knowledge Roaming',
       'nav.experience': 'Career Notes',
       'nav.about': 'About',
       'nav.search': 'Search',
@@ -290,6 +290,15 @@
     root.setAttribute('data-site-theme', current)
   }
 
+  function setupOfflineCache() {
+    if (location.protocol !== 'https:' || !('serviceWorker' in navigator)) return
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').catch(() => {
+        // Caching is an optional enhancement. The site still works without it.
+      })
+    })
+  }
+
   function setupFavicon() {
     const head = document.head
     if (!head) return
@@ -343,6 +352,7 @@
     setupReveal()
     setupFilters()
     setupExperienceGate()
+    setupOfflineCache()
     renderIcons()
   }
 
