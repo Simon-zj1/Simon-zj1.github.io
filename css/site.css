@@ -310,27 +310,28 @@ body.post {
   align-items: start;
 }
 
-.signal-list {
+.perspective-list {
   display: grid;
   gap: 20px;
 }
 
-.signal {
+.perspective {
   display: grid;
-  gap: 4px;
+  gap: 6px;
   padding-bottom: 18px;
   border-bottom: 1px solid var(--site-line);
 }
 
-.signal strong {
+.perspective strong {
   color: var(--site-ink);
-  font-size: 25px;
-  font-weight: 640;
+  font-size: 17px;
+  font-weight: 650;
 }
 
-.signal span {
+.perspective span {
   color: var(--site-muted);
-  font-size: 13px;
+  font-size: 14px;
+  line-height: 1.55;
 }
 
 .home-focus {
@@ -631,6 +632,39 @@ body.home .home-contact .button--ghost {
 
 /* Interior pages */
 
+body.type-agent {
+  --page-accent: var(--site-blue);
+  --page-soft: #e1ebf3;
+}
+
+body.type-robotics {
+  --page-accent: var(--site-amber);
+  --page-soft: #f3e6d3;
+}
+
+body.type-papers {
+  --page-accent: var(--site-teal);
+  --page-soft: #dcece8;
+}
+
+body.type-tools {
+  --page-accent: #855d94;
+  --page-soft: #eae0ee;
+}
+
+body.type-about {
+  --page-accent: var(--site-accent);
+  --page-soft: var(--site-accent-soft);
+}
+
+html[data-theme='dark'] body.type-agent,
+html[data-theme='dark'] body.type-robotics,
+html[data-theme='dark'] body.type-papers,
+html[data-theme='dark'] body.type-tools,
+html[data-theme='dark'] body.type-about {
+  --page-soft: #292a25;
+}
+
 body.page:not(.home) #page-header,
 body.archive #page-header,
 body.category #page-header,
@@ -780,8 +814,14 @@ body.post #article-container a {
 }
 
 .editorial-page__lead {
-  max-width: 820px;
-  margin: 0 0 64px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 64px;
+  align-items: end;
+  max-width: none;
+  margin: 0 0 56px;
+  padding-bottom: 44px;
+  border-bottom: 1px solid var(--site-line);
 }
 
 .editorial-page__lead p {
@@ -791,11 +831,53 @@ body.post #article-container a {
   line-height: 1.75;
 }
 
+.page-facts {
+  display: grid;
+  gap: 8px;
+  padding-left: 22px;
+  border-left: 2px solid var(--page-accent, var(--site-accent));
+}
+
+.page-facts > span {
+  color: var(--page-accent, var(--site-accent));
+  font-size: 11px;
+  font-weight: 680;
+  text-transform: uppercase;
+}
+
+.page-facts strong {
+  color: var(--site-ink);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.page-facts small {
+  color: var(--site-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
 .editorial-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px;
   margin: 52px 0;
+}
+
+.editorial-page:not(.about-page) .editorial-grid .editorial-card:first-child {
+  grid-column: span 2;
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  column-gap: 20px;
+}
+
+.editorial-page:not(.about-page) .editorial-grid .editorial-card:first-child .editorial-card__icon {
+  grid-row: span 2;
+}
+
+.editorial-page:not(.about-page) .editorial-grid .editorial-card:first-child h3,
+.editorial-page:not(.about-page) .editorial-grid .editorial-card:first-child p {
+  grid-column: 2;
 }
 
 .editorial-card {
@@ -816,6 +898,11 @@ body.post #article-container a {
   color: var(--site-accent);
 }
 
+.editorial-page:not(.about-page) .editorial-card__icon {
+  background: var(--page-soft, var(--site-accent-soft));
+  color: var(--page-accent, var(--site-accent));
+}
+
 .editorial-card__icon svg {
   width: 20px;
   height: 20px;
@@ -832,6 +919,9 @@ body.post #article-container a {
 }
 
 .editorial-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 40px;
   margin: 40px 0;
   padding: 0;
   list-style: none;
@@ -1164,7 +1254,7 @@ body.post #post-info .post-meta time {
     margin-top: 12px;
   }
 
-  .signal-list {
+  .perspective-list {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
@@ -1221,6 +1311,26 @@ body.post #post-info .post-meta time {
   .editorial-grid,
   .tool-grid,
   .paper-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .editorial-page__lead {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 42px;
+    padding-bottom: 32px;
+  }
+
+  .page-facts {
+    padding-left: 18px;
+  }
+
+  .editorial-page:not(.about-page) .editorial-grid .editorial-card:first-child {
+    grid-column: auto;
+    display: block;
+  }
+
+  .editorial-list {
     grid-template-columns: 1fr;
   }
 
@@ -1300,7 +1410,7 @@ body.post #post-info .post-meta time {
     width: 100%;
   }
 
-  .signal-list {
+  .perspective-list {
     grid-template-columns: 1fr;
   }
 
