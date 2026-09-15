@@ -1197,6 +1197,54 @@ body.post #article-container a {
   font-weight: 680;
 }
 
+.research-meta {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 28px;
+}
+
+.research-meta__card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 24px;
+  border: 1px solid var(--site-line);
+  border-radius: var(--site-radius);
+  background: var(--site-surface);
+  color: var(--site-ink);
+  text-decoration: none;
+  transition: transform 200ms ease, border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.research-meta__card:hover {
+  transform: translateY(-3px);
+  border-color: var(--site-line-strong);
+  box-shadow: var(--site-shadow);
+}
+
+.research-meta__card > span {
+  color: var(--site-accent);
+  font-size: 11px;
+  font-weight: 680;
+  text-transform: uppercase;
+}
+
+.research-meta__card h3 {
+  margin: 12px 0 0;
+  color: var(--site-ink);
+  font-size: 20px;
+  line-height: 1.35;
+}
+
+.research-meta__card p {
+  margin: 10px 0 0;
+  color: var(--site-muted);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
 .editorial-page__lead {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 320px;
@@ -2201,6 +2249,10 @@ body.module-agent #article-container strong {
   .about-hero h1,
   .about-hero h2 {
     font-size: 36px;
+  }
+
+  .research-meta {
+    grid-template-columns: 1fr;
   }
 
   .tech-directory__item {
