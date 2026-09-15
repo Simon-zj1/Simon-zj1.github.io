@@ -1,5 +1,5 @@
 /* Simon site static cache */
-const CACHE_NAME = 'simon-static-v1'
+const CACHE_NAME = 'simon-static-v2'
 const CORE_ASSETS = [
   '/',
   '/css/index.css',
@@ -9,6 +9,7 @@ const CORE_ASSETS = [
   '/js/icons.js',
   '/js/site.js',
   '/vendor/fontawesome/css/all.min.css',
+  '/favicon.ico',
   '/img/favicon-robot-v3.svg',
   '/img/favicon-robot-v3.ico'
 ]

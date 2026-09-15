@@ -310,28 +310,28 @@
       .forEach((link) => link.remove())
 
     const icons = [
-      { rel: 'shortcut icon', href: '/img/favicon-robot-v3.ico' },
-      { rel: 'icon', type: 'image/svg+xml', href: '/img/favicon-robot-v3.svg' },
+      { rel: 'shortcut icon', href: '/img/favicon-robot-v3.ico?v=3' },
+      { rel: 'icon', type: 'image/svg+xml', href: '/img/favicon-robot-v3.svg?v=3' },
       {
         rel: 'icon',
         type: 'image/png',
         sizes: '32x32',
-        href: '/img/favicon-robot-v3-32.png'
+        href: '/img/favicon-robot-v3-32.png?v=3'
       },
       {
         rel: 'icon',
         type: 'image/png',
         sizes: '16x16',
-        href: '/img/favicon-robot-v3-16.png'
+        href: '/img/favicon-robot-v3-16.png?v=3'
       },
       {
         rel: 'apple-touch-icon',
         sizes: '180x180',
-        href: '/img/apple-touch-icon-robot-v3.png'
+        href: '/img/apple-touch-icon-robot-v3.png?v=3'
       },
       {
         rel: 'mask-icon',
-        href: '/img/favicon-robot-v3.svg',
+        href: '/img/favicon-robot-v3.svg?v=3',
         color: '#151515'
       }
     ]

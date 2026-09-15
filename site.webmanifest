@@ -10,18 +10,18 @@
   "theme_color": "#151515",
   "icons": [
     {
-      "src": "/img/favicon-robot-v3.svg",
+      "src": "/img/favicon-robot-v3.svg?v=3",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "/img/favicon-robot-v3-32.png",
+      "src": "/img/favicon-robot-v3-32.png?v=3",
       "sizes": "32x32",
       "type": "image/png"
     },
     {
-      "src": "/img/apple-touch-icon-robot-v3.png",
+      "src": "/img/apple-touch-icon-robot-v3.png?v=3",
       "sizes": "180x180",
       "type": "image/png",
       "purpose": "any maskable"
