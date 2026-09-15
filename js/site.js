@@ -165,6 +165,7 @@
       .forEach((link) => link.remove())
 
     const icons = [
+      { rel: 'shortcut icon', href: '/img/favicon-robot-v3.ico' },
       { rel: 'icon', type: 'image/svg+xml', href: '/img/favicon-robot-v3.svg' },
       {
         rel: 'icon',
