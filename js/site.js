@@ -154,7 +154,53 @@
     root.setAttribute('data-site-theme', current)
   }
 
+  function setupFavicon() {
+    const head = document.head
+    if (!head) return
+
+    head
+      .querySelectorAll(
+        'link[rel~="icon"], link[rel="apple-touch-icon"], link[rel="mask-icon"]'
+      )
+      .forEach((link) => link.remove())
+
+    const icons = [
+      { rel: 'icon', type: 'image/svg+xml', href: '/img/favicon-robot-v3.svg' },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '32x32',
+        href: '/img/favicon-robot-v3-32.png'
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '16x16',
+        href: '/img/favicon-robot-v3-16.png'
+      },
+      {
+        rel: 'apple-touch-icon',
+        sizes: '180x180',
+        href: '/img/apple-touch-icon-robot-v3.png'
+      },
+      {
+        rel: 'mask-icon',
+        href: '/img/favicon-robot-v3.svg',
+        color: '#151515'
+      }
+    ]
+
+    icons.forEach((attributes) => {
+      const link = document.createElement('link')
+      Object.entries(attributes).forEach(([name, value]) => {
+        link.setAttribute(name, value)
+      })
+      head.appendChild(link)
+    })
+  }
+
   function boot() {
+    setupFavicon()
     setupThemeSync()
     setupReveal()
     setupFilters()
