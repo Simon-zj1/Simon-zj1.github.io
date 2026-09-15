@@ -1189,7 +1189,13 @@ body.post #article-container a {
 }
 
 .about-timeline {
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 32px;
+}
+
+.about-timeline > li {
+  align-content: start;
+  border-bottom: 1px solid var(--site-line);
 }
 
 .about-timeline__period {
