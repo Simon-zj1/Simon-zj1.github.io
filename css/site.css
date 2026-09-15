@@ -1318,6 +1318,60 @@ body.post #post-info .post-meta time {
   border-radius: var(--site-radius);
 }
 
+body.module-agent {
+  --module-accent: var(--site-blue);
+  --module-soft: #e1ebf3;
+}
+
+body.module-robotics {
+  --module-accent: var(--site-amber);
+  --module-soft: #f3e6d3;
+}
+
+body.module-tools {
+  --module-accent: #855d94;
+  --module-soft: #eae0ee;
+}
+
+body.module-papers {
+  --module-accent: var(--site-teal);
+  --module-soft: #dcece8;
+}
+
+body.module-notes,
+body.module-knowledge {
+  --module-accent: var(--site-accent);
+  --module-soft: var(--site-accent-soft);
+}
+
+body[class*='module-'] #article-container h2 {
+  padding-left: 16px;
+  border-left: 3px solid var(--module-accent, var(--site-accent));
+}
+
+body.module-papers #article-container blockquote {
+  border: 1px solid var(--site-line);
+  border-left: 3px solid var(--module-accent, var(--site-teal));
+  background: var(--module-soft, var(--site-surface));
+}
+
+body.module-tools #article-container li {
+  margin: 8px 0;
+  padding: 10px 12px;
+  border: 1px solid var(--site-line);
+  border-radius: var(--site-radius);
+  background: var(--site-surface);
+}
+
+body.module-robotics #article-container h3 {
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--site-line);
+}
+
+body.module-agent #article-container strong {
+  color: var(--module-accent, var(--site-blue));
+}
+
 .post-copyright {
   border-radius: var(--site-radius);
   box-shadow: none;
