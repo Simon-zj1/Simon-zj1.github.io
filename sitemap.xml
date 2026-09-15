@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://www.simon-zj.top/tech/</loc>
+    <loc>https://www.simon-zj.top/experience/</loc>
     
     <lastmod>2026-09-15</lastmod>
     
@@ -11,34 +11,7 @@
   </url>
   
   <url>
-    <loc>https://www.simon-zj.top/papers/</loc>
-    
-    <lastmod>2026-09-15</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.simon-zj.top/tools/</loc>
-    
-    <lastmod>2026-09-15</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.simon-zj.top/robotics/</loc>
-    
-    <lastmod>2026-09-15</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.simon-zj.top/agent/</loc>
+    <loc>https://www.simon-zj.top/about/</loc>
     
     <lastmod>2026-09-15</lastmod>
     
@@ -74,7 +47,7 @@
   </url>
   
   <url>
-    <loc>https://www.simon-zj.top/about/</loc>
+    <loc>https://www.simon-zj.top/papers/</loc>
     
     <lastmod>2026-09-15</lastmod>
     
@@ -83,7 +56,34 @@
   </url>
   
   <url>
-    <loc>https://www.simon-zj.top/experience/</loc>
+    <loc>https://www.simon-zj.top/tech/</loc>
+    
+    <lastmod>2026-09-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.simon-zj.top/tools/</loc>
+    
+    <lastmod>2026-09-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.simon-zj.top/robotics/</loc>
+    
+    <lastmod>2026-09-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.simon-zj.top/agent/</loc>
     
     <lastmod>2026-09-15</lastmod>
     
@@ -198,14 +198,14 @@
   </url>
   
   <url>
-    <loc>https://www.simon-zj.top/categories/PaperReading/</loc>
+    <loc>https://www.simon-zj.top/categories/hexo/</loc>
     <lastmod>2026-09-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.simon-zj.top/categories/hexo/</loc>
+    <loc>https://www.simon-zj.top/categories/PaperReading/</loc>
     <lastmod>2026-09-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
