@@ -340,7 +340,7 @@ body.post {
 
 .focus-grid {
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
 }
 
@@ -350,7 +350,7 @@ body.post {
   min-height: 360px;
   flex-direction: column;
   justify-content: space-between;
-  grid-column: span 4;
+  grid-column: auto;
   padding: 26px;
   overflow: hidden;
   border: 1px solid var(--site-line);
@@ -361,11 +361,6 @@ body.post {
   box-shadow: none;
   transition: transform 220ms ease, box-shadow 220ms ease,
     border-color 220ms ease;
-}
-
-.focus-card:nth-child(1),
-.focus-card:nth-child(2) {
-  grid-column: span 6;
 }
 
 .focus-card:hover {
@@ -387,7 +382,7 @@ body.post {
   --card-tint: #f8e2da;
 }
 
-.focus-card--agent {
+.focus-card--tech {
   --card-accent: var(--site-blue);
   --card-tint: #dfeaf3;
 }
@@ -637,6 +632,22 @@ body.type-agent {
   --page-soft: #e1ebf3;
 }
 
+body.type-tech,
+body.type-tech-agent {
+  --page-accent: var(--site-blue);
+  --page-soft: #e1ebf3;
+}
+
+body.type-tech-robotics {
+  --page-accent: var(--site-amber);
+  --page-soft: #f3e6d3;
+}
+
+body.type-tech-tools {
+  --page-accent: #855d94;
+  --page-soft: #eae0ee;
+}
+
 body.type-robotics {
   --page-accent: var(--site-amber);
   --page-soft: #f3e6d3;
@@ -658,6 +669,10 @@ body.type-about {
 }
 
 html[data-theme='dark'] body.type-agent,
+html[data-theme='dark'] body.type-tech,
+html[data-theme='dark'] body.type-tech-agent,
+html[data-theme='dark'] body.type-tech-robotics,
+html[data-theme='dark'] body.type-tech-tools,
 html[data-theme='dark'] body.type-robotics,
 html[data-theme='dark'] body.type-papers,
 html[data-theme='dark'] body.type-tools,
@@ -706,6 +721,10 @@ body.page.type-agent #content-inner,
 body.page.type-robotics #content-inner,
 body.page.type-papers #content-inner,
 body.page.type-tools #content-inner,
+body.page.type-tech #content-inner,
+body.page.type-tech-agent #content-inner,
+body.page.type-tech-robotics #content-inner,
+body.page.type-tech-tools #content-inner,
 body.page.type-experience #content-inner,
 body.page.type-about #content-inner {
   width: min(calc(100% - 40px), 1180px);
@@ -778,6 +797,103 @@ body.post #article-container a {
 .editorial-page {
   max-width: 1040px;
   margin: 0 auto;
+}
+
+.tech-directory {
+  display: grid;
+  gap: 14px;
+}
+
+.tech-directory__item {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) 24px;
+  gap: 24px;
+  align-items: center;
+  padding: 28px;
+  border: 1px solid var(--site-line);
+  border-radius: var(--site-radius);
+  background: var(--site-surface);
+  color: var(--site-ink);
+  text-decoration: none;
+  transition: transform 200ms ease, border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.tech-directory__item:hover {
+  transform: translateY(-3px);
+  border-color: var(--site-line-strong);
+  box-shadow: var(--site-shadow);
+}
+
+.tech-directory__icon {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border-radius: var(--site-radius);
+  background: var(--page-soft, var(--site-accent-soft));
+  color: var(--page-accent, var(--site-accent));
+}
+
+.tech-directory__icon svg,
+.tech-directory__item > svg {
+  width: 21px;
+  height: 21px;
+}
+
+.tech-directory__item > div:nth-child(2) > span {
+  color: var(--page-accent, var(--site-accent));
+  font-size: 11px;
+  font-weight: 680;
+  text-transform: uppercase;
+}
+
+.tech-directory__item h2 {
+  margin: 6px 0 0;
+  color: var(--site-ink);
+  font-size: 26px;
+  line-height: 1.2;
+}
+
+.tech-directory__item p {
+  margin: 8px 0 0;
+  color: var(--site-muted);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.topic-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 46px;
+  color: var(--site-muted);
+  font-size: 13px;
+}
+
+.topic-breadcrumb a {
+  color: var(--page-accent, var(--site-accent));
+  font-weight: 620;
+}
+
+.tech-child__intro {
+  max-width: 760px;
+  padding: 40px 0 80px;
+}
+
+.tech-child__intro h1 {
+  margin: 14px 0 0;
+  color: var(--site-ink);
+  font-size: 52px;
+  line-height: 1.08;
+}
+
+.tech-child__intro p {
+  margin: 24px 0 0;
+  color: var(--site-muted);
+  font-size: 19px;
+  line-height: 1.8;
 }
 
 .about-hero {
@@ -1371,6 +1487,21 @@ body.post #post-info .post-meta time {
 
   .about-hero h1 {
     font-size: 36px;
+  }
+
+  .tech-directory__item {
+    grid-template-columns: 44px minmax(0, 1fr) 20px;
+    gap: 16px;
+    padding: 22px;
+  }
+
+  .tech-directory__icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .tech-child__intro h1 {
+    font-size: 40px;
   }
 
   body.page:not(.home) #article-container h1,
