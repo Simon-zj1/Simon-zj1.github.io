@@ -133,6 +133,12 @@ body.post {
   background: transparent;
 }
 
+#nav #menus {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
 #nav #blog-info .site-name {
   color: #fff;
   font-size: 16px;
