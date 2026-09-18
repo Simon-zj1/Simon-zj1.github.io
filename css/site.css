@@ -316,10 +316,10 @@ body.post {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 28px;
-  color: var(--site-muted);
-  font-size: 12px;
-  font-weight: 680;
+  margin-bottom: 24px;
+  color: var(--site-ink);
+  font-size: 17px;
+  font-weight: 700;
   text-transform: uppercase;
 }
 
@@ -329,7 +329,7 @@ body.post {
 
 .section-label::after {
   content: '';
-  width: 36px;
+  width: 42px;
   height: 1px;
   background: var(--site-line-strong);
 }
