@@ -120,4 +120,18 @@
   
 
   
+
+  <url>
+    <loc>https://www.simon-zj.top/trends/</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.simon-zj.top/trends/2026-09-20/</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>
