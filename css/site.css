@@ -1213,8 +1213,8 @@ body.post #article-container a {
 }
 
 .about-timeline {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0 32px;
+  grid-template-columns: 1fr;
+  gap: 0;
 }
 
 .about-timeline > li {
@@ -1228,6 +1228,10 @@ body.post #article-container a {
   color: var(--site-accent);
   font-size: 12px;
   font-weight: 680;
+}
+
+.about-page .editorial-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .research-meta {
@@ -2179,6 +2183,10 @@ body.module-agent #article-container strong {
   .editorial-grid,
   .tool-grid,
   .paper-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-page .editorial-grid {
     grid-template-columns: 1fr;
   }
 
