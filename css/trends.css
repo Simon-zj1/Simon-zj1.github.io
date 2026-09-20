@@ -1,0 +1,313 @@
+/* 每日技术趋势 —— 本文件由 tools/daily-trends/render_site.py 生成，请勿手改 */
+
+[data-lang-content][hidden] {
+  display: none !important;
+}
+
+/* ---------- 文章头部 ---------- */
+.trend-hero {
+  max-width: 860px;
+  padding: 8px 0 42px;
+  border-bottom: 1px solid var(--site-line);
+}
+
+.trend-hero__eyebrow {
+  color: var(--page-accent, var(--site-accent));
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.trend-hero h1 {
+  margin: 16px 0 0;
+  color: var(--site-ink);
+  font-size: clamp(30px, 4.4vw, 48px);
+  font-weight: 640;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+.trend-hero__meta {
+  margin-top: 18px;
+  color: var(--site-muted);
+  font-size: 13px;
+}
+
+.trend-hero__summary {
+  max-width: 760px;
+  margin-top: 20px;
+  color: var(--site-muted);
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+/* ---------- 速览 ---------- */
+.trend-tldr {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.trend-tldr li {
+  position: relative;
+  padding: 16px 20px 16px 46px;
+  border: 1px solid var(--site-line);
+  border-radius: var(--site-radius);
+  background: var(--site-surface);
+  line-height: 1.78;
+}
+
+.trend-tldr li::before {
+  content: '↗';
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  color: var(--page-accent, var(--site-accent));
+  font-weight: 700;
+}
+
+/* ---------- 分组与条目 ---------- */
+.trend-section__intro,
+.trend-group__intro {
+  max-width: 760px;
+  color: var(--site-muted);
+  line-height: 1.8;
+}
+
+.trend-group {
+  margin-top: 42px;
+}
+
+.trend-group h3 {
+  margin: 0 0 6px;
+  color: var(--site-ink);
+  font-size: 22px;
+  line-height: 1.35;
+}
+
+.trend-item {
+  margin-top: 20px;
+  padding: 24px 26px;
+  border: 1px solid var(--site-line);
+  border-radius: var(--site-radius);
+  background: var(--site-surface);
+}
+
+.trend-item__head {
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+}
+
+.trend-item__index {
+  flex: 0 0 auto;
+  color: var(--page-accent, var(--site-accent));
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.trend-item__title {
+  margin: 0;
+  color: var(--site-ink);
+  font-size: 19px;
+  line-height: 1.45;
+}
+
+.trend-item__meta {
+  margin: 10px 0 0 30px;
+  color: var(--site-muted);
+  font-size: 12px;
+}
+
+.trend-item__body {
+  margin-top: 14px;
+  color: var(--site-ink);
+  font-size: 15.5px;
+  line-height: 1.85;
+}
+
+.trend-item__body p {
+  margin: 0 0 10px;
+}
+
+.trend-comment {
+  margin-top: 16px;
+  padding: 16px 18px;
+  border-left: 3px solid var(--page-accent, var(--site-accent));
+  border-radius: 0 var(--site-radius) var(--site-radius) 0;
+  background: var(--site-surface-soft);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.trend-comment__label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--page-accent, var(--site-accent));
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.trend-comment p {
+  margin: 0;
+}
+
+.trend-item__sources {
+  margin-top: 14px;
+  color: var(--site-muted);
+  font-size: 12.5px;
+  line-height: 1.9;
+}
+
+.trend-item__sources a {
+  margin-right: 12px;
+  color: var(--page-accent, var(--site-accent));
+  text-decoration: none;
+}
+
+.trend-item__sources a:hover {
+  text-decoration: underline;
+}
+
+.trend-cite {
+  font-size: 0.72em;
+  white-space: nowrap;
+}
+
+.trend-cite a {
+  color: var(--page-accent, var(--site-accent));
+  font-weight: 650;
+  text-decoration: none;
+}
+
+/* ---------- 来源与说明 ---------- */
+.trend-refs ol {
+  margin: 0;
+  padding-left: 1.5em;
+}
+
+.trend-refs li {
+  margin-bottom: 10px;
+  font-size: 14.5px;
+  line-height: 1.75;
+}
+
+.trend-refs a {
+  color: var(--site-ink);
+}
+
+.trend-refs a:hover {
+  color: var(--page-accent, var(--site-accent));
+}
+
+.trend-refs__meta {
+  color: var(--site-muted);
+  font-size: 12.5px;
+}
+
+.trend-notes p {
+  color: var(--site-muted);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.trend-disclaimer {
+  margin-top: 18px;
+  color: var(--site-muted);
+  font-size: 12.5px;
+  line-height: 1.7;
+}
+
+/* ---------- 期号目录 ---------- */
+.trend-issue-list {
+  display: grid;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.trend-issue-card {
+  display: block;
+  padding: 26px 28px;
+  border: 1px solid var(--site-line);
+  border-radius: var(--site-radius);
+  background: var(--site-surface);
+  color: var(--site-ink);
+  text-decoration: none;
+  transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.trend-issue-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--site-line-strong);
+  box-shadow: var(--site-shadow);
+}
+
+.trend-issue-card__top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.trend-issue-card__date {
+  color: var(--site-ink);
+  font-size: 24px;
+  font-weight: 640;
+  letter-spacing: 0.01em;
+}
+
+.trend-issue-card__count {
+  color: var(--site-muted);
+  font-size: 12px;
+}
+
+.trend-issue-card__summary {
+  margin-top: 14px;
+  color: var(--site-muted);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.trend-issue-card__summary p {
+  margin: 0;
+}
+
+.trend-issue-card__more {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 16px;
+  color: var(--page-accent, var(--site-accent));
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.trend-issue-card__more svg {
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 768px) {
+  .trend-item {
+    padding: 20px 18px;
+  }
+
+  .trend-item__title {
+    font-size: 17px;
+  }
+
+  .trend-item__meta {
+    margin-left: 0;
+  }
+
+  .trend-issue-card {
+    padding: 20px;
+  }
+}
