@@ -273,6 +273,7 @@
 
         const decoder = new TextDecoder()
         content.innerHTML = decoder.decode(plaintext)
+        activateScripts(content)
         gate.hidden = true
         content.hidden = false
         renderIcons()
@@ -282,6 +283,20 @@
         status.dataset.state = 'error'
         input.select()
       }
+    })
+  }
+
+  // Decrypted notes may ship their own behaviour (for example the study tool
+  // on the Kuaishou page). Scripts inserted through innerHTML never run, so
+  // rebuild every one of them after the content lands in the DOM.
+  function activateScripts(container) {
+    container.querySelectorAll('script').forEach((oldScript) => {
+      const script = document.createElement('script')
+      Array.from(oldScript.attributes).forEach((attribute) => {
+        script.setAttribute(attribute.name, attribute.value)
+      })
+      script.text = oldScript.textContent
+      oldScript.replaceWith(script)
     })
   }
 
