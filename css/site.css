@@ -1612,6 +1612,12 @@ body.post #article-container a {
   display: none;
 }
 
+/* The notes only become visible after unlocking, so their anchors need to
+   clear the fixed site navigation bar when they are opened. */
+.experience-content h2 {
+  scroll-margin-top: 96px;
+}
+
 /* Experience topic cards link to the password-protected sub pages. */
 
 #page #article-container .experience-topics {
