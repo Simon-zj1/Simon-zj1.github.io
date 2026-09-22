@@ -1622,27 +1622,81 @@ body.post #article-container a {
 
 /* Experience topic cards link to the password-protected sub pages. */
 
-#page #article-container .experience-topics {
-  display: grid;
-  gap: 12px;
-  max-width: 760px;
-  margin: 0 0 44px;
+/* After unlocking, the notes area opens on a chapter index. Each chapter is a
+   separate view inside the same decrypted payload, so one password covers all
+   of them. */
+
+[data-chapter-view][hidden] {
+  display: none !important;
 }
 
-#page #article-container .experience-topics__label {
-  margin: 0;
+.experience-chapter-nav {
+  margin: 0 0 24px;
+}
+
+.experience-chapter-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   color: var(--page-accent, var(--site-accent));
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  line-height: 1.4;
+  font-size: 13px;
+  font-weight: 620;
+  text-decoration: none;
+}
+
+.experience-chapter-nav svg {
+  flex: 0 0 auto;
+  width: 15px;
+  height: 15px;
+}
+
+#page #article-container .experience-chapters {
+  max-width: 880px;
+}
+
+.experience-chapters__eyebrow {
+  color: var(--page-accent, var(--site-accent));
+  font-size: 12px;
+  font-weight: 680;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-#page #article-container a.experience-topic {
+#page #article-container .experience-chapters h2 {
+  margin: 10px 0 0;
+  color: var(--site-ink);
+  font-size: 34px;
+  font-weight: 660;
+  line-height: 1.2;
+}
+
+#page #article-container .experience-chapters__intro {
+  max-width: 640px;
+  margin: 12px 0 0;
+  color: var(--site-muted);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+#page #article-container .experience-chapter-list {
   display: grid;
-  gap: 6px;
-  padding: 22px 24px;
+  gap: 16px;
+  margin: 34px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+#page #article-container .experience-chapter-list > li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#page #article-container a.experience-chapter-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 22px;
+  padding: 26px 28px;
   border: 1px solid var(--site-line);
   border-radius: var(--site-radius);
   background: var(--site-surface);
@@ -1651,13 +1705,26 @@ body.post #article-container a {
   transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
-#page #article-container a.experience-topic:hover {
+#page #article-container a.experience-chapter-card:hover {
   border-color: var(--page-accent, var(--site-accent));
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(20, 24, 21, 0.08);
+  box-shadow: 0 14px 34px rgba(20, 24, 21, 0.08);
 }
 
-#page #article-container .experience-topic__meta {
+.experience-chapter-card__index {
+  color: var(--page-accent, var(--site-accent));
+  font-size: 30px;
+  font-weight: 660;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.experience-chapter-card__body {
+  display: grid;
+  gap: 6px;
+}
+
+.experience-chapter-card__meta {
   color: var(--site-muted);
   font-size: 12px;
   letter-spacing: 0.04em;
@@ -1665,24 +1732,32 @@ body.post #article-container a {
   text-transform: uppercase;
 }
 
-#page #article-container .experience-topic__title {
+.experience-chapter-card__title {
   color: var(--site-ink);
   font-size: 20px;
   font-weight: 650;
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
-#page #article-container .experience-topic__desc {
+.experience-chapter-card__desc {
   color: var(--site-muted);
   font-size: 14px;
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
-#page #article-container .experience-topic__cta {
-  margin-top: 4px;
+.experience-chapter-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
   color: var(--page-accent, var(--site-accent));
   font-size: 13px;
   font-weight: 620;
+}
+
+.experience-chapter-card__cta svg {
+  width: 15px;
+  height: 15px;
 }
 
 /* Article refinements */
