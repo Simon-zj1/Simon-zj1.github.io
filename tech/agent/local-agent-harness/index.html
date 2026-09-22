@@ -1,0 +1,341 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><script>(() => {
+  try {
+    const requestedLanguage = new URLSearchParams(window.location.search).get('lang')
+    const storedLanguage = localStorage.getItem('simon-language')
+    const language = requestedLanguage === 'en' || requestedLanguage === 'zh'
+      ? requestedLanguage
+      : storedLanguage === 'en' ? 'en' : 'zh'
+    document.documentElement.lang = language === 'en' ? 'en' : 'zh-CN'
+    document.documentElement.dataset.language = language
+  } catch (error) {
+    document.documentElement.lang = 'zh-CN'
+    document.documentElement.dataset.language = 'zh'
+  }
+})()</script><title>本地 Agent Harness | Simon</title><meta name="author" content="Simon"><meta name="copyright" content="Simon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一套自己拥有的本地 Agent 运行时：自研循环、可替换执行器、文件优先记忆、无人值守调度与代码化验收。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="本地 Agent Harness">
+<meta property="og:url" content="https://www.simon-zj.top/tech/agent/local-agent-harness/">
+<meta property="og:site_name" content="Simon">
+<meta property="og:description" content="一套自己拥有的本地 Agent 运行时：自研循环、可替换执行器、文件优先记忆、无人值守调度与代码化验收。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg">
+<meta property="article:published_time" content="2026-09-22T18:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-22T17:41:14.117Z">
+<meta property="article:author" content="Simon">
+<meta property="article:tag" content="机器人,具身智能,Agent,ROS,论文阅读,知识漫游,AI提效,面经,Robotics,Embodied AI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg"><link rel="shortcut icon" href="/img/favicon-robot-v3.ico?v=3"><link rel="canonical" href="https://www.simon-zj.top/tech/agent/local-agent-harness/"><meta name="google-site-verification" content="v8upAgqbj73wNa2JwNefCRjNHGTmyXKN1v9xIx-xsTY"/><meta name="msvalidate.01" content="998791418970E8CF5EBDB5F160F2BD89"/><meta name="baidu-site-verification" content="codeva-ePm0SowACw"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: '/pluginsSrc/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '本地 Agent Harness',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><script type="speculationrules">{"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"a[target='_blank'],a[href^='#'],a[href^='mailto:'],a[download]"}}]},"eagerness":"moderate"}]}</script><link rel="stylesheet" href="/css/site.css"><link rel="manifest" href="/site.webmanifest"><link rel="icon" type="image/svg+xml" href="/img/favicon-robot-v3.svg?v=3"><link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-robot-v3-32.png?v=3"><link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-robot-v3-16.png?v=3"><link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon-robot-v3.png?v=3"><link rel="mask-icon" href="/img/favicon-robot-v3.svg?v=3" color="#151515"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Simon" type="application/atom+xml">
+</head><body class="page type-tech-agent-harness page" data-page-title-zh="本地 Agent Harness" data-page-title-en="Local Agent Harness" data-page-description-zh="一套自己拥有的本地 Agent 运行时：自研循环、可替换执行器、文件优先记忆、无人值守调度与代码化验收。" data-page-description-en="A locally owned agent runtime with its own loop, swappable executors, file-first memory, unattended scheduling and acceptance criteria in code."><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/optimized/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="language-switch language-switch--sidebar" role="group" aria-label="Language"><button class="language-switch__button" type="button" data-language-option="zh" aria-pressed="true">中文</button><button class="language-switch__button" type="button" data-language-option="en" aria-pressed="false">EN</button></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-house"></i><span data-i18n="nav.home"> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tech/"><i class="fa-fw fas fa-lightbulb"></i><span data-i18n="nav.tech"> 技术</span></a></div><div class="menus_item"><a class="site-page" href="/knowledge/"><i class="fa-fw fas fa-compass"></i><span data-i18n="nav.knowledge"> 知识漫游</span></a></div><div class="menus_item"><a class="site-page" href="/experience/"><i class="fa-fw fas fa-lock"></i><span data-i18n="nav.experience"> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span data-i18n="nav.about"> 关于</span></a></div></div></div></div><div class="page type-tech-agent-harness" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav id="nav"><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span data-i18n="nav.search"> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-house"></i><span data-i18n="nav.home"> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tech/"><i class="fa-fw fas fa-lightbulb"></i><span data-i18n="nav.tech"> 技术</span></a></div><div class="menus_item"><a class="site-page" href="/knowledge/"><i class="fa-fw fas fa-compass"></i><span data-i18n="nav.knowledge"> 知识漫游</span></a></div><div class="menus_item"><a class="site-page" href="/experience/"><i class="fa-fw fas fa-lock"></i><span data-i18n="nav.experience"> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span data-i18n="nav.about"> 关于</span></a></div></div><div class="language-switch" role="group" aria-label="Language"><button class="language-switch__button" type="button" data-language-option="zh" aria-pressed="true">中文</button><button class="language-switch__button" type="button" data-language-option="en" aria-pressed="false">EN</button></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav></header><main class="layout hide-aside" id="content-inner"><div class="page-masthead"><div class="page-masthead__grid"><div class="page-masthead__meta"><span class="page-masthead__eyebrow">Agent / Local Harness</span><div class="page-masthead__rule"></div><p data-i18n-zh="一套自己拥有的本地 Agent 运行时：自研循环、可替换执行器、文件优先记忆、无人值守调度与代码化验收。" data-i18n-en="A locally owned agent runtime with its own loop, swappable executors, file-first memory, unattended scheduling and acceptance criteria in code.">一套自己拥有的本地 Agent 运行时：自研循环、可替换执行器、文件优先记忆、无人值守调度与代码化验收。</p></div><div class="page-masthead__body"><h1 data-i18n-zh="本地 Agent Harness" data-i18n-en="Local Agent Harness">本地 Agent Harness</h1><p class="page-masthead__caption" data-i18n-zh="把记忆、权限、触发和验收握在自己手里，让 Agent 真的把事做完。" data-i18n-en="Keep memory, permissions, triggers and acceptance in your own hands so the agent actually finishes the work.">把记忆、权限、触发和验收握在自己手里，让 Agent 真的把事做完。</p></div><div class="page-masthead__art" aria-hidden="true"><span class="page-masthead__index">01.1.1</span><div class="page-masthead__marks"><i></i><i></i><i></i></div><span class="page-masthead__note">Own the loop</span></div></div></div><div id="page"><div class="container" id="article-container"><div class="editorial-page agent-harness-page">
+  <nav class="topic-breadcrumb" aria-label="当前位置">
+    <a href="/tech/"><span data-lang-content="zh">技术笔记</span><span data-lang-content="en">Technology Notes</span></a>
+    <span>/</span>
+    <a href="/tech/agent/"><span data-lang-content="zh">Agent 系统</span><span data-lang-content="en">Agent Systems</span></a>
+    <span>/</span>
+    <span><span data-lang-content="zh">本地 Agent Harness</span><span data-lang-content="en">Local Agent Harness</span></span>
+  </nav>
+  <div class="content-index">
+    <span class="content-index__label" data-lang-content="zh">目录</span>
+    <span class="content-index__label" data-lang-content="en">Contents</span>
+    <a href="#why"><span data-lang-content="zh">为什么做</span><span data-lang-content="en">Why</span></a>
+    <a href="#problem"><span data-lang-content="zh">解决什么问题</span><span data-lang-content="en">Problem</span></a>
+    <a href="#use"><span data-lang-content="zh">能做什么</span><span data-lang-content="en">Use cases</span></a>
+    <a href="#architecture"><span data-lang-content="zh">系统结构</span><span data-lang-content="en">Architecture</span></a>
+    <a href="#run"><span data-lang-content="zh">一次无人值守运行</span><span data-lang-content="en">Unattended run</span></a>
+    <a href="#evidence"><span data-lang-content="zh">实测数据</span><span data-lang-content="en">Evidence</span></a>
+    <a href="#how"><span data-lang-content="zh">怎么用</span><span data-lang-content="en">How to use</span></a>
+    <a href="#gates"><span data-lang-content="zh">质量闸门</span><span data-lang-content="en">Gates</span></a>
+    <a href="#limits"><span data-lang-content="zh">边界</span><span data-lang-content="en">Limits</span></a>
+  </div>
+
+  <section id="why" class="workflow-section">
+    <h2 data-lang-content="zh">为什么做</h2>
+    <h2 data-lang-content="en">Why this exists</h2>
+    <p data-lang-content="zh">我原本已经有一个每天 23:00 自动发布技术趋势的流程：抓取、撰写、渲染、推送，步骤都是我自己定的。但它跑在哪、什么时候醒、记住了什么，全都挂在别人的运行时里。行为归我，运行时归厂商——这是"看起来很像自己的 Agent"和"真的是自己的 Agent"之间最常见的一条界线。</p>
+    <p data-lang-content="en">I already had a workflow that publishes a daily tech digest at 23:00: fetch, write, render, push, all steps defined by me. But where it ran, when it woke up and what it remembered all belonged to someone else's runtime. My behaviour, their runtime - that is the most common boundary between something that looks like my own agent and something that actually is.</p>
+    <div class="quote-panel">
+      <p data-lang-content="zh">RAG 不是"自己的"的来源。检索只是上下文装填手段：通用 Agent 读本地文件本身就是按需检索，在个人规模下往往比向量召回更准。真正属于自己的是四件事——记忆归你、权限归你、触发归你、验收标准归你。</p>
+      <p data-lang-content="en">RAG is not what makes an agent yours. Retrieval is just context filling: a general coding agent already reads local files on demand, which at personal scale is usually more accurate than vector recall. What is genuinely yours are four things - memory, permissions, triggers and acceptance criteria.</p>
+    </div>
+  </section>
+
+  <section id="problem" class="workflow-section">
+    <h2 data-lang-content="zh">解决什么问题</h2>
+    <h2 data-lang-content="en">What it solves</h2>
+    <ol class="editorial-list">
+      <li><span class="editorial-list__index">01</span><div>
+        <h3 data-lang-content="zh">能力在，但所有权不在</h3>
+        <h3 data-lang-content="en">Capability without ownership</h3>
+        <p data-lang-content="zh">会话、记忆、调度和凭据都在别人的产品里，换一个工具就从零开始，历史也拿不回来。</p>
+        <p data-lang-content="en">Sessions, memory, scheduling and credentials live inside someone else's product; switching tools means starting over.</p>
+      </div></li>
+      <li><span class="editorial-list__index">02</span><div>
+        <h3 data-lang-content="zh">通用 Agent 不会自己开始</h3>
+        <h3 data-lang-content="en">A general agent never starts itself</h3>
+        <p data-lang-content="zh">它只在你打开窗口、开口提问时干活。夜里该跑的东西，需要有人先想起它。</p>
+        <p data-lang-content="en">It only works when you open a window and type. Anything that should run overnight needs a human to remember it.</p>
+      </div></li>
+      <li><span class="editorial-list__index">03</span><div>
+        <h3 data-lang-content="zh">权限是"大概能用"，不是"明确允许"</h3>
+        <h3 data-lang-content="en">Permissions are vague, not explicit</h3>
+        <p data-lang-content="zh">哪个任务能写哪些目录、能跑哪些命令、能不能联网，通常没有一处可审计的声明。</p>
+        <p data-lang-content="en">Which task may write where, run what, or reach the network is rarely declared in one auditable place.</p>
+      </div></li>
+      <li><span class="editorial-list__index">04</span><div>
+        <h3 data-lang-content="zh">验收靠人眼，失败靠运气</h3>
+        <h3 data-lang-content="en">Acceptance by eyeball, failure by luck</h3>
+        <p data-lang-content="zh">输出合不合格由人翻一遍才知道；失败后是重跑、降级还是放弃，没有统一策略。</p>
+        <p data-lang-content="en">Whether an output is acceptable is decided by scrolling through it; whether a failure retries, degrades or aborts is ad hoc.</p>
+      </div></li>
+    </ol>
+  </section>
+
+  <section id="use" class="workflow-section">
+    <h2 data-lang-content="zh">能做什么</h2>
+    <h2 data-lang-content="en">What it can do</h2>
+    <div class="editorial-grid">
+      <article class="editorial-card"><h3 data-lang-content="zh">无人值守跑完整流程</h3><h3 data-lang-content="en">Run a full pipeline unattended</h3><p data-lang-content="zh">定时或事件唤醒，从抓取一路做到发布与通知，中途不需要人盯着。</p><p data-lang-content="en">Woken by a schedule or an event, it goes from data collection all the way to publishing and notification without supervision.</p></article>
+      <article class="editorial-card"><h3 data-lang-content="zh">把重复流程变成一条声明</h3><h3 data-lang-content="en">Turn a repeated process into a declaration</h3><p data-lang-content="zh">步骤、可用工具、可写路径、预算和降级策略写进一个任务文件，而不是散落在聊天记录里。</p><p data-lang-content="en">Steps, allowed tools, writable paths, budget and degradation policy live in one task file instead of scattered chat history.</p></article>
+      <article class="editorial-card"><h3 data-lang-content="zh">会记住事的助手</h3><h3 data-lang-content="en">An assistant that remembers</h3><p data-lang-content="zh">每次运行的事实自动落盘并建索引，长期结论由人确认后才沉淀，可检索、可审计、可删除。</p><p data-lang-content="en">Facts from every run are stored and indexed automatically; long-term conclusions are human-confirmed, searchable, auditable and deletable.</p></article>
+      <article class="editorial-card"><h3 data-lang-content="zh">用实验台比较策略</h3><h3 data-lang-content="en">Compare strategies with an eval lab</h3><p data-lang-content="zh">同一份输入跑多条路线，比较成功率、可核验率、token 与耗时，而不是凭感觉选方案。</p><p data-lang-content="en">Run several routes over the same input and compare success rate, traceability, tokens and wall-clock instead of guessing.</p></article>
+      <article class="editorial-card"><h3 data-lang-content="zh">把重活外包给成熟执行器</h3><h3 data-lang-content="en">Delegate heavy lifting to mature executors</h3><p data-lang-content="zh">Codex CLI、Claude Code、云端模型都只是可替换的执行器；调度、记忆和验收留在自己手里。</p><p data-lang-content="en">Codex CLI, Claude Code and cloud models are swappable executors; scheduling, memory and acceptance stay on your side.</p></article>
+      <article class="editorial-card"><h3 data-lang-content="zh">失败看得见、说得清</h3><h3 data-lang-content="en">Failures that are visible and explainable</h3><p data-lang-content="zh">每次运行都有台账：步骤、工具调用、token、耗时、失败分类与降级原因，回看就能定位。</p><p data-lang-content="en">Every run leaves a ledger: steps, tool calls, tokens, duration, failure class and degradation reasons.</p></article>
+    </div>
+  </section>
+
+  <section id="architecture" class="workflow-section">
+    <h2 data-lang-content="zh">系统结构</h2>
+    <h2 data-lang-content="en">Architecture</h2>
+    <p data-lang-content="zh">内核是自己写的确定性循环，模型只是其中一层。任务声明式描述，工具按权限调用，产物经过代码化的验收标准才会落地。</p>
+    <p data-lang-content="en">The kernel is a deterministic loop I wrote; the model is only one layer inside it. Tasks are declared, tools are called under explicit permissions, and artifacts must pass acceptance criteria written in code.</p>
+    <figure class="story-figure">
+      <img data-lang-content="zh" src="/img/AgentHarness/architecture-zh.svg" alt="本地 Agent Harness 的五层结构：触发与验收、任务与编排、工具与权限、记忆、模型适配">
+      <img data-lang-content="en" src="/img/AgentHarness/architecture-en.svg" alt="Five layers of the local agent harness: triggers and acceptance, tasks and orchestration, tools and permissions, memory, model adapters">
+      <figcaption data-lang-content="zh">图 1 · 五层结构：上面两层是你的规矩，中间两层是你的资产与边界，最下面才是可替换的模型。</figcaption>
+      <figcaption data-lang-content="en">Figure 1 - Five layers: the top two are your rules, the middle two are your assets and boundaries, and the bottom layer is the swappable model.</figcaption>
+    </figure>
+  </section>
+
+  <section id="run" class="workflow-section">
+    <h2 data-lang-content="zh">一次无人值守运行</h2>
+    <h2 data-lang-content="en">One unattended run</h2>
+    <p data-lang-content="zh">以"每日技术趋势"为例，这是它每晚实际走过的路径。任何一步降级都会被记录，而不是悄悄糊过去。</p>
+    <p data-lang-content="en">Using the daily tech digest as the example, this is the path it actually walks every night. Every degradation is recorded rather than quietly smoothed over.</p>
+    <figure class="story-figure">
+      <img data-lang-content="zh" src="/img/AgentHarness/run-lifecycle-zh.svg" alt="一次无人值守运行的七个步骤，以及降级路径">
+      <img data-lang-content="en" src="/img/AgentHarness/run-lifecycle-en.svg" alt="Seven steps of one unattended run, plus the degradation path">
+      <figcaption data-lang-content="zh">图 2 · 定时唤醒到发布：任务锁保证同一个任务只跑一份，四项校验通过之后才允许推送。</figcaption>
+      <figcaption data-lang-content="en">Figure 2 - From scheduled wake-up to release: a task lock keeps a single run in flight, and publishing only happens after all four gates pass.</figcaption>
+    </figure>
+    <ul>
+      <li data-lang-content="zh">重复触发：同一天同一任务只成功一次（数据库唯一索引 + 文件锁），被中断的运行下次自动标记为 crashed 并重跑。</li>
+      <li data-lang-content="en">Idempotency: one successful run per task and day (unique index plus a file lock); an interrupted run is marked crashed and safely retried.</li>
+      <li data-lang-content="zh">降级：代理不可用或数据源额度耗尽时，沿用已有数据继续，并如实标记 degraded。</li>
+      <li data-lang-content="en">Degradation: when a proxy or a data source quota fails, it continues on existing data and marks the run degraded.</li>
+      <li data-lang-content="zh">中止：必需校验不通过或推送失败就判失败并发通知，绝不用半成品凑数。</li>
+      <li data-lang-content="en">Abort: a failed required gate or a failed push stops the release and raises a notification - no half-finished output is shipped.</li>
+    </ul>
+  </section>
+
+  <section id="evidence" class="workflow-section">
+    <h2 data-lang-content="zh">实测数据</h2>
+    <h2 data-lang-content="en">Measured evidence</h2>
+    <p data-lang-content="zh">下面这组数字来自真实运行，不是设计文档里的估计。它同时解释了一个工程结论：一篇 20 条的双语稿件塞不进一次模型响应。</p>
+    <p data-lang-content="en">These numbers come from real runs, not estimates in a design document. They also explain one engineering conclusion: a 20-item bilingual article does not fit in a single model response.</p>
+    <figure class="story-figure">
+      <img data-lang-content="zh" src="/img/AgentHarness/experiment-evidence-zh.svg" alt="三条撰写路线的输入输出 token 与结果对比">
+      <img data-lang-content="en" src="/img/AgentHarness/experiment-evidence-en.svg" alt="Input and output tokens for three composition routes, with outcomes">
+      <figcaption data-lang-content="zh">图 3 · 同一份 2026-09-22 抓取数据下的三条路线：一次性撰写两次都被输出上限截断，分片撰写在更省 token 的前提下通过全部校验。</figcaption>
+      <figcaption data-lang-content="en">Figure 3 - Three routes over the same 2026-09-22 capture: single-shot composition was truncated twice by the output ceiling, while chunking passed every gate on fewer tokens.</figcaption>
+    </figure>
+    <ul>
+      <li data-lang-content="zh">发布闸门：结构、引用完整性、来源可核验性、生成物漂移四项校验，全部代码化。</li>
+      <li data-lang-content="en">Release gates: structure, reference integrity, source traceability and generated-file drift - all enforced in code.</li>
+      <li data-lang-content="zh">防编造：正文引用的每条来源都必须能在当日原始抓取结果里找到，实测 47/47 可回溯。</li>
+      <li data-lang-content="en">Anti-fabrication: every cited source must exist in that day's raw capture; measured 47 out of 47 traceable.</li>
+      <li data-lang-content="zh">真实的失败案例：模型多写了 4 条热点，被上限校验挡下，运行判失败并通知，而不是把超限内容发出去。</li>
+      <li data-lang-content="en">A real failure: the model wrote four items over the limit; the gate failed the run and notified instead of publishing over-limit content.</li>
+      <li data-lang-content="zh">崩溃恢复：在步骤执行中途强制 kill 进程，下一次运行自动识别并重跑，没有产生重复发布。</li>
+      <li data-lang-content="en">Crash recovery: killing the process mid-step led the next run to detect and retry it, with no duplicate release.</li>
+    </ul>
+  </section>
+
+  <section id="how" class="workflow-section">
+    <h2 data-lang-content="zh">怎么用</h2>
+    <h2 data-lang-content="en">How to use it</h2>
+    <p data-lang-content="zh">标准库优先，不需要 Docker，也不需要额外服务。仓库里带一条真实任务（每日技术趋势）作为参考实现。</p>
+    <p data-lang-content="en">Standard library first: no Docker and no extra services. The repository ships one real task (the daily digest) as a reference implementation.</p>
+    <div class="prompt-examples">
+      <code data-lang-content="zh">./agent doctor</code>
+      <code data-lang-content="en">./agent doctor</code>
+      <code data-lang-content="zh">./agent run daily-trends --compose replay --dry-run</code>
+      <code data-lang-content="en">./agent run daily-trends --compose replay --dry-run</code>
+      <code data-lang-content="zh">./agent experiment run daily-trends-compare --date 2026-09-22 --allow-llm</code>
+      <code data-lang-content="en">./agent experiment run daily-trends-compare --date 2026-09-22 --allow-llm</code>
+      <code data-lang-content="zh">./agent status / runs / report &lt;run_id&gt;</code>
+      <code data-lang-content="en">./agent status / runs / report &lt;run_id&gt;</code>
+    </div>
+  </section>
+
+  <section id="gates" class="workflow-section">
+    <h2 data-lang-content="zh">质量闸门</h2>
+    <h2 data-lang-content="en">Quality gates</h2>
+    <ul>
+      <li data-lang-content="zh">同一天同一任务只允许一次成功产物，重跑必须显式声明。</li>
+      <li data-lang-content="en">One successful artifact per task and day; a forced re-run must be explicit.</li>
+      <li data-lang-content="zh">工具调用受可写路径与命令白名单约束，越权直接拒绝并记入台账。</li>
+      <li data-lang-content="en">Tool calls are bounded by writable paths and a command allow-list; violations are refused and recorded.</li>
+      <li data-lang-content="zh">内容必须通过结构、引用与可核验性校验，缺一不发。</li>
+      <li data-lang-content="en">Content must pass structure, reference and traceability checks; missing one blocks release.</li>
+      <li data-lang-content="zh">生成物漂移同样会被拦下（例如站点 sitemap 反复累积空行这类问题）。</li>
+      <li data-lang-content="en">Generated-file drift is blocked too - for example a sitemap that accumulates blank lines on every run.</li>
+    </ul>
+  </section>
+
+  <section id="limits" class="workflow-section">
+    <h2 data-lang-content="zh">边界与说明</h2>
+    <h2 data-lang-content="en">Limits and notes</h2>
+    <ul>
+      <li data-lang-content="zh">面向个人规模：一台笔记本、少量任务，不追求多 Agent 花哨编排或通用聊天界面。</li>
+      <li data-lang-content="en">Designed for personal scale: one laptop, a handful of tasks. No elaborate multi-agent choreography and no general chat UI.</li>
+      <li data-lang-content="zh">语义检索只保留可选接口，当前版本以关键词索引与结构化检索为主。</li>
+      <li data-lang-content="en">Semantic retrieval is an optional interface only; the current version relies on keyword indexing and structured lookup.</li>
+      <li data-lang-content="zh">模型是可换的：云端模型为主，本地模型留同一接口，能力上限由所选模型决定。</li>
+      <li data-lang-content="en">Models are swappable: cloud by default with the same interface for a local endpoint, and the ceiling is set by whichever model you pick.</li>
+      <li data-lang-content="zh">密钥不落仓库：所有凭据走环境变量或本地 .env，仓库里不含任何明文密钥。</li>
+      <li data-lang-content="en">No secrets in the repository: credentials come from environment variables or a local .env file.</li>
+    </ul>
+  </section>
+
+  <div class="editorial-actions">
+    <a class="button button--dark" href="https://github.com/Simon-zj1/agent-harness" target="_blank" rel="noopener external nofollow noreferrer"><i data-lucide="github" aria-hidden="true"></i><span data-lang-content="zh">查看 GitHub 项目</span><span data-lang-content="en">View GitHub project</span></a>
+  </div>
+</div>
+</div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By Simon</div><div class="framework-info"><span data-i18n="footer.framework">框架</span><span>&nbsp;</span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span data-i18n="footer.theme">主题</span><span>&nbsp;</span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div><div class="footer_custom_text"><span data-lang-content="zh">把复杂技术讲清楚，也把它做成可验证的系统。</span><span data-lang-content="en">Explain complex systems clearly, then make them verifiable.</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><div class="js-pjax"></div><script src="/js/icons.js" defer></script><script src="/js/site.js" defer></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

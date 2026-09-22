@@ -1,0 +1,332 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><script>(() => {
+  try {
+    const requestedLanguage = new URLSearchParams(window.location.search).get('lang')
+    const storedLanguage = localStorage.getItem('simon-language')
+    const language = requestedLanguage === 'en' || requestedLanguage === 'zh'
+      ? requestedLanguage
+      : storedLanguage === 'en' ? 'en' : 'zh'
+    document.documentElement.lang = language === 'en' ? 'en' : 'zh-CN'
+    document.documentElement.dataset.language = language
+  } catch (error) {
+    document.documentElement.lang = 'zh-CN'
+    document.documentElement.dataset.language = 'zh'
+  }
+})()</script><title>Jev 备考：把「判分」拆成可以核对的问题 | Simon</title><meta name="author" content="Simon"><meta name="copyright" content="Simon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="上传自己的学习材料，自动出题并用 Jev（决策模型）逐得分点判分的自助备考系统。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Jev 备考：把「判分」拆成可以核对的问题">
+<meta property="og:url" content="https://www.simon-zj.top/tech/tools/jev-exam/">
+<meta property="og:site_name" content="Simon">
+<meta property="og:description" content="上传自己的学习材料，自动出题并用 Jev（决策模型）逐得分点判分的自助备考系统。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg">
+<meta property="article:published_time" content="2026-09-22T18:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-22T17:41:04.500Z">
+<meta property="article:author" content="Simon">
+<meta property="article:tag" content="机器人,具身智能,Agent,ROS,论文阅读,知识漫游,AI提效,面经,Robotics,Embodied AI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg"><link rel="shortcut icon" href="/img/favicon-robot-v3.ico?v=3"><link rel="canonical" href="https://www.simon-zj.top/tech/tools/jev-exam/"><meta name="google-site-verification" content="v8upAgqbj73wNa2JwNefCRjNHGTmyXKN1v9xIx-xsTY"/><meta name="msvalidate.01" content="998791418970E8CF5EBDB5F160F2BD89"/><meta name="baidu-site-verification" content="codeva-ePm0SowACw"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: '/pluginsSrc/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Jev 备考：把「判分」拆成可以核对的问题',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><script type="speculationrules">{"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"a[target='_blank'],a[href^='#'],a[href^='mailto:'],a[download]"}}]},"eagerness":"moderate"}]}</script><link rel="stylesheet" href="/css/site.css"><link rel="manifest" href="/site.webmanifest"><link rel="icon" type="image/svg+xml" href="/img/favicon-robot-v3.svg?v=3"><link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-robot-v3-32.png?v=3"><link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-robot-v3-16.png?v=3"><link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon-robot-v3.png?v=3"><link rel="mask-icon" href="/img/favicon-robot-v3.svg?v=3" color="#151515"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Simon" type="application/atom+xml">
+</head><body class="page type-tech-tools-jev-exam page" data-page-title-zh="Jev 备考：把「判分」拆成可以核对的问题" data-page-title-en="Jev Exam Prep: Turning Grading into Verifiable Questions" data-page-description-zh="上传自己的学习材料，自动出题并用 Jev（决策模型）逐得分点判分的自助备考系统。" data-page-description-en="A self-exam system that generates questions from your own material and grades each rubric point with Jev, a decision model."><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/optimized/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="language-switch language-switch--sidebar" role="group" aria-label="Language"><button class="language-switch__button" type="button" data-language-option="zh" aria-pressed="true">中文</button><button class="language-switch__button" type="button" data-language-option="en" aria-pressed="false">EN</button></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-house"></i><span data-i18n="nav.home"> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tech/"><i class="fa-fw fas fa-lightbulb"></i><span data-i18n="nav.tech"> 技术</span></a></div><div class="menus_item"><a class="site-page" href="/knowledge/"><i class="fa-fw fas fa-compass"></i><span data-i18n="nav.knowledge"> 知识漫游</span></a></div><div class="menus_item"><a class="site-page" href="/experience/"><i class="fa-fw fas fa-lock"></i><span data-i18n="nav.experience"> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span data-i18n="nav.about"> 关于</span></a></div></div></div></div><div class="page type-tech-tools-jev-exam" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav id="nav"><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span data-i18n="nav.search"> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-house"></i><span data-i18n="nav.home"> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tech/"><i class="fa-fw fas fa-lightbulb"></i><span data-i18n="nav.tech"> 技术</span></a></div><div class="menus_item"><a class="site-page" href="/knowledge/"><i class="fa-fw fas fa-compass"></i><span data-i18n="nav.knowledge"> 知识漫游</span></a></div><div class="menus_item"><a class="site-page" href="/experience/"><i class="fa-fw fas fa-lock"></i><span data-i18n="nav.experience"> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span data-i18n="nav.about"> 关于</span></a></div></div><div class="language-switch" role="group" aria-label="Language"><button class="language-switch__button" type="button" data-language-option="zh" aria-pressed="true">中文</button><button class="language-switch__button" type="button" data-language-option="en" aria-pressed="false">EN</button></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav></header><main class="layout hide-aside" id="content-inner"><div class="page-masthead"><div class="page-masthead__grid"><div class="page-masthead__meta"><span class="page-masthead__eyebrow">AI Productivity / Self-Exam</span><div class="page-masthead__rule"></div><p data-i18n-zh="上传自己的学习材料，自动出题并用 Jev（决策模型）逐得分点判分的自助备考系统。" data-i18n-en="A self-exam system that generates questions from your own material and grades each rubric point with Jev, a decision model.">上传自己的学习材料，自动出题并用 Jev（决策模型）逐得分点判分的自助备考系统。</p></div><div class="page-masthead__body"><h1 data-i18n-zh="Jev 备考：把「判分」拆成可以核对的问题" data-i18n-en="Jev Exam Prep: Turning Grading into Verifiable Questions">Jev 备考：把「判分」拆成可以核对的问题</h1><p class="page-masthead__caption" data-i18n-zh="把自己的学习材料变成一套可以自动判分、并且能解释为什么得这个分的考试。" data-i18n-en="Turning your own study material into an exam that grades automatically and can explain every point.">把自己的学习材料变成一套可以自动判分、并且能解释为什么得这个分的考试。</p></div><div class="page-masthead__art" aria-hidden="true"><span class="page-masthead__index">01.4.2</span><div class="page-masthead__marks"><i></i><i></i><i></i></div><span class="page-masthead__note">Decisions over Vibes</span></div></div></div><div id="page"><div class="container" id="article-container"><div class="editorial-page jev-exam-page">
+  <nav class="topic-breadcrumb" aria-label="当前位置">
+    <a href="/tech/"><span data-lang-content="zh">技术笔记</span><span data-lang-content="en">Technology Notes</span></a>
+    <span>/</span>
+    <a href="/tech/tools/"><span data-lang-content="zh">AI 提效</span><span data-lang-content="en">AI Productivity</span></a>
+    <span>/</span>
+    <span><span data-lang-content="zh">Jev 备考</span><span data-lang-content="en">Jev Exam Prep</span></span>
+  </nav>
+  <div class="content-index">
+    <span class="content-index__label" data-lang-content="zh">目录</span>
+    <span class="content-index__label" data-lang-content="en">Contents</span>
+    <a href="#why"><span data-lang-content="zh">为什么做</span><span data-lang-content="en">Why</span></a>
+    <a href="#problem"><span data-lang-content="zh">解决什么问题</span><span data-lang-content="en">Problems</span></a>
+    <a href="#use"><span data-lang-content="zh">可以用来做什么</span><span data-lang-content="en">Use cases</span></a>
+    <a href="#how"><span data-lang-content="zh">它怎么工作</span><span data-lang-content="en">How it works</span></a>
+    <a href="#design"><span data-lang-content="zh">关键设计</span><span data-lang-content="en">Design decisions</span></a>
+    <a href="#evidence"><span data-lang-content="zh">实测与边界</span><span data-lang-content="en">Evidence and limits</span></a>
+    <a href="#start"><span data-lang-content="zh">怎么用起来</span><span data-lang-content="en">Get started</span></a>
+  </div>
+
+  <section id="why" class="workflow-section">
+    <h2 data-lang-content="zh">为什么做</h2>
+    <h2 data-lang-content="en">Why this exists</h2>
+    <p data-lang-content="zh">备考的瓶颈通常不是「没有资料」，而是「不知道自己哪里没掌握」。读完一份材料，感觉都懂了；真正被问到时，才发现有些要点根本没说出来。而通用题库和你的材料往往对不上：题目是别人出的，考点是别人的重点。</p>
+    <p data-lang-content="en">The bottleneck in exam prep is rarely the material. It is not knowing which parts you actually failed to learn. After reading, everything feels understood; when questioned, some points turn out to be missing. Generic question banks do not fix this either, because the questions and the key points belong to someone else.</p>
+    <div class="quote-panel">
+      <p data-lang-content="zh">这个项目的目标很具体：把你自己的材料变成一场考试，并且让每一分都能追溯到「哪一个要点没说到」。</p>
+      <p data-lang-content="en">The goal is narrow: turn your own material into an exam where every point traces back to a specific idea you did or did not express.</p>
+    </div>
+    <figure class="story-figure">
+      <img src="/img/jev-exam/topics.jpg" alt="上传材料后自动切分知识点，并配置题量与题型配比" loading="lazy" />
+      <figcaption>
+        <span data-lang-content="zh">上传材料后先切分知识点，由你确认考点与题型配比，再生成试卷。</span>
+        <span data-lang-content="en">Material is split into topics first. You confirm the topics and the question mix, then the exam is generated.</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <section id="problem" class="workflow-section">
+    <h2 data-lang-content="zh">解决什么问题</h2>
+    <h2 data-lang-content="en">What it solves</h2>
+    <ol class="editorial-list">
+      <li><span class="editorial-list__index">01</span><div><h3 data-lang-content="zh">学完没有反馈</h3><h3 data-lang-content="en">No feedback loop</h3><p data-lang-content="zh">材料是单向输入的。没有问答环节，就很难知道要点是否真的记住了。</p><p data-lang-content="en">Material is one-way input. Without a questioning step, there is no evidence that a point was actually learned.</p></div></li>
+      <li><span class="editorial-list__index">02</span><div><h3 data-lang-content="zh">对错之外的空白</h3><h3 data-lang-content="en">Beyond right and wrong</h3><p data-lang-content="zh">简答题只给一个总分，看不出是漏了定义、漏了条件，还是把结论说反了。</p><p data-lang-content="en">A single score for a written answer hides whether a definition, a condition or the conclusion itself was missing.</p></div></li>
+      <li><span class="editorial-list__index">03</span><div><h3 data-lang-content="zh">通用题库与材料脱节</h3><h3 data-lang-content="en">Generic banks do not match</h3><p data-lang-content="zh">题库考的是别人的重点，答案也无法回到你手上这份材料的原文。</p><p data-lang-content="en">Question banks test someone else's priorities, and their answers cannot be traced back to your source document.</p></div></li>
+      <li><span class="editorial-list__index">04</span><div><h3 data-lang-content="zh">进度只靠感觉</h3><h3 data-lang-content="en">Progress by feeling</h3><p data-lang-content="zh">没有错题本和掌握度，复习只能从头再来一遍。</p><p data-lang-content="en">Without a mistake log or mastery signal, revision restarts from zero every time.</p></div></li>
+    </ol>
+  </section>
+
+  <section id="use" class="workflow-section">
+    <h2 data-lang-content="zh">可以用来做什么</h2>
+    <h2 data-lang-content="en">What it can do</h2>
+    <div class="editorial-grid">
+      <article class="editorial-card"><h3 data-lang-content="zh">把任意材料变成试卷</h3><h3 data-lang-content="en">Material into exam</h3><p data-lang-content="zh">粘贴一段材料，自动切分知识点，生成单选、判断、填空和简答。</p><p data-lang-content="en">Paste material, get topics, multiple-choice, true/false, cloze and short-answer questions.</p></article>
+      <article class="editorial-card"><h3 data-lang-content="zh">逐得分点判分</h3><h3 data-lang-content="en">Point-level grading</h3><p data-lang-content="zh">简答题不是给一个 0–100 的黑盒分数，而是逐条判定「这个要点说到了没有」。</p><p data-lang-content="en">A written answer is graded point by point instead of receiving one opaque 0-100 score.</p></article>
+      <article class="editorial-card"><h3 data-lang-content="zh">把不确定标出来</h3><h3 data-lang-content="en">Uncertainty made visible</h3><p data-lang-content="zh">模型没把握的题目标记为「待复核」，给出分数区间，并且不计入掌握度。</p><p data-lang-content="en">Low-confidence judgments are flagged with a score range and excluded from mastery tracking.</p></article>
+      <article class="editorial-card"><h3 data-lang-content="zh">错题本与薄弱点</h3><h3 data-lang-content="en">Mistake log and weak spots</h3><p data-lang-content="zh">自动收集错题，按知识点聚合掌握度，并支持一键重考错题。</p><p data-lang-content="en">Mistakes are collected, mastery is aggregated per topic, and retakes reuse the same questions.</p></article>
+    </div>
+    <figure class="story-figure">
+      <img src="/img/jev-exam/mistakes.jpg" alt="错题本与知识点掌握度" loading="lazy" />
+      <figcaption>
+        <span data-lang-content="zh">得分低于 60 分的题目进入错题本；重考答对后自动移除，待复核的题目不参与掌握度计算。</span>
+        <span data-lang-content="en">Questions scoring below 60 enter the mistake log; retaking correctly removes them, and flagged items never affect mastery.</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <section id="how" class="workflow-section">
+    <h2 data-lang-content="zh">它怎么工作</h2>
+    <h2 data-lang-content="en">How it works</h2>
+    <p data-lang-content="zh">这里有一个容易混淆的地方：Jev 不是「打分模型」，而是一类输出决策的模型（System One / Decision Model）。它接收材料与问题，输出的是类型化概率：命题为真的概率、选项的概率分布、有序 rubric 上的分数，而不输出任何文字。所以整条链路上有三种明确的角色分工。</p>
+    <p data-lang-content="en">One distinction matters: Jev is not a scoring model but a decision model (System One). It takes material and questions, and returns typed probabilities: how likely a statement is true, a distribution over options, a score on an ordered rubric. It never returns prose. That splits the pipeline into three explicit roles.</p>
+    <div class="workflow-figure" aria-label="Jev exam pipeline">
+      <div class="workflow-figure__line"></div>
+      <div class="workflow-figure__step"><span>01</span><strong data-lang-content="zh">出题与拆点</strong><strong data-lang-content="en">Generate</strong><small data-lang-content="zh">普通 LLM：切分知识点、出题、拆评分点</small><small data-lang-content="en">LLM splits topics, writes questions and rubric points</small></div>
+      <div class="workflow-figure__step"><span>02</span><strong data-lang-content="zh">客观题判分</strong><strong data-lang-content="en">Deterministic</strong><small data-lang-content="zh">代码比对：只有填空的语义等价才问模型</small><small data-lang-content="en">Code compares answers; only semantic cloze asks a model</small></div>
+      <div class="workflow-figure__step"><span>03</span><strong data-lang-content="zh">主观题判分</strong><strong data-lang-content="en">Point by point</strong><small data-lang-content="zh">Jev：每个得分点一条判定，代码加权合成</small><small data-lang-content="en">One Jev judgment per rubric point, combined in code</small></div>
+    </div>
+    <ul>
+      <li data-lang-content="zh">出题由通用大模型完成。Jev 不生成任何文字，所以材料理解、题干、评分点都必须由生成式模型产出，并且每道题都要能在原文中定位到出处。</li>
+      <li data-lang-content="en">Question writing uses a normal LLM. Jev generates no text, so topics, stems and rubric points come from a generative model, and every question must anchor back to a verbatim span.</li>
+      <li data-lang-content="zh">客观题由代码判分：选择、判断、填空先做归一化比对（全半角、大小写、标点、可接受写法），只有字面不一致的填空才会调用一次「语义等价吗」的判定。</li>
+      <li data-lang-content="en">Objective questions are graded in code. Choices, true/false and cloze are normalised first; only a cloze answer that does not match literally triggers one semantic-equivalence question.</li>
+      <li data-lang-content="zh">简答题拆成一批原子问题：每个得分点一条 noul 问题，问题里带着该得分点的陈述与原文证据，最后按权重合成，再减去「与材料矛盾」和「编造材料外事实」这两项扣分。</li>
+      <li data-lang-content="en">A written answer is decomposed into atomic questions: one per rubric point, each carrying its own statement and evidence span. The score is a weighted sum minus explicit penalties for contradicting the material or inventing facts.</li>
+    </ul>
+    <figure class="story-figure">
+      <img src="/img/jev-exam/rubric.jpg" alt="逐点判定表：得分点、权重、命中概率、判定强度与结果" loading="lazy" />
+      <figcaption>
+        <span data-lang-content="zh">结果页把「为什么是这个分」摊开：每个得分点的命中概率、判定强度与是否命中；本题因为一个关键点判定强度不足，整体被标记为待复核，并给出分数区间。</span>
+        <span data-lang-content="en">The report shows why the score is what it is: hit probability and judgment strength per point. This question is flagged for review with a score range because one key point was judged too weakly.</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <section id="design" class="workflow-section">
+    <h2 data-lang-content="zh">关键设计</h2>
+    <h2 data-lang-content="en">Design decisions</h2>
+    <ul>
+      <li data-lang-content="zh">每个得分点的问题必须自带它所判的那一点。Jev 的多个问题是并行且互相独立的，如果所有问题共用同一段指令、只靠问题名字区分，模型根本不知道自己在判哪一点——判定质量会在没有报错的情况下悄悄崩掉。这是实现时踩到的第一个真问题。</li>
+      <li data-lang-content="en">Each rubric question must carry the point it judges. Jev answers questions independently and in parallel; if every question shares one instruction and only the key name differs, the model cannot know which point it is deciding. Quality collapses silently, with no error to notice.</li>
+      <li data-lang-content="zh">不确定就别装懂。判定强度低于阈值的关键点会让整题变成「待复核」，给出分数区间，并且不计入知识点掌握度。</li>
+      <li data-lang-content="en">Never fake certainty. A key point judged too weakly turns the whole question into a review item with a score range, excluded from mastery.</li>
+      <li data-lang-content="zh">扣分规则在代码里，而不在模型里。「矛盾」和「编造」两项概率由模型给出，但怎么扣、扣多少由代码决定。</li>
+      <li data-lang-content="en">Penalties live in code, not in the model. The model provides probabilities for contradiction and fabrication; the code decides how much to subtract.</li>
+      <li data-lang-content="zh">引擎可替换。判定层只有一个接口（DecisionEngine），当前实现是 TypeSafe Jev；模型输出更像黑盒、也没有开源替代的一天到来时，换实现不需要动业务代码。</li>
+      <li data-lang-content="en">The engine is swappable. Grading depends on one interface, currently backed by TypeSafe Jev, so a future self-hosted decision model only replaces that implementation.</li>
+      <li data-lang-content="zh">成本与准入可控。每人每天限量，自带密钥（BYOK）不占平台额度；Jev 按输入计费且输出免费，所以「每个得分点问一次」这种暴力拆解在经济上是可行的。</li>
+      <li data-lang-content="en">Cost and access stay bounded. Daily quotas apply, BYOK calls bypass platform quota, and because Jev charges for input only, one question per rubric point is affordable.</li>
+    </ul>
+    <figure class="story-figure">
+      <img src="/img/jev-exam/result.jpg" alt="判定报告：总分、待复核数量、客观题正确数与逐题对照" loading="lazy" />
+      <figcaption>
+        <span data-lang-content="zh">判定报告给出总分、待复核数量、客观题正确数，下面逐题对照作答与参考答案，并附材料原文溯源。</span>
+        <span data-lang-content="en">The report summarises score, review items and objective accuracy, then compares each answer with the reference and links back to the source span.</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <section id="evidence" class="workflow-section">
+    <h2 data-lang-content="zh">实测与边界</h2>
+    <h2 data-lang-content="en">Evidence and limits</h2>
+    <p data-lang-content="zh">项目自带一个判定评测脚本和一份小规模金标准集（12 道主观题、42 个得分点，逐点人工标注）。它输出逐点准确率、Brier 分数、校准分桶与自一致性，并设了门槛：逐点准确率不低于 90%，且校准分桶单调。</p>
+    <p data-lang-content="en">The project ships an evaluation harness with a small golden set (12 written questions, 42 labelled rubric points). It reports per-point accuracy, Brier score, calibration buckets and self-consistency, with a gate of at least 90% accuracy and monotonic calibration.</p>
+    <p data-lang-content="zh">有意思的是，把「离线演示引擎」放进去跑，它只有 42.9% 的逐点准确率、Brier 0.56，而且置信度全部挤在 0.99 那一档。这正是要接入 Jev 的理由：词面重合不能替代校准过的判定模型，而这件事必须有数字，不能靠感觉。</p>
+    <p data-lang-content="en">Run the offline demo engine through it and it scores 42.9% per-point accuracy with a Brier score of 0.56, with all confidence crammed into one bucket. That number is the argument for using a calibrated decision model instead of word overlap, and it is why the gate is a number rather than an opinion.</p>
+    <div class="troubleshooting-table">
+      <table>
+        <thead>
+          <tr><th data-lang-content="zh">适合</th><th data-lang-content="en">Good fit</th><th data-lang-content="zh">不适合</th><th data-lang-content="en">Poor fit</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-lang-content="zh">有明确要点的背诵型材料（面试八股、法条、术语、流程）</td><td data-lang-content="en">Memorisation-heavy material with explicit points</td>
+            <td data-lang-content="zh">需要执行或符号验证的题（复杂计算、代码正确性）</td><td data-lang-content="en">Tasks needing execution or symbolic checking</td>
+          </tr>
+          <tr>
+            <td data-lang-content="zh">要点式简答：判断「说到了没有」</td><td data-lang-content="en">Point-based written answers</td>
+            <td data-lang-content="zh">创新写作、开放论述的“好坏”评价</td><td data-lang-content="en">Judging the quality of open-ended writing</td>
+          </tr>
+          <tr>
+            <td data-lang-content="zh">量大、需要成本的批量判定</td><td data-lang-content="en">High-volume, cost-sensitive grading</td>
+            <td data-lang-content="zh">需要模型给出解释理由的场景（Jev 只给概率）</td><td data-lang-content="en">Scenarios demanding a written justification</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="start" class="workflow-section">
+    <h2 data-lang-content="zh">怎么用起来</h2>
+    <h2 data-lang-content="en">Getting started</h2>
+    <p data-lang-content="zh">目前是自己部署使用的形态：克隆仓库、装依赖、填两个密钥（Jev 判定 + 出题模型），本地跑起来即可。没有密钥也能运行，只是会退化成离线演示模式，界面上会明确标注。</p>
+    <p data-lang-content="en">Today it is a self-hosted tool: clone the repository, install dependencies, provide two keys (a Jev grading key and a question-generation model), and run it locally. It also runs without any key, degrading to a clearly labelled offline demo mode.</p>
+    <div class="prompt-examples">
+      <code data-lang-content="zh">npm install &amp;&amp; npm run dev</code>
+      <code data-lang-content="en">npm install &amp;&amp; npm run dev</code>
+      <code data-lang-content="zh">上传：Agent 面试八股（检索 / Agent / 评测）</code>
+      <code data-lang-content="en">Upload: agent interview notes (retrieval, agents, evals)</code>
+      <code data-lang-content="zh">确认知识点 → 生成 10 题 → 作答 → 看逐点判定</code>
+      <code data-lang-content="en">Confirm topics, generate ten questions, answer, read the point-level report</code>
+    </div>
+    <figure class="story-figure">
+      <img src="/img/jev-exam/take.jpg" alt="作答页：单选、判断、填空与简答混合试卷" loading="lazy" />
+      <figcaption>
+        <span data-lang-content="zh">作答过程自动保存草稿，交卷后逐题判定；题目顺序与题型配比在生成前由你决定。</span>
+        <span data-lang-content="en">Drafts save automatically and grading runs per question on submit. Question order and mix are chosen before generation.</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <div class="editorial-actions">
+    <a class="button button--dark" href="https://github.com/Simon-zj1/jev-exam" target="_blank" rel="noopener external nofollow noreferrer"><i data-lucide="github" aria-hidden="true"></i><span data-lang-content="zh">查看 GitHub 项目</span><span data-lang-content="en">View GitHub project</span></a>
+    <a class="button button--outline" href="/tech/tools/"><span data-lang-content="zh">返回 AI 提效</span><span data-lang-content="en">Back to AI Productivity</span></a>
+  </div>
+</div>
+</div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By Simon</div><div class="framework-info"><span data-i18n="footer.framework">框架</span><span>&nbsp;</span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span data-i18n="footer.theme">主题</span><span>&nbsp;</span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div><div class="footer_custom_text"><span data-lang-content="zh">把复杂技术讲清楚，也把它做成可验证的系统。</span><span data-lang-content="en">Explain complex systems clearly, then make them verifiable.</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><div class="js-pjax"></div><script src="/js/icons.js" defer></script><script src="/js/site.js" defer></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
