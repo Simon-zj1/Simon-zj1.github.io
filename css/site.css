@@ -1620,8 +1620,6 @@ body.post #article-container a {
   scroll-margin-top: 96px;
 }
 
-/* Experience topic cards link to the password-protected sub pages. */
-
 /* After unlocking, the notes area opens on a chapter index. Each chapter is a
    separate view inside the same decrypted payload, so one password covers all
    of them. */
