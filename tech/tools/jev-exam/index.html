@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg">
 <meta property="article:published_time" content="2026-09-22T18:00:00.000Z">
-<meta property="article:modified_time" content="2026-09-23T17:32:49.705Z">
+<meta property="article:modified_time" content="2026-09-23T18:12:51.207Z">
 <meta property="article:author" content="Simon">
 <meta property="article:tag" content="机器人,具身智能,Agent,ROS,论文阅读,知识漫游,AI提效,面经,Robotics,Embodied AI">
 <meta name="twitter:card" content="summary">
@@ -336,14 +336,30 @@
     <p data-lang-content="en">There are two ways to use it. The web app is the full loop: clone the repository, install dependencies, provide two keys (a Jev grading key and a question-generation model), and run it locally. It also runs without any key, degrading to a clearly labelled offline demo mode.</p>
     <p data-lang-content="zh">另一种是 Agent Skill：把仓库克隆到 Codex / Claude Code 的 skills 目录，然后在对话里说「用这份材料考我」。出题由 Agent 完成，校验、判定与报告渲染由命令行完成，不需要服务器和数据库。</p>
     <p data-lang-content="en">The other is an Agent Skill: clone the repository into the skills directory of Codex or Claude Code and ask it to quiz you on a material. The agent writes the questions; verification, grading and report rendering run from the command line, with no server or database.</p>
+    <p data-lang-content="zh">判定能力还做成了命令行与 MCP：<code>npx jev-exam verify / grade / render</code>，或把 MCP server 挂进 Agent（四个工具：校验、出模板、判分、渲染）。这样同一套判定实现既能用在网页里，也能被 Codex、Claude Code、Cursor 直接调用——不用自己拼 shell 命令。</p>
+    <p data-lang-content="en">The same grading capability also ships as a CLI and an MCP server: <code>npx jev-exam verify / grade / render</code>, or register the MCP server so an agent can call four tools (verify, template, grade, render) directly instead of assembling shell commands.</p>
     <div class="prompt-examples">
-      <code data-lang-content="zh">npm install &amp;&amp; npm run dev</code>
-      <code data-lang-content="en">npm install &amp;&amp; npm run dev</code>
-      <code data-lang-content="zh">git clone .../jev-exam.git ~/.agents/skills/jev-exam</code>
-      <code data-lang-content="en">git clone .../jev-exam.git ~/.agents/skills/jev-exam</code>
-      <code data-lang-content="zh">study.ts verify → answer-template → grade --engine auto</code>
-      <code data-lang-content="en">study.ts verify → answer-template → grade --engine auto</code>
+      <code data-lang-content="zh">npx jev-exam verify --material m.md --exam exam.json --strict</code>
+      <code data-lang-content="en">npx jev-exam verify --material m.md --exam exam.json --strict</code>
+      <code data-lang-content="zh">npx jev-exam grade --answers answers.json --engine auto</code>
+      <code data-lang-content="en">npx jev-exam grade --answers answers.json --engine auto</code>
+      <code data-lang-content="zh">claude mcp add jev-exam -- npx -y jev-exam@latest mcp</code>
+      <code data-lang-content="en">claude mcp add jev-exam -- npx -y jev-exam@latest mcp</code>
     </div>
+    <figure class="story-figure">
+      <img src="/img/jev-exam/progressive.jpg" alt="作答页：提交后逐题判定并实时显示每题结果与进度" width="1440" height="1100" loading="lazy" />
+      <figcaption>
+        <span data-lang-content="zh">提交不是一次性等待：判定按题并行发出（限 4 路），每题判完立刻显示结果，顶部同步给出进度与当前均分，全部结束后再收卷。</span>
+        <span data-lang-content="en">Submitting is not one long wait: judgments are issued per question (concurrency capped at four), each result appears as soon as it lands, with progress and a running average on top before the attempt is finalised.</span>
+      </figcaption>
+    </figure>
+    <figure class="story-figure">
+      <img src="/img/jev-exam/dark-dashboard.jpg" alt="深色模式下的仪表盘：额度进度条、学习概况与薄弱点" width="1440" height="1100" loading="lazy" />
+      <figcaption>
+        <span data-lang-content="zh">额度卡直接给进度条与重置倒计时，深色模式由同一套语义色变量翻转，不需要维护两份样式。</span>
+        <span data-lang-content="en">The quota card shows usage bars and the reset countdown; dark mode flips the same semantic colour variables rather than maintaining a second set of styles.</span>
+      </figcaption>
+    </figure>
     <figure class="story-figure">
       <img src="/img/jev-exam/take.jpg" alt="作答页：单选、判断、填空与简答混合试卷" width="1440" height="1260" loading="lazy" />
       <figcaption>
