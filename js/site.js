@@ -237,6 +237,22 @@
     )
   }
 
+  async function decodePayload(plaintext, payload) {
+    const bytes = new Uint8Array(plaintext)
+    if (payload.compression !== 'gzip') {
+      return new TextDecoder().decode(bytes)
+    }
+
+    if (typeof DecompressionStream === 'undefined') {
+      throw new Error('gzip-unsupported')
+    }
+
+    const stream = new Blob([bytes])
+      .stream()
+      .pipeThrough(new DecompressionStream('gzip'))
+    return new Response(stream).text()
+  }
+
   function setupExperienceGate() {
     const gate = document.querySelector('[data-experience-gate]')
     const content = document.querySelector('[data-experience-content]')
@@ -271,8 +287,13 @@
           encrypted
         )
 
-        const decoder = new TextDecoder()
-        content.innerHTML = decoder.decode(plaintext)
+        if (payload.compression === 'gzip' && typeof DecompressionStream === 'undefined') {
+          status.textContent = t('experience.unsupported')
+          status.dataset.state = 'error'
+          return
+        }
+
+        content.innerHTML = await decodePayload(plaintext, payload)
         activateScripts(content)
         gate.hidden = true
         content.hidden = false
