@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg">
 <meta property="article:published_time" content="2026-09-22T18:00:00.000Z">
-<meta property="article:modified_time" content="2026-09-23T18:12:51.207Z">
+<meta property="article:modified_time" content="2026-09-23T18:39:22.908Z">
 <meta property="article:author" content="Simon">
 <meta property="article:tag" content="机器人,具身智能,Agent,ROS,论文阅读,知识漫游,AI提效,面经,Robotics,Embodied AI">
 <meta name="twitter:card" content="summary">
@@ -184,7 +184,11 @@
       <p data-lang-content="en">The goal is narrow: turn your own material into an exam where every point traces back to a specific idea you did or did not express.</p>
     </div>
     <figure class="story-figure">
-      <img src="/img/jev-exam/topics.jpg" alt="上传材料后自动切分知识点，并配置题量与题型配比" width="1440" height="1420" />
+      <picture>
+  <source media="(max-width: 760px)" srcset="/img/jev-exam/topics-m.jpg">
+  <source media="(max-width: 1080px)" srcset="/img/jev-exam/topics-960.jpg">
+  <img src="/img/jev-exam/topics.jpg" alt="上传材料后自动切分知识点，并配置题量与题型配比" width="1440" height="1420" loading="lazy" decoding="async">
+</picture>
       <figcaption>
         <span data-lang-content="zh">上传材料后先切分知识点，由你确认考点与题型配比，再生成试卷。</span>
         <span data-lang-content="en">Material is split into topics first. You confirm the topics and the question mix, then the exam is generated.</span>
@@ -213,7 +217,11 @@
       <article class="editorial-card"><h3 data-lang-content="zh">错题本与薄弱点</h3><h3 data-lang-content="en">Mistake log and weak spots</h3><p data-lang-content="zh">自动收集错题，按知识点聚合掌握度，并支持一键重考错题。</p><p data-lang-content="en">Mistakes are collected, mastery is aggregated per topic, and retakes reuse the same questions.</p></article>
     </div>
     <figure class="story-figure">
-      <img src="/img/jev-exam/mistakes.jpg" alt="错题本与知识点掌握度" width="1440" height="904" loading="lazy" />
+      <picture>
+  <source media="(max-width: 760px)" srcset="/img/jev-exam/mistakes-m.jpg">
+  <source media="(max-width: 1080px)" srcset="/img/jev-exam/mistakes-960.jpg">
+  <img src="/img/jev-exam/mistakes.jpg" alt="错题本与知识点掌握度" width="1440" height="904" loading="lazy" decoding="async">
+</picture>
       <figcaption>
         <span data-lang-content="zh">得分低于 60 分的题目进入错题本；重考答对后自动移除，待复核的题目不参与掌握度计算。</span>
         <span data-lang-content="en">Questions scoring below 60 enter the mistake log; retaking correctly removes them, and flagged items never affect mastery.</span>
@@ -241,7 +249,11 @@
       <li data-lang-content="en">A written answer is decomposed into atomic questions: one per rubric point, each carrying its own statement and evidence span. The score is a weighted sum minus explicit penalties for contradicting the material or inventing facts.</li>
     </ul>
     <figure class="story-figure">
-      <img src="/img/jev-exam/rubric.jpg" alt="逐点判定表：得分点、权重、命中概率、判定强度与结果" width="1440" height="1040" loading="lazy" />
+      <picture>
+  <source media="(max-width: 760px)" srcset="/img/jev-exam/rubric-m.jpg">
+  <source media="(max-width: 1080px)" srcset="/img/jev-exam/rubric-960.jpg">
+  <img src="/img/jev-exam/rubric.jpg" alt="逐点判定表：得分点、权重、命中概率、判定强度与结果" width="1440" height="1040" loading="lazy" decoding="async">
+</picture>
       <figcaption>
         <span data-lang-content="zh">结果页把「为什么是这个分」摊开：每个得分点的命中概率、判定强度与是否命中；本题因为一个关键点判定强度不足，整体被标记为待复核，并给出分数区间。</span>
         <span data-lang-content="en">The report shows why the score is what it is: hit probability and judgment strength per point. This question is flagged for review with a score range because one key point was judged too weakly.</span>
@@ -260,14 +272,22 @@
       <article class="editorial-card"><h3 data-lang-content="zh">不确定就标出来</h3><h3 data-lang-content="en">Uncertainty is surfaced</h3><p data-lang-content="zh">判定强度不足的得分点会让整题变成「待复核」，给出分数区间，并且不计入知识点掌握度。</p><p data-lang-content="en">A weakly judged key point turns the question into "needs review" with a score range, excluded from mastery tracking.</p></article>
     </div>
     <figure class="story-figure">
-      <img src="/img/jev-exam/source-hover.jpg" alt="结果页：出处定位到第 N 句，悬停显示原文，材料原文与模型补充分别标注" width="1440" height="1000" loading="lazy" />
+      <picture>
+  <source media="(max-width: 760px)" srcset="/img/jev-exam/source-hover-m.jpg">
+  <source media="(max-width: 1080px)" srcset="/img/jev-exam/source-hover-960.jpg">
+  <img src="/img/jev-exam/source-hover.jpg" alt="结果页：出处定位到第 N 句，悬停显示原文，材料原文与模型补充分别标注" width="1440" height="1000" loading="lazy" decoding="async">
+</picture>
       <figcaption>
         <span data-lang-content="zh">出处可以定位到「第 2 句 / 共 14 句」，悬停或键盘聚焦直接看到原文；参考答案标「模型补充」，出处标「材料原文」。</span>
         <span data-lang-content="en">Sources resolve to "unit 2 of 14" with the original text on hover or keyboard focus; answers are tagged model-added and sources tagged material.</span>
       </figcaption>
     </figure>
     <figure class="story-figure">
-      <img src="/img/jev-exam/coverage.jpg" alt="覆盖率面板：材料要点覆盖情况与未覆盖的具体句子" width="1440" height="900" loading="lazy" />
+      <picture>
+  <source media="(max-width: 760px)" srcset="/img/jev-exam/coverage-m.jpg">
+  <source media="(max-width: 1080px)" srcset="/img/jev-exam/coverage-960.jpg">
+  <img src="/img/jev-exam/coverage.jpg" alt="覆盖率面板：材料要点覆盖情况与未覆盖的具体句子" width="1440" height="900" loading="lazy" decoding="async">
+</picture>
       <figcaption>
         <span data-lang-content="zh">覆盖率面板同时给出「溯源契约是否通过」和「哪些句子没被出题」。这张截图里覆盖 11/14，未覆盖的三句被直接列出来。</span>
         <span data-lang-content="en">The coverage panel reports both the provenance contract and which sentences no question covered — here 11/14, with the three missing sentences named.</span>
@@ -291,7 +311,11 @@
       <li data-lang-content="en">Cost and access stay bounded. Daily quotas apply, BYOK calls bypass platform quota, and because Jev charges for input only, one question per rubric point is affordable.</li>
     </ul>
     <figure class="story-figure">
-      <img src="/img/jev-exam/result.jpg" alt="判定报告：总分、待复核数量、客观题正确数与逐题对照" width="1440" height="1560" loading="lazy" />
+      <picture>
+  <source media="(max-width: 760px)" srcset="/img/jev-exam/result-m.jpg">
+  <source media="(max-width: 1080px)" srcset="/img/jev-exam/result-960.jpg">
+  <img src="/img/jev-exam/result.jpg" alt="判定报告：总分、待复核数量、客观题正确数与逐题对照" width="1440" height="1560" loading="lazy" decoding="async">
+</picture>
       <figcaption>
         <span data-lang-content="zh">判定报告给出总分、待复核数量、客观题正确数，下面逐题对照作答与参考答案，并附材料原文溯源。</span>
         <span data-lang-content="en">The report summarises score, review items and objective accuracy, then compares each answer with the reference and links back to the source span.</span>
@@ -347,21 +371,33 @@
       <code data-lang-content="en">claude mcp add jev-exam -- npx -y jev-exam@latest mcp</code>
     </div>
     <figure class="story-figure">
-      <img src="/img/jev-exam/progressive.jpg" alt="作答页：提交后逐题判定并实时显示每题结果与进度" width="1440" height="1100" loading="lazy" />
+      <picture>
+  <source media="(max-width: 760px)" srcset="/img/jev-exam/progressive-m.jpg">
+  <source media="(max-width: 1080px)" srcset="/img/jev-exam/progressive-960.jpg">
+  <img src="/img/jev-exam/progressive.jpg" alt="作答页：提交后逐题判定并实时显示每题结果与进度" width="1440" height="1100" loading="lazy" decoding="async">
+</picture>
       <figcaption>
         <span data-lang-content="zh">提交不是一次性等待：判定按题并行发出（限 4 路），每题判完立刻显示结果，顶部同步给出进度与当前均分，全部结束后再收卷。</span>
         <span data-lang-content="en">Submitting is not one long wait: judgments are issued per question (concurrency capped at four), each result appears as soon as it lands, with progress and a running average on top before the attempt is finalised.</span>
       </figcaption>
     </figure>
     <figure class="story-figure">
-      <img src="/img/jev-exam/dark-dashboard.jpg" alt="深色模式下的仪表盘：额度进度条、学习概况与薄弱点" width="1440" height="1100" loading="lazy" />
+      <picture>
+  <source media="(max-width: 760px)" srcset="/img/jev-exam/dark-dashboard-m.jpg">
+  <source media="(max-width: 1080px)" srcset="/img/jev-exam/dark-dashboard-960.jpg">
+  <img src="/img/jev-exam/dark-dashboard.jpg" alt="深色模式下的仪表盘：额度进度条、学习概况与薄弱点" width="1440" height="1100" loading="lazy" decoding="async">
+</picture>
       <figcaption>
         <span data-lang-content="zh">额度卡直接给进度条与重置倒计时，深色模式由同一套语义色变量翻转，不需要维护两份样式。</span>
         <span data-lang-content="en">The quota card shows usage bars and the reset countdown; dark mode flips the same semantic colour variables rather than maintaining a second set of styles.</span>
       </figcaption>
     </figure>
     <figure class="story-figure">
-      <img src="/img/jev-exam/take.jpg" alt="作答页：单选、判断、填空与简答混合试卷" width="1440" height="1260" loading="lazy" />
+      <picture>
+  <source media="(max-width: 760px)" srcset="/img/jev-exam/take-m.jpg">
+  <source media="(max-width: 1080px)" srcset="/img/jev-exam/take-960.jpg">
+  <img src="/img/jev-exam/take.jpg" alt="作答页：单选、判断、填空与简答混合试卷" width="1440" height="1260" loading="lazy" decoding="async">
+</picture>
       <figcaption>
         <span data-lang-content="zh">作答过程自动保存草稿，交卷后逐题判定；题目顺序与题型配比在生成前由你决定。</span>
         <span data-lang-content="en">Drafts save automatically and grading runs per question on submit. Question order and mix are chosen before generation.</span>

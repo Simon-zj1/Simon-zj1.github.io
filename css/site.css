@@ -1885,6 +1885,67 @@ body.post #post-info .post-meta time {
   background: var(--site-surface);
 }
 
+/* 点击放大：内容截图在手机上会很小，点开进全屏 */
+.story-cover img.zoomable,
+.story-figure img.zoomable,
+.editorial-page img.zoomable {
+  cursor: zoom-in;
+}
+
+.image-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(12, 12, 14, 0.92);
+  opacity: 0;
+  transition: opacity 0.18s ease;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+.image-lightbox.is-open {
+  opacity: 1;
+}
+
+.image-lightbox img {
+  width: min(1600px, 94vw);
+  max-width: none;
+  height: auto;
+  border-radius: 10px;
+  background: #fff;
+  cursor: zoom-out;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+
+.image-lightbox__hint {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* 手机上：图片按约 2 屏宽展示，左右滚动即可看清细节 */
+@media (max-width: 760px) {
+  .image-lightbox {
+    align-items: flex-start;
+    padding: 12px 10px 52px;
+  }
+
+  .image-lightbox img {
+    width: 190vw;
+  }
+}
+
 .story-cover img {
   aspect-ratio: 16 / 9;
   object-fit: cover;

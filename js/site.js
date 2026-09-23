@@ -381,6 +381,67 @@
     })
   }
 
+  // 内容截图点击放大：桌面截图在手机上直接看会太小，点一下进全屏并可滚动/双指缩放
+  function setupLightbox() {
+    const container = document.querySelector('#content-inner') || document.body
+    let overlay = null
+
+    function close() {
+      if (!overlay) return
+      const target = overlay
+      overlay = null
+      target.classList.remove('is-open')
+      document.documentElement.style.removeProperty('overflow')
+      window.setTimeout(() => target.remove(), 180)
+    }
+
+    function open(img) {
+      overlay = document.createElement('div')
+      overlay.className = 'image-lightbox'
+      overlay.setAttribute('role', 'dialog')
+      overlay.setAttribute('aria-label', '放大查看图片')
+
+      const picture = document.createElement('img')
+      picture.src = img.currentSrc || img.src
+      picture.alt = img.alt || ''
+
+      const hint = document.createElement('span')
+      hint.className = 'image-lightbox__hint'
+      hint.textContent = '双指缩放 · 点击空白或按 Esc 关闭'
+
+      overlay.append(picture, hint)
+      overlay.addEventListener('click', close)
+      document.body.appendChild(overlay)
+      requestAnimationFrame(() => overlay.classList.add('is-open'))
+      document.documentElement.style.overflow = 'hidden'
+    }
+
+    function bindOne(img) {
+      if (img.dataset.zoomBound === '1' || img.dataset.zoomCandidate === '1') return
+      img.dataset.zoomCandidate = '1'
+      const activate = () => {
+        // 头像、图标这类小图不参与放大
+        if (!img.naturalWidth || img.naturalWidth < 420) return
+        img.dataset.zoomBound = '1'
+        img.classList.add('zoomable')
+        img.addEventListener('click', () => open(img))
+      }
+      if (img.complete) activate()
+      else img.addEventListener('load', activate, { once: true })
+    }
+
+    function bindAll() {
+      container.querySelectorAll('img').forEach(bindOne)
+    }
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') close()
+    })
+
+    bindAll()
+    window.addEventListener('load', bindAll)
+  }
+
   function boot() {
     setupFavicon()
     setupThemeSync()
@@ -388,6 +449,7 @@
     setupReveal()
     setupFilters()
     setupExperienceGate()
+    setupLightbox()
     setupOfflineCache()
     renderIcons()
   }
