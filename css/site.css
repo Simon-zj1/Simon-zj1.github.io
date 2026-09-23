@@ -1936,6 +1936,26 @@ body.post #post-info .post-meta time {
 
 /* 手机上：图片按约 2 屏宽展示，左右滚动即可看清细节 */
 @media (max-width: 760px) {
+  /* 手机上展示的是裁剪版，给一个明确的「可放大」提示 */
+  .story-figure picture {
+    position: relative;
+    display: block;
+  }
+
+  .story-figure picture::after {
+    content: "⤢ 点击放大";
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: rgba(15, 15, 18, 0.6);
+    color: #fff;
+    font-size: 11px;
+    line-height: 1.6;
+    pointer-events: none;
+  }
+
   .image-lightbox {
     align-items: flex-start;
     padding: 12px 10px 52px;

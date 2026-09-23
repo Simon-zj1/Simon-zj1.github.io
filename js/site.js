@@ -402,7 +402,8 @@
       overlay.setAttribute('aria-label', '放大查看图片')
 
       const picture = document.createElement('img')
-      picture.src = img.currentSrc || img.src
+      // 放大时优先用原始桌面大图（<img> 的 src 属性），而不是手机上用的裁剪版
+      picture.src = img.dataset.zoomSrc || img.currentSrc || img.src
       picture.alt = img.alt || ''
 
       const hint = document.createElement('span')
@@ -423,6 +424,7 @@
         // 头像、图标这类小图不参与放大
         if (!img.naturalWidth || img.naturalWidth < 420) return
         img.dataset.zoomBound = '1'
+        img.dataset.zoomSrc = img.getAttribute('src') || img.currentSrc || img.src
         img.classList.add('zoomable')
         img.addEventListener('click', () => open(img))
       }
