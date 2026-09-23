@@ -1946,7 +1946,7 @@ body.post #post-info .post-meta time {
     content: "⤢ 点击放大";
     position: absolute;
     right: 10px;
-    bottom: 10px;
+    top: 10px;
     padding: 3px 10px;
     border-radius: 999px;
     background: rgba(15, 15, 18, 0.6);
