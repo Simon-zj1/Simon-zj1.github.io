@@ -171,6 +171,24 @@
     items.forEach((item) => observer.observe(item))
   }
 
+  function setupBriefingCarousel() {
+    document.querySelectorAll('[data-briefing-carousel]').forEach((carousel) => {
+      const track = carousel.querySelector('[data-briefing-track]')
+      const previous = carousel.querySelector('[data-briefing-prev]')
+      const next = carousel.querySelector('[data-briefing-next]')
+      if (!track || !previous || !next) return
+
+      const move = (direction) => {
+        const card = track.querySelector('.briefing-card')
+        const distance = card ? card.getBoundingClientRect().width + 14 : 320
+        track.scrollBy({ left: direction * distance, behavior: 'smooth' })
+      }
+
+      previous.addEventListener('click', () => move(-1))
+      next.addEventListener('click', () => move(1))
+    })
+  }
+
   function setupFilters() {
     document.querySelectorAll('[data-filter-group]').forEach((group) => {
       const buttons = Array.from(group.querySelectorAll('[data-filter]'))
@@ -451,6 +469,7 @@
     setupThemeSync()
     setupLanguageSwitch()
     setupReveal()
+    setupBriefingCarousel()
     setupFilters()
     setupExperienceGate()
     setupLightbox()

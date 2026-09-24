@@ -6,7 +6,7 @@
   <link href="https://www.simon-zj.top/atom.xml" rel="self"/>
   
   <link href="https://www.simon-zj.top/"/>
-  <updated>2026-09-20T17:17:58.593Z</updated>
+  <updated>2026-09-20T17:17:58.592Z</updated>
   <id>https://www.simon-zj.top/</id>
   
   <author>
@@ -15,23 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>TacGNN 论文精读：只有触觉，机器人如何完成手内操作？</title>
-    <link href="https://www.simon-zj.top/posts/%E2%80%981%E2%80%99"/>
-    <id>https://www.simon-zj.top/posts/%E2%80%981%E2%80%99</id>
-    <published>2025-05-16T16:00:00.000Z</published>
-    <updated>2026-09-20T17:17:58.593Z</updated>
-    
-    <content type="html"><![CDATA[<figure class="story-cover story-cover--paper">  <img src="/img/PaperRead/TacGNN.png" alt="TacGNN paper overview" />  <figcaption>    <span data-lang-content="zh">没有视觉时，机器人只能依靠接触序列理解物体状态并调整动作。</span>    <span data-lang-content="en">Without vision, a robot must infer object state and adapt its actions from contact alone.</span>  </figcaption></figure><div data-lang-content="zh"><h2 id="问题：视觉被拿掉之后，操作还剩下什么？"><a href="#问题：视觉被拿掉之后，操作还剩下什么？" class="headerlink" title="问题：视觉被拿掉之后，操作还剩下什么？"></a>问题：视觉被拿掉之后，操作还剩下什么？</h2><p>手内操作要求机器人持续改变物体在手中的姿态。视觉方案通常依赖相机和遮挡较少的场景，但在拥挤、遮挡或接触密集的环境里，视觉信息会迅速变得不可靠。</p><p>TacGNN 关注的核心问题是：如果只保留触觉反馈，机器人能否仍然学习到有效的操作策略，并把局部接触信息组织成对整体状态的理解？</p></div><div data-lang-content="en"><h2 id="The-problem-what-remains-when-vision-is-removed"><a href="#The-problem-what-remains-when-vision-is-removed" class="headerlink" title="The problem: what remains when vision is removed?"></a>The problem: what remains when vision is removed?</h2><p>In-hand manipulation requires a robot to continuously change an object’s pose within its hand. Vision-based systems usually depend on cameras and relatively clear sight lines. In cluttered, occluded or contact-rich settings, that information becomes unreliable.</p><p>TacGNN focuses on a harder question: can tactile feedback alone support useful manipulation policies, and can local contact signals be organised into a representation of the whole object?</p></div><div data-lang-content="zh"><h2 id="方法：把接触关系组织成层级图"><a href="#方法：把接触关系组织成层级图" class="headerlink" title="方法：把接触关系组织成层级图"></a>方法：把接触关系组织成层级图</h2><p>这项工作的关键不是“把触觉塞进一个更大的网络”，而是选择一种适合接触数据的结构。连续时刻的触觉读数首先形成局部节点，节点之间再通过空间和时间关系建立连接，最终得到可以传递、聚合和更新的层级图表示。</p><p>这种方法的价值在于同时保留两类信息：</p><ul><li><strong>局部细节</strong>：某个接触点何时出现、压力如何变化。</li><li><strong>全局关系</strong>：不同接触点如何共同解释物体的运动状态。</li></ul><p>动作策略因此不必只依赖最近一帧，而可以从一段接触历史中推断下一步。</p></div><div data-lang-content="en"><h2 id="Method-turning-contact-into-a-hierarchy-of-graphs"><a href="#Method-turning-contact-into-a-hierarchy-of-graphs" class="headerlink" title="Method: turning contact into a hierarchy of graphs"></a>Method: turning contact into a hierarchy of graphs</h2><p>The important idea is not simply adding a larger network. It is choosing a structure that matches contact data. Tactile readings across time become local nodes, then spatial and temporal relations connect those nodes into a hierarchical graph that can pass, aggregate and update information.</p><p>This preserves two levels at once:</p><ul><li><strong>Local detail</strong>: when a contact appears and how pressure changes.</li><li><strong>Global relation</strong>: how multiple contacts together explain the object’s motion.</li></ul><p>The policy can therefore reason over a short history of contact instead of relying on a single latest frame.</p></div><div data-lang-content="zh"><h2 id="读这篇论文时，我会重点检查什么？"><a href="#读这篇论文时，我会重点检查什么？" class="headerlink" title="读这篇论文时，我会重点检查什么？"></a>读这篇论文时，我会重点检查什么？</h2><ol><li><strong>触觉输入是否真的足够</strong>：论文是否说明了传感器布局、采样频率和缺失数据处理方式。</li><li><strong>图结构是否有必要</strong>：简单的时序模型或 MLP 基线能否达到接近效果，层级关系带来了什么增益。</li><li><strong>真机证据是否充分</strong>：是否包含不同物体、初始姿态和接触条件下的重复实验，而不只是顺畅演示。</li><li><strong>失败边界是否清楚</strong>：哪些物体最容易掉落，策略在接触噪声、滑移或传感器故障下表现如何。</li></ol></div><div data-lang-content="en"><h2 id="What-I-check-when-reading-the-paper"><a href="#What-I-check-when-reading-the-paper" class="headerlink" title="What I check when reading the paper"></a>What I check when reading the paper</h2><ol><li><strong>Is tactile input sufficient</strong>: sensor layout, sampling rate and missing-data handling should be explicit.</li><li><strong>Is the graph necessary</strong>: can a simpler temporal model or MLP baseline get close, and what does the hierarchy add?</li><li><strong>Is the real-robot evidence strong</strong>: repeated trials across objects, initial poses and contact conditions matter more than a smooth demonstration.</li><li><strong>Are failure boundaries clear</strong>: which objects fall most often, and how does the policy behave under contact noise, slip or sensor failure?</li></ol></div><div class="story-ending">  <p data-lang-content="zh">TacGNN 最值得带走的地方，不是某一次操作成功率，而是它把“接触”重新组织成了一种可以推理的结构。</p>  <p data-lang-content="en">The most transferable idea in TacGNN is not a single success rate. It is the decision to organise contact into a structure that can be reasoned about.</p></div>]]></content>
-    
-    
-    <summary type="html">从触觉表示、层级图结构和真机证据三个角度理解 TacGNN。</summary>
-    
-    
-    
-    
-  </entry>
   
   <entry>
     <title>追鸟：一场跨越千年的迁徙发现</title>
