@@ -4,7 +4,7 @@
   <url>
     <loc>https://www.simon-zj.top/tech/tools/jev-exam/</loc>
     
-    <lastmod>2026-09-23</lastmod>
+    <lastmod>2026-09-24</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -130,7 +130,7 @@
 
   <url>
     <loc>https://www.simon-zj.top/</loc>
-    <lastmod>2026-09-23</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -144,6 +144,13 @@
     <lastmod>2026-09-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.simon-zj.top/trends/2026-09-24/</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
   </url>
 
   <url>

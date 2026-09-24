@@ -7,6 +7,7 @@
     zh: {
       'nav.home': '首页',
       'nav.tech': '技术',
+      'nav.news': 'AI资讯速递',
       'nav.knowledge': '知识漫游',
       'nav.experience': '面经',
       'nav.about': '关于',
@@ -35,6 +36,7 @@
     en: {
       'nav.home': 'Home',
       'nav.tech': 'Technology',
+      'nav.news': 'AI News Digest',
       'nav.knowledge': 'Knowledge Roaming',
       'nav.experience': 'Career Notes',
       'nav.about': 'About',

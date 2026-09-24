@@ -2689,3 +2689,61 @@ body.module-agent #article-container strong {
     width: 38%;
   }
 }
+
+/* 应用入口卡片（技术 → AI 提效 → Jev 备考）：把 Web 应用放在最显眼的位置 */
+.app-entry {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  margin: 26px 0 30px;
+  padding: 22px;
+  border: 1px solid var(--site-line);
+  border-radius: var(--site-radius);
+  background: var(--site-surface);
+  box-shadow: var(--site-shadow);
+}
+
+.app-entry img {
+  flex: 0 0 auto;
+  width: 76px;
+  height: 76px;
+  border-radius: 18px;
+  box-shadow: 0 8px 22px rgba(23, 60, 120, 0.18);
+}
+
+.app-entry h2 {
+  margin: 0 0 6px;
+  font-size: 1.16rem;
+}
+
+.app-entry p {
+  margin: 0 0 10px;
+  color: var(--site-muted);
+  font-size: 0.94rem;
+}
+
+.app-entry__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.app-entry__note {
+  color: var(--site-muted);
+  font-size: 0.78rem;
+}
+
+@media (max-width: 760px) {
+  .app-entry {
+    flex-direction: column;
+    gap: 14px;
+    padding: 18px;
+  }
+
+  .app-entry img {
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+  }
+}
