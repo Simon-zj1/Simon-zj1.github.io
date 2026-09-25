@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg">
 <meta property="article:published_time" content="2026-09-22T18:00:00.000Z">
-<meta property="article:modified_time" content="2026-09-25T18:18:34.139Z">
+<meta property="article:modified_time" content="2026-09-25T18:28:05.074Z">
 <meta property="article:author" content="Simon">
 <meta property="article:tag" content="机器人,具身智能,Agent,ROS,论文阅读,知识漫游,AI提效,面经,Robotics,Embodied AI">
 <meta name="twitter:card" content="summary">
@@ -380,8 +380,8 @@
     <h2 data-lang-content="en">Evidence and limits</h2>
     <p data-lang-content="zh">项目自带一个判定评测脚本和一份小规模金标准集（12 道主观题、42 个得分点，逐点人工标注）。它输出逐点准确率、Brier 分数、校准分桶与自一致性，并设了门槛：逐点准确率不低于 90%，且校准分桶单调。</p>
     <p data-lang-content="en">The project ships an evaluation harness with a small golden set (12 written questions, 42 labelled rubric points). It reports per-point accuracy, Brier score, calibration buckets and self-consistency, with a gate of at least 90% accuracy and monotonic calibration.</p>
-    <p data-lang-content="zh">有意思的是，把「离线演示引擎」放进去跑，它只有 42.9% 的逐点准确率、Brier 0.56，而且置信度全部挤在 0.99 那一档。这正是要接入 Jev 的理由：词面重合不能替代校准过的判定模型，而这件事必须有数字，不能靠感觉。</p>
-    <p data-lang-content="en">Run the offline demo engine through it and it scores 42.9% per-point accuracy with a Brier score of 0.56, with all confidence crammed into one bucket. That number is the argument for using a calibrated decision model instead of word overlap, and it is why the gate is a number rather than an opinion.</p>
+    <p data-lang-content="zh">有意思的是，把「离线演示引擎」放进去跑：逐点准确率 71.4%、Brier 0.216，校准分桶单调（0.6–0.8 档 60%、0.8–1.0 档 80%），但 12 道题里有 9 道因为判定强度不足被标成「待复核」。这正是要接入 Jev 的理由：词面重合能蒙对一些点，却给不出可用的判定强度，而这件事必须有数字，不能靠感觉。</p>
+    <p data-lang-content="en">Run the offline demo engine through it and you get 71.4% per-point accuracy with a Brier score of 0.216 and monotonic calibration — but 9 of the 12 questions are flagged for review because their judgment strength is too low. Word overlap can guess some points right while being unable to say how sure it is, and that is why the gate is a number rather than an opinion.</p>
     <div class="troubleshooting-table">
       <table>
         <thead>
