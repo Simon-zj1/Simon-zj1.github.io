@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 680" width="1240" height="680" role="img">
+<rect x="0" y="0" width="1240" height="680" rx="0" fill="#eeeee8"/>
+<text x="60" y="66" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="27" font-weight="650" fill="#151515" text-anchor="start" opacity="1">RRSI regularises the search, not the edit space</text>
+<text x="60" y="96" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="400" fill="#666862" text-anchor="start" opacity="1">The proposal side controls how search capacity is spent; the selection side controls which gains become permanent.</text>
+<rect x="60" y="130" width="500" height="470" rx="10" fill="#f7f6f1" stroke="rgba(21,21,21,0.24)" stroke-width="1"/>
+<text x="88" y="168" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="19" font-weight="650" fill="#1f6f68" text-anchor="start" opacity="1">Proposal side</text>
+<text x="88" y="190" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">How search capacity is used</text>
+<rect x="88" y="210" width="444" height="110" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<rect x="88" y="210" width="5" height="110" rx="2.5" fill="#1f6f68" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<rect x="112" y="228" width="26" height="26" rx="6" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="125" y="246" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1">A</text>
+<text x="152" y="247" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="620" fill="#151515" text-anchor="start" opacity="1">Annealed edit budget</text>
+<text x="112" y="276" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#666862" text-anchor="start" opacity="1">Cosine schedule from b_max down to 1</text>
+<text x="112" y="297" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#666862" text-anchor="start" opacity="1">Later rounds allow a single attributable edit</text>
+<rect x="88" y="336" width="444" height="110" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<rect x="88" y="336" width="5" height="110" rx="2.5" fill="#1f6f68" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<rect x="112" y="354" width="26" height="26" rx="6" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="125" y="372" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1">B</text>
+<text x="152" y="373" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="620" fill="#151515" text-anchor="start" opacity="1">Evidence-aware credit assignment</text>
+<text x="112" y="402" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#666862" text-anchor="start" opacity="1">Every edit carries component, hypothesis, outcome</text>
+<text x="112" y="423" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#666862" text-anchor="start" opacity="1">Rejected mechanisms stay as negative evidence</text>
+<rect x="88" y="462" width="444" height="110" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<rect x="88" y="462" width="5" height="110" rx="2.5" fill="#1f6f68" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<rect x="112" y="480" width="26" height="26" rx="6" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="125" y="498" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1">C</text>
+<text x="152" y="499" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="620" fill="#151515" text-anchor="start" opacity="1">Structured exploration</text>
+<text x="112" y="528" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#666862" text-anchor="start" opacity="1">When stalled, spend slots on untried components</text>
+<text x="112" y="549" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#666862" text-anchor="start" opacity="1">Redirects the search without shrinking the space</text>
+<rect x="584" y="288" width="76" height="76" rx="38" fill="#ffffff" stroke="rgba(21,21,21,0.24)" stroke-width="1"/>
+<text x="622" y="322" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="20" font-weight="700" fill="#e05a36" text-anchor="middle" opacity="1">RS</text>
+<text x="622" y="344" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="middle" opacity="1">Regularised transition</text>
+<text x="622" y="404" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="middle" opacity="1">H′ ~ P_reg(· | H_t)</text>
+<rect x="680" y="130" width="500" height="470" rx="10" fill="#f7f6f1" stroke="rgba(21,21,21,0.24)" stroke-width="1"/>
+<text x="708" y="168" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="19" font-weight="650" fill="#315f86" text-anchor="start" opacity="1">Selection side</text>
+<text x="708" y="190" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">Which gains may become permanent</text>
+<rect x="708" y="210" width="444" height="80" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<rect x="708" y="210" width="5" height="80" rx="2.5" fill="#315f86" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<rect x="732" y="224" width="24" height="24" rx="6" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="744" y="241" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1">D</text>
+<text x="768" y="242" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="620" fill="#151515" text-anchor="start" opacity="1">Leakage screening</text>
+<text x="732" y="268" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">Blocks benchmark-specific logic before scoring</text>
+<text x="732" y="286" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">Keeps dirty candidates out of later rounds</text>
+<rect x="708" y="304" width="444" height="80" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<rect x="708" y="304" width="5" height="80" rx="2.5" fill="#315f86" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<rect x="732" y="318" width="24" height="24" rx="6" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="744" y="335" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1">E</text>
+<text x="768" y="336" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="620" fill="#151515" text-anchor="start" opacity="1">Noise-adjusted floor</text>
+<text x="732" y="362" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">Score must stay above best-so-far minus δ</text>
+<text x="732" y="380" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">δ comes from repeated runs of the unchanged harness</text>
+<rect x="708" y="398" width="444" height="80" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<rect x="708" y="398" width="5" height="80" rx="2.5" fill="#315f86" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<rect x="732" y="412" width="24" height="24" rx="6" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="744" y="429" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1">F</text>
+<text x="768" y="430" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="620" fill="#151515" text-anchor="start" opacity="1">Complexity-aware acceptance</text>
+<text x="732" y="456" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">Extra tokens must buy measurable gain</text>
+<text x="732" y="474" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">ΔC ≤ β0 + β1 · ΔS</text>
+<rect x="708" y="492" width="444" height="80" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<rect x="708" y="492" width="5" height="80" rx="2.5" fill="#315f86" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<rect x="732" y="506" width="24" height="24" rx="6" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="744" y="523" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="1">G</text>
+<text x="768" y="524" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="620" fill="#151515" text-anchor="start" opacity="1">Structural pruning</text>
+<text x="732" y="550" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">Components with no recent gain are pruned</text>
+<text x="732" y="568" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">A mechanism must keep earning its place</text>
+<text x="60" y="640" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#666862" text-anchor="start" opacity="1">None of the seven constraints limits what a harness may look like; they only change how the search moves.</text>
+</svg>

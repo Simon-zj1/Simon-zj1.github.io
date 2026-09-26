@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 540" width="1240" height="540" role="img">
+<rect x="0" y="0" width="1240" height="540" rx="0" fill="#eeeee8"/>
+<text x="60" y="66" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="27" font-weight="650" fill="#151515" text-anchor="start" opacity="1">An agent = a frozen policy wrapped in an editable harness</text>
+<text x="60" y="96" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="400" fill="#666862" text-anchor="start" opacity="1">The paper optimises the outer layer: prompts, control flow, tooling, memory and context handling.</text>
+<rect x="60" y="140" width="700" height="300" rx="10" fill="#f7f6f1" stroke="rgba(21,21,21,0.24)" stroke-width="1"/>
+<text x="88" y="176" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="620" fill="#151515" text-anchor="start" opacity="1">Agent system</text>
+<rect x="88" y="198" width="644" height="74" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<rect x="88" y="198" width="6" height="74" rx="3" fill="#666862" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="114" y="232" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="18" font-weight="600" fill="#151515" text-anchor="start" opacity="1">Backbone policy π (frozen)</text>
+<text x="114" y="256" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">Weights never updated</text>
+<rect x="88" y="288" width="644" height="120" rx="10" fill="#ffffff" stroke="#e05a36" stroke-width="1.5"/>
+<rect x="88" y="288" width="6" height="120" rx="3" fill="#e05a36" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="114" y="322" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="18" font-weight="600" fill="#151515" text-anchor="start" opacity="1">Harness H (evolved)</text>
+<text x="114" y="346" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">The only optimised part</text>
+<text x="114" y="380" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#666862" text-anchor="start" opacity="1">Prompts · control flow · tooling · memory · context</text>
+<line x1="800" y1="348" x2="848" y2="348" stroke="#e05a36" stroke-width="2"/>
+<path d="M 848 341 L 862 348 L 848 355 z" fill="#e05a36"/>
+<text x="880" y="176" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="620" fill="#151515" text-anchor="start" opacity="1">What H contains</text>
+<rect x="880" y="198" width="300" height="40" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="900" y="224" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#151515" text-anchor="start" opacity="1">System and task prompts</text>
+<rect x="880" y="246" width="300" height="40" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="900" y="272" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#151515" text-anchor="start" opacity="1">Control flow: plan, reflect, stop</text>
+<rect x="880" y="294" width="300" height="40" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="900" y="320" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#151515" text-anchor="start" opacity="1">Tool interfaces and descriptions</text>
+<rect x="880" y="342" width="300" height="40" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="900" y="368" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#151515" text-anchor="start" opacity="1">Memory and skill files</text>
+<rect x="880" y="390" width="300" height="40" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="900" y="416" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#151515" text-anchor="start" opacity="1">Context management</text>
+<text x="60" y="490" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#666862" text-anchor="start" opacity="1">All nine component types can be added, changed or removed — RRSI never restricts what may change.</text>
+</svg>

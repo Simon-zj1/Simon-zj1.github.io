@@ -1,0 +1,792 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><script>(() => {
+  try {
+    const requestedLanguage = new URLSearchParams(window.location.search).get('lang')
+    const storedLanguage = localStorage.getItem('simon-language')
+    const language = requestedLanguage === 'en' || requestedLanguage === 'zh'
+      ? requestedLanguage
+      : storedLanguage === 'en' ? 'en' : 'zh'
+    document.documentElement.lang = language === 'en' ? 'en' : 'zh-CN'
+    document.documentElement.dataset.language = language
+  } catch (error) {
+    document.documentElement.lang = 'zh-CN'
+    document.documentElement.dataset.language = 'zh'
+  }
+})()</script><title>RRSI：让 Agent Harness 的自我演化真正可迁移 | Simon</title><meta name="author" content="Simon"><meta name="copyright" content="Simon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="RRSI 论文精读：harness 演化的自适应过拟合、七条正则约束、可核验的主结果与适用边界。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="RRSI：让 Agent Harness 的自我演化真正可迁移">
+<meta property="og:url" content="https://www.simon-zj.top/tech/papers/rrsi-harness-rsi/">
+<meta property="og:site_name" content="Simon">
+<meta property="og:description" content="RRSI 论文精读：harness 演化的自适应过拟合、七条正则约束、可核验的主结果与适用边界。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg">
+<meta property="article:published_time" content="2026-09-26T02:30:00.000Z">
+<meta property="article:modified_time" content="2026-09-26T04:03:35.838Z">
+<meta property="article:author" content="Simon">
+<meta property="article:tag" content="机器人,具身智能,Agent,ROS,论文阅读,知识漫游,AI提效,面经,Robotics,Embodied AI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg"><link rel="shortcut icon" href="/img/favicon-robot-v3.ico?v=3"><link rel="canonical" href="https://www.simon-zj.top/tech/papers/rrsi-harness-rsi/"><meta name="google-site-verification" content="v8upAgqbj73wNa2JwNefCRjNHGTmyXKN1v9xIx-xsTY"/><meta name="msvalidate.01" content="998791418970E8CF5EBDB5F160F2BD89"/><meta name="baidu-site-verification" content="codeva-ePm0SowACw"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: '/pluginsSrc/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'RRSI：让 Agent Harness 的自我演化真正可迁移',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><script type="speculationrules">{"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"a[target='_blank'],a[href^='#'],a[href^='mailto:'],a[download]"}}]},"eagerness":"moderate"}]}</script><link rel="stylesheet" href="/css/site.css"><link rel="manifest" href="/site.webmanifest"><link rel="icon" type="image/svg+xml" href="/img/favicon-robot-v3.svg?v=3"><link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-robot-v3-32.png?v=3"><link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-robot-v3-16.png?v=3"><link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon-robot-v3.png?v=3"><link rel="mask-icon" href="/img/favicon-robot-v3.svg?v=3" color="#151515"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Simon" type="application/atom+xml">
+</head><body class="page type-tech-papers-rrsi page" data-page-title-zh="RRSI：让 Agent Harness 的自我演化真正可迁移" data-page-title-en="RRSI: Making Agent Harness Self-Improvement Actually Transfer" data-page-description-zh="RRSI 论文精读：harness 演化的自适应过拟合、七条正则约束、可核验的主结果与适用边界。" data-page-description-en="A deep read of RRSI - adaptive overfitting in harness evolution, seven regularising constraints, and the evidence behind them."><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/optimized/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="language-switch language-switch--sidebar" role="group" aria-label="Language"><button class="language-switch__button" type="button" data-language-option="zh" aria-pressed="true">中文</button><button class="language-switch__button" type="button" data-language-option="en" aria-pressed="false">EN</button></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-house"></i><span data-i18n="nav.home"> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tech/"><i class="fa-fw fas fa-lightbulb"></i><span data-i18n="nav.tech"> 技术</span></a></div><div class="menus_item"><a class="site-page" href="/trends/"><i class="fa-fw fas fa-newspaper"></i><span data-i18n="nav.news"> AI资讯速递</span></a></div><div class="menus_item"><a class="site-page" href="/knowledge/"><i class="fa-fw fas fa-compass"></i><span data-i18n="nav.knowledge"> 知识漫游</span></a></div><div class="menus_item"><a class="site-page" href="/experience/"><i class="fa-fw fas fa-lock"></i><span data-i18n="nav.experience"> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span data-i18n="nav.about"> 关于</span></a></div></div></div></div><div class="page type-tech-papers-rrsi" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav id="nav"><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span data-i18n="nav.search"> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-house"></i><span data-i18n="nav.home"> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tech/"><i class="fa-fw fas fa-lightbulb"></i><span data-i18n="nav.tech"> 技术</span></a></div><div class="menus_item"><a class="site-page" href="/trends/"><i class="fa-fw fas fa-newspaper"></i><span data-i18n="nav.news"> AI资讯速递</span></a></div><div class="menus_item"><a class="site-page" href="/knowledge/"><i class="fa-fw fas fa-compass"></i><span data-i18n="nav.knowledge"> 知识漫游</span></a></div><div class="menus_item"><a class="site-page" href="/experience/"><i class="fa-fw fas fa-lock"></i><span data-i18n="nav.experience"> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span data-i18n="nav.about"> 关于</span></a></div></div><div class="language-switch" role="group" aria-label="Language"><button class="language-switch__button" type="button" data-language-option="zh" aria-pressed="true">中文</button><button class="language-switch__button" type="button" data-language-option="en" aria-pressed="false">EN</button></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav></header><main class="layout hide-aside" id="content-inner"><div class="page-masthead"><div class="page-masthead__grid"><div class="page-masthead__meta"><span class="page-masthead__eyebrow">Paper Reading / Agent Harness</span><div class="page-masthead__rule"></div><p data-i18n-zh="RRSI 论文精读：harness 演化的自适应过拟合、七条正则约束、可核验的主结果与适用边界。" data-i18n-en="A deep read of RRSI - adaptive overfitting in harness evolution, seven regularising constraints, and the evidence behind them.">RRSI 论文精读：harness 演化的自适应过拟合、七条正则约束、可核验的主结果与适用边界。</p></div><div class="page-masthead__body"><h1 data-i18n-zh="RRSI：让 Agent Harness 的自我演化真正可迁移" data-i18n-en="RRSI: Making Agent Harness Self-Improvement Actually Transfer">RRSI：让 Agent Harness 的自我演化真正可迁移</h1><p class="page-masthead__caption" data-i18n-zh="当 LLM 反复改写 agent 的 harness，它优化的是能力，还是那份考卷？" data-i18n-en="When an LLM keeps rewriting a harness, is it learning capability - or the exam?">当 LLM 反复改写 agent 的 harness，它优化的是能力，还是那份考卷？</p></div><div class="page-masthead__art" aria-hidden="true"><span class="page-masthead__index">01.3.1</span><div class="page-masthead__marks"><i></i><i></i><i></i></div><span class="page-masthead__note">Regularise the search</span></div></div></div><div id="page"><div class="container" id="article-container"><div class="editorial-page paper-reading-page">
+  <nav class="topic-breadcrumb" aria-label="当前位置">
+    <a href="/tech/"><span data-lang-content="zh">技术笔记</span><span data-lang-content="en">Technology Notes</span></a>
+    <span>/</span>
+    <a href="/tech/papers/"><span data-lang-content="zh">论文阅读</span><span data-lang-content="en">Paper Reading</span></a>
+    <span>/</span>
+    <span><span data-lang-content="zh">RRSI</span><span data-lang-content="en">RRSI</span></span>
+  </nav>
+
+  <div class="editorial-page__lead">
+    <div data-lang-content="zh">
+      <p>这篇论文提出的问题比它的方法更重要：当 LLM 被用来反复优化 agent 系统本身时，<strong>优化循环自己也需要被正则化</strong>。它把「演化集上变好、换一批任务就不行」这个现象拆开、量化，并给出一套约束搜索过程的工程做法。</p>
+    </div>
+    <div data-lang-content="en">
+      <p>The question matters more than the method: once an LLM is used to keep optimising an agent system itself, <strong>the optimisation loop needs regularising too</strong>. The paper picks apart the familiar pattern of gains that vanish on unseen tasks, and turns it into a set of constraints on how the search moves.</p>
+    </div>
+    <div class="page-facts">
+      <span data-lang-content="zh">阅读结论</span>
+      <span data-lang-content="en">Verdict</span>
+      <strong data-lang-content="zh">问题真实 / 方法可借用 / 统计证据偏薄</strong>
+      <strong data-lang-content="en">Real problem, reusable method, thin statistics</strong>
+      <small data-lang-content="zh">适合当作工程 checklist，不适合当作「某机制已被严格证明」的引用来源。</small>
+      <small data-lang-content="en">Treat it as an engineering checklist, not as proof that a mechanism works.</small>
+    </div>
+  </div>
+
+  <div class="content-index">
+    <span class="content-index__label" data-lang-content="zh">目录</span>
+    <span class="content-index__label" data-lang-content="en">Contents</span>
+    <a href="#problem"><span data-lang-content="zh">问题：harness 是什么，为什么要自动化</span><span data-lang-content="en">Problem: what a harness is and why automate it</span></a>
+    <a href="#gap"><span data-lang-content="zh">缺口：有限演化集上的自适应过拟合</span><span data-lang-content="en">Gap: adaptive overfitting on a finite evolve set</span></a>
+    <a href="#idea"><span data-lang-content="zh">核心思想：正则化搜索过程</span><span data-lang-content="en">Core idea: regularise the search</span></a>
+    <a href="#method"><span data-lang-content="zh">方法：七条约束与准入决策链</span><span data-lang-content="en">Method: seven constraints and the admission chain</span></a>
+    <a href="#setup"><span data-lang-content="zh">实验设置：三域八个 benchmark</span><span data-lang-content="en">Setup: three domains, eight benchmarks</span></a>
+    <a href="#results"><span data-lang-content="zh">主结果：每个留出集都没有回退</span><span data-lang-content="en">Results: no held-out split regresses</span></a>
+    <a href="#baselines"><span data-lang-content="zh">与四个基线对比：排名反转</span><span data-lang-content="en">Against four baselines: the ranking inverts</span></a>
+    <a href="#ablation"><span data-lang-content="zh">消融与鲁棒性</span><span data-lang-content="en">Ablation and robustness</span></a>
+    <a href="#cost"><span data-lang-content="zh">成本：省的是相对值</span><span data-lang-content="en">Cost: cheaper than the alternative, not than nothing</span></a>
+    <a href="#critique"><span data-lang-content="zh">批判性评估</span><span data-lang-content="en">Critical assessment</span></a>
+    <a href="#transfer"><span data-lang-content="zh">可以带走的做法</span><span data-lang-content="en">What transfers</span></a>
+    <a href="#verify"><span data-lang-content="zh">最小验证实验</span><span data-lang-content="en">Minimum validation experiments</span></a>
+  </div>
+
+  <div class="story-facts">
+    <div>
+      <strong>+6.0 / +1.1 / +4.9</strong>
+      <span data-lang-content="zh">三个 evolve split 的绝对增益（分）：Terminal-Bench 2.1、Harvey LAB、EngDesign</span>
+      <span data-lang-content="en">Absolute gain in points on the three evolve splits: Terminal-Bench 2.1, Harvey LAB, EngDesign</span>
+    </div>
+    <div>
+      <strong>39.7 → 43.6</strong>
+      <span data-lang-content="zh">三个 agentic 分布外 benchmark 的平均分，基线均值为 39.4</span>
+      <span data-lang-content="en">Average over three agentic out-of-distribution benchmarks; the baseline average is 39.4</span>
+    </div>
+    <div>
+      <strong>2.42M</strong>
+      <span data-lang-content="zh">最终 harness 每 trial 的 policy token，是四个演化臂里最省的</span>
+      <span data-lang-content="en">Policy tokens per trial for the final harness - the cheapest of the four evolved arms</span>
+    </div>
+  </div>
+
+  <div class="research-meta">
+    <div class="research-meta__card">
+      <span data-lang-content="zh">论文</span>
+      <span data-lang-content="en">Paper</span>
+      <h3>RRSI: Regularized Recursive Self-Improvement of Agent Harnesses</h3>
+      <p data-lang-content="zh">Peng Xia 等 14 位作者，Google Cloud AI Research 与 UNC-Chapel Hill、Stanford、Washington University in St. Louis 合作。</p>
+      <p data-lang-content="en">Peng Xia and 13 co-authors, from Google Cloud AI Research with UNC-Chapel Hill, Stanford and Washington University in St. Louis.</p>
+    </div>
+    <div class="research-meta__card">
+      <span data-lang-content="zh">来源</span>
+      <span data-lang-content="en">Source</span>
+      <h3>arXiv:2609.24972v1</h3>
+      <p data-lang-content="zh">2026-09-21 提交，全文 24 页。本页按 v1 版本精读，所有数字都回到原文页码、图号或表号。</p>
+      <p data-lang-content="en">Submitted 2026-09-21, 24 pages. This note reads version v1 and traces every number back to a page, figure or table.</p>
+    </div>
+    <a class="research-meta__card" href="https://github.com/google-research/rrsi" target="_blank" rel="noopener external nofollow noreferrer">
+      <span data-lang-content="zh">代码与项目页</span>
+      <span data-lang-content="en">Code and project page</span>
+      <h3>github.com/google-research/rrsi</h3>
+      <p data-lang-content="zh">官方仓库已开源；项目页 regularized-rsi.com 发布逐轮提案、critic 决策与精确 harness diff。</p>
+      <p data-lang-content="en">The official repository is open; regularized-rsi.com publishes round-by-round proposals, critic decisions and exact harness diffs.</p>
+    </a>
+  </div>
+
+  <section id="problem" class="workflow-section">
+    <h2 data-lang-content="zh">问题：被自动化的那一层</h2>
+    <h2 data-lang-content="en">Problem: the layer being automated</h2>
+    <p data-lang-content="zh">当代 LLM agent 是系统，不是单个模型。一个冻结的 backbone policy 外面裹着一层 harness：系统提示与任务提示、决定何时规划/行动/反思/停止的控制流、工具接口及其描述、可查阅的记忆与 skill 文件，以及决定每一步看到什么的上下文管理。</p>
+    <p data-lang-content="en">A modern LLM agent is a system, not a model. A frozen backbone policy is wrapped in a harness: system and task prompts, the control flow that decides when to plan, act, reflect or stop, tool interfaces and their descriptions, memory and skill files, and the context handling that decides what the policy sees at each step.</p>
+    <figure class="story-figure">
+      <img data-lang-content="zh" src="/img/RRSI/harness-zh.svg" alt="Agent 系统由冻结的 backbone policy 与可编辑的 harness 两层组成，harness 包含提示、控制流、工具、记忆与上下文管理">
+      <img data-lang-content="en" src="/img/RRSI/harness-en.svg" alt="An agent is a frozen backbone policy wrapped in an editable harness covering prompts, control flow, tooling, memory and context handling">
+      <figcaption data-lang-content="zh">图 1 · 论文优化的是 harness 这一层。backbone 权重全程不变，被搜索的是提示、控制流、工具描述、记忆与上下文管理这些代码与配置。依据原文 p.1 Sec.1 与 p.3 Sec.2 重绘。</figcaption>
+      <figcaption data-lang-content="en">Figure 1 - What the paper optimises is the harness layer. The backbone weights never change; the search covers prompts, control flow, tool descriptions, memory and context handling. Redrawn from p.1 Sec.1 and p.3 Sec.2.</figcaption>
+    </figure>
+    <p data-lang-content="zh">论文的出发点是：agent 产品的近期进展很大一部分来自 harness 工程而不是新模型权重，而这件事长期依赖人工读失败轨迹、手工改 scaffold，进度受限于人能读多少条轨迹。于是出现了一批用 LLM 自动做 proposer、反复改写 harness 并在固定任务集上打分选优的方法。</p>
+    <p data-lang-content="en">The starting point is that much recent progress in agent products came from harness engineering rather than new model weights, and that this work has been manual: engineers read failed trajectories and tweak the scaffold by hand, so progress is bounded by how many trajectories a person can read. A family of methods now automates it, using an LLM proposer to rewrite the harness and keeping the edits that raise a benchmark score.</p>
+    <div class="quote-panel">
+      <p data-lang-content="zh">需要说清的是：这里被优化的是 harness 的源码，backbone 权重冻结，所以它是 agent 系统层面的自我改进，不是权重层面的自我改进。论文自己在第二节和第三节明确了这一点。</p>
+      <p data-lang-content="en">One clarification: what gets optimised is harness source code with frozen backbone weights, so this is self-improvement at the agent-system level, not at the weight level. The paper states this itself in Sections 2 and 3.</p>
+    </div>
+  </section>
+
+  <section id="gap" class="workflow-section">
+    <h2 data-lang-content="zh">缺口：有限演化集上的自适应过拟合</h2>
+    <h2 data-lang-content="en">Gap: adaptive overfitting on a finite evolve set</h2>
+    <p data-lang-content="zh">论文指出的缺口很具体，不是泛泛地说「效果不好」：演化过程会跨轮复用同一批任务。第 t 轮的候选集合由上一轮在同一批任务上的测量结果决定，因此后续候选的分布依赖此前的测量——这是一次典型的数据窥探。</p>
+    <p data-lang-content="en">The gap is specific rather than vague: the evolution loop reuses one task set across rounds. The candidates proposed in round t depend on measurements taken on that same set in earlier rounds, so later candidates are drawn from a distribution conditioned on earlier measurements - a textbook case of data snooping.</p>
+    <p data-lang-content="zh">论文把由此产生的失败拆成三种耦合行为，每一种都对应后面的一条约束：</p>
+    <p data-lang-content="en">The paper splits the resulting failure into three coupled behaviours, each mapping onto a later constraint:</p>
+    <ol class="editorial-list">
+      <li><span class="editorial-list__index">01</span><div>
+        <h3 data-lang-content="zh">benchmark 专属拟合</h3>
+        <h3 data-lang-content="en">Benchmark-specific fitting</h3>
+        <p data-lang-content="zh">搜索把演化集的专属模式，甚至是任务名、实体名和答案，直接编码进 harness。对应约束是泄漏筛查与结构剪枝。</p>
+        <p data-lang-content="en">The search encodes patterns specific to the evolve set - sometimes task names, entities or answers - directly into the harness. It maps onto leakage screening and structural pruning.</p>
+      </div></li>
+      <li><span class="editorial-list__index">02</span><div>
+        <h3 data-lang-content="zh">追逐评测噪声</h3>
+        <h3 data-lang-content="en">Chasing evaluation noise</h3>
+        <p data-lang-content="zh">候选因为随机波动而获胜，随后被固化成永久状态。对应约束是噪声调整接受下限与全历史信用分配。</p>
+        <p data-lang-content="en">Candidates win on random variation and are then frozen into permanent state. It maps onto the noise-adjusted floor and evidence-aware credit assignment.</p>
+      </div></li>
+      <li><span class="editorial-list__index">03</span><div>
+        <h3 data-lang-content="zh">复杂度累积</h3>
+        <h3 data-lang-content="en">Complexity accumulation</h3>
+        <p data-lang-content="zh">harness 越堆越厚，演化分变高，但底层机制没有变好。对应约束是退火编辑预算与复杂度感知接受。</p>
+        <p data-lang-content="en">The harness thickens, the evolve score rises, and the underlying mechanism does not improve. It maps onto the annealed edit budget and complexity-aware acceptance.</p>
+      </div></li>
+    </ol>
+    <p data-lang-content="zh">论文用论文自己的 Figure 1(a) 说明了这个现象的普遍性：四个近期演化方法几乎全部落在「1:1 迁移线」下方，其中 TTHE 在分布外比起点还低约 4.3%，AHE 与 HarnessX 的分布外相对增益约为 0。</p>
+    <p data-lang-content="en">The paper's own Figure 1(a) shows how general this is: all four recent evolution methods fall below the 1:1 transfer line. TTHE ends roughly 4.3% below its own starting point out of distribution, while AHE and HarnessX sit at about zero relative gain.</p>
+  </section>
+
+  <section id="idea" class="workflow-section">
+    <h2 data-lang-content="zh">核心思想：正则化搜索过程，而不是限制编辑空间</h2>
+    <h2 data-lang-content="en">Core idea: regularise the search, not the edit space</h2>
+    <p data-lang-content="zh">RRSI 的判断是：不要靠缩小 harness 的可编辑范围来防过拟合，而要靠约束搜索怎么走。论文明确保留开放的编辑空间——提示、控制流、配置、上下文管理、工具、skill、记忆和 subagent 都可以被增加、修改或删除，一共九类组件。</p>
+    <p data-lang-content="en">RRSI's judgement is that you should not prevent overfitting by shrinking what a harness may contain, but by constraining how the search moves. The edit space stays open: prompts, control flow, configuration, context handling, tooling, skills, memory and subagents can all be added, changed or removed - nine component types in total.</p>
+    <figure class="story-figure">
+      <img data-lang-content="zh" src="/img/RRSI/overview-zh.svg" alt="RRSI 的双侧正则：提案侧包含退火编辑预算、证据感知信用分配与结构化探索，选择侧包含泄漏筛查、噪声调整下限、复杂度感知接受与结构剪枝">
+      <img data-lang-content="en" src="/img/RRSI/overview-en.svg" alt="RRSI regularises both sides: annealed edit budget, evidence-aware credit assignment and structured exploration on the proposal side; leakage screening, noise-adjusted floor, complexity-aware acceptance and structural pruning on the selection side">
+      <figcaption data-lang-content="zh">图 2 · RRSI 的结构：提案侧控制搜索容量怎么花，选择侧控制哪些增益可以变成永久状态。七条约束里没有一条限制 harness 能长什么样。依据原文 p.4 Fig.2、p.20 Alg.1-2 与 p.21-22 Eq.13-17 重绘。</figcaption>
+      <figcaption data-lang-content="en">Figure 2 - How RRSI is arranged: the proposal side controls how search capacity is spent, the selection side controls which gains may become permanent. None of the seven constraints limits what a harness may look like. Redrawn from p.4 Fig.2, p.20 Alg.1-2 and p.21-22 Eq.13-17.</figcaption>
+    </figure>
+    <p data-lang-content="zh">论文把三个经典正则概念翻译成搜索过程的类比：编辑预算对应 L0 的基数约束，结构剪枝对应 Lasso/L1 的稀疏化，复杂度感知接受对应 Ridge/L2 的收缩。作者在正文和附录里三次强调这只是功能性类比，不是数学等价——这个过程并不优化范数惩罚目标，异构的 harness 组件也不是共享连续参数向量的坐标。</p>
+    <p data-lang-content="en">Three classical regularisation concepts are translated into search-process analogues: the edit budget as an L0-style cardinality constraint, structural pruning as Lasso/L1-style sparsification, and complexity-aware acceptance as Ridge/L2-style shrinkage. The authors stress three times, in the body and the appendix, that these are functional analogies rather than mathematical equivalences - the procedure optimises no norm-penalised objective, and heterogeneous harness components are not coordinates of a shared continuous parameter vector.</p>
+    <div class="quote-panel">
+      <p data-lang-content="zh">实践含义很直接：不能像调正则系数那样去调它们。每条规则都要按自己的语义单独标定，比如噪声带 δ 是用固定 harness 的重复评测统计出来的，而不是从损失函数推导的。</p>
+      <p data-lang-content="en">The practical consequence is direct: these are not coefficients you tune like a regularisation weight. Each rule is calibrated on its own terms - the noise band δ, for example, is measured by repeatedly evaluating the unchanged harness rather than derived from a loss function.</p>
+    </div>
+  </section>
+
+  <section id="method" class="workflow-section">
+    <h2 data-lang-content="zh">方法：七条约束与准入决策链</h2>
+    <h2 data-lang-content="en">Method: seven constraints and the admission chain</h2>
+    <div class="editorial-grid">
+      <article class="editorial-card">
+        <h3 data-lang-content="zh">A · 退火编辑预算</h3>
+        <h3 data-lang-content="en">A - Annealed edit budget</h3>
+        <p data-lang-content="zh">限制单个候选能打包多少条可独立归因的编辑。预算是余弦退火：初始 4/3/4（编码 / 工作台 / 工程设计），最后一轮降到 1。早期允许协同大改，后期只允许单点可归因改动。</p>
+        <p data-lang-content="en">Caps how many independently attributable edits one candidate may bundle. The budget follows a cosine schedule from 4/3/4 (coding, workspace, engineering design) down to 1 in the final round: broad coordinated change early, single attributable edits late.</p>
+      </article>
+      <article class="editorial-card">
+        <h3 data-lang-content="zh">B · 证据感知信用分配</h3>
+        <h3 data-lang-content="en">B - Evidence-aware credit assignment</h3>
+        <p data-lang-content="zh">每条原子编辑都记录组件、假设、源码 diff、分数与成本变化、是否被接受。被否掉的机制留作负证据，而不是重新再试一遍。这与 A 是耦合的：预算退火到 1 之后，候选级的测量才等价于单条编辑的效应。</p>
+        <p data-lang-content="en">Every atomic edit carries its component, hypothesis, source diff, measured score and cost change, and whether it was accepted. Rejected mechanisms stay as negative evidence instead of being retried. This couples to A: only once the budget anneals to one does a candidate-level measurement equal a single edit's effect.</p>
+      </article>
+      <article class="editorial-card">
+        <h3 data-lang-content="zh">C · 结构化探索</h3>
+        <h3 data-lang-content="en">C - Structured exploration</h3>
+        <p data-lang-content="zh">当搜索连续三轮的进展都落在噪声带内，就把一部分提案名额留给从未被测过的组件类型。它只改变搜索往哪看，不改变可编辑范围。</p>
+        <p data-lang-content="en">When progress over three consecutive rounds stays inside the noise band, part of the proposal budget is reserved for component types never yet exercised. It redirects where the search looks without changing what may be edited.</p>
+      </article>
+      <article class="editorial-card">
+        <h3 data-lang-content="zh">D · 泄漏筛查</h3>
+        <h3 data-lang-content="en">D - Leakage screening</h3>
+        <p data-lang-content="zh">在完整评测之前，由一个 critic 读候选 diff，拒绝编码了任务名、实体名、答案或 benchmark 专属逻辑的修改，以及只增加惰性机制的修改。放在评测之前是关键：泄漏候选拿不到虚高的分数，也就不会污染后续轮次。</p>
+        <p data-lang-content="en">Before full evaluation, a critic reads each candidate diff and rejects edits that encode task names, entities, answers or benchmark-specific logic, along with edits that only add inert machinery. Screening before scoring is the point: a leaking candidate never receives the inflated score that would let it contaminate later rounds.</p>
+      </article>
+      <article class="editorial-card">
+        <h3 data-lang-content="zh">E · 噪声调整接受下限</h3>
+        <h3 data-lang-content="en">E - Noise-adjusted floor</h3>
+        <p data-lang-content="zh">演化开始前，先对未改动的 harness 重复评测，估计经验噪声带 δ。之后任何候选的分数都不得低于历史最好值减 δ，防止搜索通过一串看似在噪声范围内的回退走下坡。三个域的 δ 分别是 1.7、0.4 和 2.0 个百分点。</p>
+        <p data-lang-content="en">Before evolution starts, the unchanged harness is evaluated repeatedly to estimate an empirical noise band δ. No candidate may then score below the best-so-far minus δ, which stops the search from walking downhill through a sequence of individually tiny regressions. The three domains use δ of 1.7, 0.4 and 2.0 points.</p>
+      </article>
+      <article class="editorial-card">
+        <h3 data-lang-content="zh">F · 复杂度感知接受</h3>
+        <h3 data-lang-content="en">F - Complexity-aware acceptance</h3>
+        <p data-lang-content="zh">当增益超过噪声带时，要求成本增幅满足 ΔC ≤ β0 + β1 · ΔS：多花推理成本必须换来可测的收益。β0 是基础容许，β1 决定增益越大允许多花多少。当增益落在噪声带内，改用整形规则：降成本或引入从未被接受过的结构组件才能换取准入。</p>
+        <p data-lang-content="en">When the gain clears the noise band, the cost increase must satisfy ΔC ≤ β0 + β1 · ΔS: extra inference cost has to buy measurable improvement. β0 is the base allowance and β1 sets how much more cost a larger gain may justify. Inside the noise band a shaped rule applies instead, where lower cost or a structurally novel component is what earns admission.</p>
+      </article>
+      <article class="editorial-card">
+        <h3 data-lang-content="zh">G · 结构剪枝</h3>
+        <h3 data-lang-content="en">G - Structural pruning</h3>
+        <p data-lang-content="zh">被测试过但在最近窗口内没有产生严格正增益的组件，会被列为后续提案的删除目标。纯分数搜索没有删除动力，剪枝补上了这一块：机制必须持续挣得自己的位置。</p>
+        <p data-lang-content="en">Components that have been exercised but produced no strictly positive gain in the recent window become deletion targets for later proposals. Score-only search has no incentive to remove anything; pruning supplies it, so a mechanism has to keep earning its place.</p>
+      </article>
+    </div>
+    <h3 data-lang-content="zh">一轮演化里的准入决策链</h3>
+    <h3 data-lang-content="en">The admission chain inside one round</h3>
+    <ol class="editorial-list">
+      <li><span class="editorial-list__index">01</span><div>
+        <h3 data-lang-content="zh">提案：受约束的候选</h3>
+        <h3 data-lang-content="en">Proposal: a constrained candidate</h3>
+        <p data-lang-content="zh">候选来自受 A、B、C 约束的提案分布，编辑条数不超过当前预算，且携带组件与假设元数据。</p>
+        <p data-lang-content="en">The candidate comes from a proposal distribution constrained by A, B and C, bundles no more than the current budget, and carries component and hypothesis metadata.</p>
+      </div></li>
+      <li><span class="editorial-list__index">02</span><div>
+        <h3 data-lang-content="zh">筛查：评测之前的泄漏检查</h3>
+        <h3 data-lang-content="en">Screening: leakage check before scoring</h3>
+        <p data-lang-content="zh">命中 benchmark 专属逻辑的候选直接丢弃，不消耗评测预算，也不会把虚高分数写进历史。</p>
+        <p data-lang-content="en">Candidates carrying benchmark-specific logic are dropped without spending evaluation budget and without writing an inflated score into the history.</p>
+      </div></li>
+      <li><span class="editorial-list__index">03</span><div>
+        <h3 data-lang-content="zh">下限：不得跌破噪声带</h3>
+        <h3 data-lang-content="en">Floor: stay inside the noise band</h3>
+        <p data-lang-content="zh">评测后先看分数是否仍在历史最好值减 δ 之上，不通过就直接丢弃。</p>
+        <p data-lang-content="en">After evaluation, the score must still sit above best-so-far minus δ; failing that, the candidate is discarded.</p>
+      </div></li>
+      <li><span class="editorial-list__index">04</span><div>
+        <h3 data-lang-content="zh">成本与新颖性：二选一的分支</h3>
+        <h3 data-lang-content="en">Cost and novelty: two branches</h3>
+        <p data-lang-content="zh">增益超过噪声带时走成本规则；落在噪声带内时走整形规则，需要靠降成本或结构新颖性换取准入。编码域把分数权重设为 0，也就是说噪声带内的分数上涨本身完全不算理由。</p>
+        <p data-lang-content="en">A gain beyond the noise band goes through the cost rule; a gain inside the band goes through the shaped rule and must earn admission from lower cost or structural novelty. The coding domain sets the score weight to zero, so a within-band score increase counts for nothing by itself.</p>
+      </div></li>
+      <li><span class="editorial-list__index">05</span><div>
+        <h3 data-lang-content="zh">合并：非补偿性选择</h3>
+        <h3 data-lang-content="en">Merge: non-compensatory selection</h3>
+        <p data-lang-content="zh">所有条件取 AND 而不是加权求和：域守卫、下限和成本条件必须同时通过，候选才进入可接受集合，再由分数选出胜者；如果一个都没有通过，就保留当前 harness。</p>
+        <p data-lang-content="en">Conditions are combined with AND rather than a weighted sum: domain guards, the floor and the cost condition must all pass before a candidate joins the admissible set, and the highest score wins. If nothing passes, the incumbent harness is kept.</p>
+      </div></li>
+    </ol>
+  </section>
+
+  <section id="setup" class="workflow-section">
+    <h2 data-lang-content="zh">实验设置：三域八个 benchmark</h2>
+    <h2 data-lang-content="en">Setup: three domains, eight benchmarks</h2>
+    <p data-lang-content="zh">每个域只在一个 suite 上演化，然后原样迁移到其余 benchmark。这种 evolve / 同分布留出 / 分布外三层分离，是这篇论文证据链里最值得借用的部分。</p>
+    <p data-lang-content="en">Each domain evolves on exactly one suite and is then run unchanged on the others. This three-way split between evolve, in-distribution hold-out and out-of-distribution is the most reusable part of the paper's evaluation design.</p>
+    <div class="troubleshooting-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Benchmark</th>
+            <th data-lang-content="zh">域 / 角色</th>
+            <th data-lang-content="en">Domain / role</th>
+            <th data-lang-content="zh">规模</th>
+            <th data-lang-content="en">Size</th>
+            <th data-lang-content="zh">判分方式</th>
+            <th data-lang-content="en">Scoring</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Terminal-Bench 2.1</td>
+            <td data-lang-content="zh">编码 / evolve</td>
+            <td data-lang-content="en">Coding / evolve</td>
+            <td data-lang-content="zh">89 个任务</td>
+            <td data-lang-content="en">89 tasks</td>
+            <td data-lang-content="zh">容器内真实 shell，自带隐藏单测（确定性）</td>
+            <td data-lang-content="en">Real shell in a container, hidden unit tests (deterministic)</td>
+          </tr>
+          <tr>
+            <td>SWE-bench Verified</td>
+            <td data-lang-content="zh">编码 / 分布外</td>
+            <td data-lang-content="en">Coding / OOD</td>
+            <td data-lang-content="zh">真实 GitHub issue</td>
+            <td data-lang-content="en">Real GitHub issues</td>
+            <td data-lang-content="zh">fail-to-pass 与 pass-to-pass 测试（确定性）</td>
+            <td data-lang-content="en">fail-to-pass and pass-to-pass tests (deterministic)</td>
+          </tr>
+          <tr>
+            <td>Harvey LAB</td>
+            <td data-lang-content="zh">工作台 / evolve 与同分布留出</td>
+            <td data-lang-content="en">Workspace / evolve and ID hold-out</td>
+            <td data-lang-content="zh">120 + 40 个任务</td>
+            <td data-lang-content="en">120 + 40 tasks</td>
+            <td data-lang-content="zh">每任务 20 至 100 条判据，整轮约 14,000 条（LLM 评委）</td>
+            <td data-lang-content="en">20 to 100 criteria per task, about 14,000 per run (LLM judge)</td>
+          </tr>
+          <tr>
+            <td>JobBench</td>
+            <td data-lang-content="zh">工作台 / 分布外</td>
+            <td data-lang-content="en">Workspace / OOD</td>
+            <td data-lang-content="zh">真实职业工作流</td>
+            <td data-lang-content="en">Real professional workflows</td>
+            <td data-lang-content="zh">加权 rubric，两个模型取平均</td>
+            <td data-lang-content="en">Weighted rubric, averaged over two models</td>
+          </tr>
+          <tr>
+            <td>GDPval</td>
+            <td data-lang-content="zh">工作台 / 分布外</td>
+            <td data-lang-content="en">Workspace / OOD</td>
+            <td data-lang-content="zh">185 个任务</td>
+            <td data-lang-content="en">185 tasks</td>
+            <td data-lang-content="zh">与人类专家交付物并排比较，三位评委多数投票</td>
+            <td data-lang-content="en">Side-by-side against human expert work, majority of three judges</td>
+          </tr>
+          <tr>
+            <td>APEX-Agents</td>
+            <td data-lang-content="zh">工作台 / 分布外</td>
+            <td data-lang-content="en">Workspace / OOD</td>
+            <td data-lang-content="zh">480 个任务</td>
+            <td data-lang-content="en">480 tasks</td>
+            <td data-lang-content="zh">沙盒 MCP 工具面加 rubric（LLM 评委）</td>
+            <td data-lang-content="en">Sandboxed MCP tool surface plus rubric (LLM judge)</td>
+          </tr>
+          <tr>
+            <td>EngDesign</td>
+            <td data-lang-content="zh">工程设计 / evolve</td>
+            <td data-lang-content="en">Eng. design / evolve</td>
+            <td data-lang-content="zh">61 个任务</td>
+            <td data-lang-content="en">61 tasks</td>
+            <td data-lang-content="zh">每任务自带冻结模拟器（确定性）</td>
+            <td data-lang-content="en">Each task ships a frozen simulator (deterministic)</td>
+          </tr>
+          <tr>
+            <td>Frontier-Eng</td>
+            <td data-lang-content="zh">工程设计 / 分布外</td>
+            <td data-lang-content="en">Eng. design / OOD</td>
+            <td data-lang-content="zh">47 个任务，38 个计入</td>
+            <td data-lang-content="en">47 tasks, 38 counted</td>
+            <td data-lang-content="zh">冻结评测器，报 Medal Score（确定性）</td>
+            <td data-lang-content="en">Frozen evaluator, reported as Medal Score (deterministic)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p data-lang-content="zh">三个域的 policy、proposer、失败分析师与泄漏 critic 都是 Claude Opus 4.8；演化轮数为 20 / 20 / 40，每任务每次评测试验数为 2 / 2 / 4。论文声明所有超参只依据 evolve 环境与工程考量选择，留出集与分布外 benchmark 未用于调参。</p>
+    <p data-lang-content="en">In all three domains the policy, proposer, failure analyst and leakage critic are Claude Opus 4.8. Evolution runs for 20 / 20 / 40 rounds with 2 / 2 / 4 trials per task per evaluation. The paper states that all hyperparameters were chosen using only the evolve environment and engineering considerations, never the held-out or out-of-distribution benchmarks.</p>
+    <div class="quote-panel">
+      <p data-lang-content="zh">协议里有三条值得单独记下的公平性措施：harness 与基线总是在同一窗口内评测；容器在各臂之间销毁重建，避免状态跨评测传递；APEX-Agents 的基础设施失败计为失败而非剔除，防止在难世界里崩溃的 harness 看起来更好。</p>
+      <p data-lang-content="en">Three fairness measures are worth noting separately: a harness and its baselines are always evaluated in the same window; containers are torn down and rebuilt between arms so no state carries over; and infra failures in APEX-Agents count as failures rather than being excluded, so a harness that crashes on hard worlds does not look better for it.</p>
+    </div>
+  </section>
+
+  <section id="results" class="workflow-section">
+    <h2 data-lang-content="zh">主结果：每个留出集都没有回退</h2>
+    <h2 data-lang-content="en">Results: no held-out split regresses</h2>
+    <p data-lang-content="zh">所有数字都与同一评测窗口内测得的未演化 harness 对比，因此增益不能归因于评测基础设施漂移。演化集增益是 6.0、4.9 和 1.1 分；真正重要的是离开这些集合之后剩下什么。</p>
+    <p data-lang-content="en">Every number is compared against the unevolved harness measured in the same window, so the gains cannot be attributed to drift in the evaluation infrastructure. The evolve-set gains are 6.0, 4.9 and 1.1 points; what matters is what survives once the harness leaves those suites.</p>
+    <figure class="story-figure">
+      <img data-lang-content="zh" src="/img/RRSI/results-zh.svg" alt="九个 benchmark 上未演化 harness 与 RRSI 的绝对增益，其中演化集、同分布留出与分布外分别用三种颜色标出">
+      <img data-lang-content="en" src="/img/RRSI/results-en.svg" alt="Absolute gain from the unevolved harness to RRSI across nine benchmarks, colour-coded by evolve, in-distribution hold-out and out-of-distribution">
+      <figcaption data-lang-content="zh">图 3 · 每个 held-out split 都没有回退。SWE-bench 的 +1.8 与编码域噪声带 1.7 几乎同量级，是整篇论文里最需要保留态度的那个数字。数据来源：原文 p.8 Fig.3 与 p.8 Table 1，按原数值重绘。</figcaption>
+      <figcaption data-lang-content="en">Figure 3 - No held-out split regresses. SWE-bench's +1.8 sits almost at the coding noise band of 1.7, making it the number most in need of caution. Source: p.8 Fig.3 and p.8 Table 1, redrawn from the reported values.</figcaption>
+    </figure>
+    <div class="troubleshooting-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Benchmark</th>
+            <th data-lang-content="zh">角色</th>
+            <th data-lang-content="en">Role</th>
+            <th data-lang-content="zh">未演化</th>
+            <th data-lang-content="en">Unevolved</th>
+            <th>RRSI</th>
+            <th data-lang-content="zh">绝对增益</th>
+            <th data-lang-content="en">Absolute</th>
+            <th data-lang-content="zh">相对增益</th>
+            <th data-lang-content="en">Relative</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Terminal-Bench 2.1</td><td data-lang-content="zh">演化集</td><td data-lang-content="en">Evolve</td><td>74.2</td><td>80.2</td><td>+6.0</td><td>+8.1%</td></tr>
+          <tr><td>EngDesign</td><td data-lang-content="zh">演化集</td><td data-lang-content="en">Evolve</td><td>50.0</td><td>54.9</td><td>+4.9</td><td>+9.8%</td></tr>
+          <tr><td>Harvey LAB</td><td data-lang-content="zh">演化集</td><td data-lang-content="en">Evolve</td><td>89.4</td><td>90.5</td><td>+1.1</td><td>+1.2%</td></tr>
+          <tr><td>Harvey LAB</td><td data-lang-content="zh">同分布留出</td><td data-lang-content="en">ID hold-out</td><td>86.9</td><td>89.2</td><td>+2.3</td><td>+2.6%</td></tr>
+          <tr><td>SWE-bench Verified</td><td data-lang-content="zh">分布外</td><td data-lang-content="en">OOD</td><td>82.0</td><td>83.8</td><td>+1.8</td><td>+2.2%</td></tr>
+          <tr><td>JobBench</td><td data-lang-content="zh">分布外</td><td data-lang-content="en">OOD</td><td>36.0</td><td>40.7</td><td>+4.7</td><td>+13.1%</td></tr>
+          <tr><td>GDPval</td><td data-lang-content="zh">分布外</td><td data-lang-content="en">OOD</td><td>48.8</td><td>52.3</td><td>+3.5</td><td>+7.2%</td></tr>
+          <tr><td>APEX-Agents</td><td data-lang-content="zh">分布外</td><td data-lang-content="en">OOD</td><td>34.2</td><td>37.9</td><td>+3.7</td><td>+10.8%</td></tr>
+          <tr><td>Frontier-Eng</td><td data-lang-content="zh">分布外（Medal）</td><td data-lang-content="en">OOD (Medal)</td><td>17.7</td><td>22.0</td><td>+4.3</td><td>+24.3%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p data-lang-content="zh">两个细节值得留意。第一，Frontier-Eng 的单位是 Medal points，与其余准确率类指标不可直接相加。第二，Harvey LAB 的同分布留出上，RRSI 与最强基线 Meta-Harness 打成平手，分离只出现在分布外。</p>
+    <p data-lang-content="en">Two details matter. First, Frontier-Eng is measured in Medal points and is not commensurate with the accuracy metrics. Second, on the Harvey LAB in-distribution hold-out RRSI ties the strongest baseline, Meta-Harness; the separation only appears out of distribution.</p>
+  </section>
+
+  <section id="baselines" class="workflow-section">
+    <h2 data-lang-content="zh">与四个基线对比：排名反转</h2>
+    <h2 data-lang-content="en">Against four baselines: the ranking inverts</h2>
+    <p data-lang-content="zh">四个近期演化方法与 RRSI 从同一个起点出发，共享冻结 policy、演化集与候选预算。结果是：基线在演化集上更强，但到了分布外被反超。</p>
+    <p data-lang-content="en">Four recent evolution methods start from the same harness as RRSI and share the frozen policy, evolve set and candidate budget. The result: the baselines are stronger on the evolve split, and are overtaken out of distribution.</p>
+    <div class="troubleshooting-table">
+      <table>
+        <thead>
+          <tr>
+            <th data-lang-content="zh">方法</th>
+            <th data-lang-content="en">Method</th>
+            <th>Harvey LAB<br>evolve</th>
+            <th>Harvey LAB<br>ID hold-out</th>
+            <th data-lang-content="zh">分布外均值</th>
+            <th data-lang-content="en">OOD average</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td data-lang-content="zh">未演化起点</td><td data-lang-content="en">Unevolved</td><td>89.4</td><td>86.9</td><td>39.7</td></tr>
+          <tr><td>Meta-Harness</td><td>93.0</td><td>89.2</td><td>40.6</td></tr>
+          <tr><td>AHE</td><td>90.7</td><td>88.7</td><td>39.2</td></tr>
+          <tr><td>TTHE</td><td>91.1</td><td>88.5</td><td>38.0</td></tr>
+          <tr><td>HarnessX</td><td>91.8</td><td>89.1</td><td>39.7</td></tr>
+          <tr><td>RRSI</td><td>90.5</td><td>89.2</td><td>43.6</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p data-lang-content="zh">这张表里最反直觉的一行是：RRSI 在演化集上的增益是所有演化方法里最小的（+1.1 分），低于全部四个基线。换来的，是唯一一个把基线均值甩开 4 分以上的分布外成绩（43.6 对 39.4）。</p>
+    <p data-lang-content="en">The most counter-intuitive row is this: RRSI posts the smallest evolve-set gain of any evolved method (+1.1) and trails all four baselines there. What it buys is the only out-of-distribution average that clears the baseline mean by more than four points (43.6 against 39.4).</p>
+    <p data-lang-content="zh">另一个值得记下的事实是：TTHE 与 AHE 演化之后，分布外平均分反而低于它们自己的起点（38.0 和 39.2，起点 39.7）。这说明「做了 harness 演化」不等于「harness 变好了」。</p>
+    <p data-lang-content="en">Another fact worth recording: after evolution, TTHE and AHE score below their own starting point out of distribution (38.0 and 39.2 against 39.7). Doing harness evolution is not the same as improving a harness.</p>
+    <div class="quote-panel">
+      <p data-lang-content="zh">需要保留的怀疑：论文说四个基线共享同一起点、policy、演化集与候选预算，但没有说明用的是各方法的官方代码还是本文重新实现。对这类强依赖具体 scaffold 与提示词的方法，重新实现的差异很容易达到 1 至 2 分。所以「TTHE 低于起点」这类结论应谨慎引用。</p>
+      <p data-lang-content="en">A caveat worth keeping: the paper says the four baselines share the same harness, policy, evolve set and candidate budget, but does not say whether it used each method's official code or a reimplementation. For methods this sensitive to scaffold and prompts, a reimplementation gap of one to two points is easy. Treat claims like "TTHE ends below its starting point" with care.</p>
+    </div>
+  </section>
+
+  <section id="ablation" class="workflow-section">
+    <h2 data-lang-content="zh">消融与鲁棒性</h2>
+    <h2 data-lang-content="en">Ablation and robustness</h2>
+    <p data-lang-content="zh">消融只在工作台域做，其余条件与主实验一致。去掉任一侧正则都会提高演化集分数、降低迁移；两侧都去掉时演化分最高，但分布外只剩 40.3，距起点不到 1 分，成本却是 RRSI 的 1.57 倍。</p>
+    <p data-lang-content="en">The ablation runs only in the workspace domain with everything else held equal. Removing either side of the regularisers raises the evolve score and lowers transfer; removing both gives the highest evolve score while leaving the out-of-distribution average at 40.3, under a point above the starting point, at 1.57 times the token cost.</p>
+    <div class="troubleshooting-table">
+      <table>
+        <thead>
+          <tr>
+            <th data-lang-content="zh">变体</th>
+            <th data-lang-content="en">Variant</th>
+            <th data-lang-content="zh">演化集</th>
+            <th data-lang-content="en">Evolve</th>
+            <th data-lang-content="zh">同分布留出</th>
+            <th data-lang-content="en">ID hold-out</th>
+            <th data-lang-content="zh">分布外均值</th>
+            <th data-lang-content="en">OOD average</th>
+            <th data-lang-content="zh">token / trial</th>
+            <th data-lang-content="en">Tokens / trial</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td data-lang-content="zh">未演化起点</td><td data-lang-content="en">Unevolved</td><td>89.4</td><td>86.9</td><td>39.7</td><td>1.56M</td></tr>
+          <tr><td data-lang-content="zh">未正则化演化</td><td data-lang-content="en">Unregularised</td><td>92.8</td><td>88.9</td><td>40.3</td><td>3.80M</td></tr>
+          <tr><td data-lang-content="zh">去掉提案侧正则</td><td data-lang-content="en">Without proposal side</td><td>90.7</td><td>88.8</td><td>41.9</td><td>2.69M</td></tr>
+          <tr><td data-lang-content="zh">去掉接受侧正则</td><td data-lang-content="en">Without acceptance side</td><td>91.5</td><td>88.7</td><td>41.0</td><td>3.59M</td></tr>
+          <tr><td>RRSI</td><td>90.5</td><td>89.2</td><td>43.6</td><td>2.42M</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p data-lang-content="zh">三组鲁棒性实验说明收益不是绑定某一个 policy 的伪迹。用两个 policy 家族各自独立演化，编码域的迁移方向一致；把 Gemini 3.5 Flash 演化出的 harness 原样交给从未参与搜索的 Gemini 3.1 Flash Lite，Terminal-Bench 从 11.2 升到 14.6。</p>
+    <p data-lang-content="en">Three robustness experiments show the gains are not an artefact of one policy. Two policy families evolve independently and transfer in the same direction in the coding domain, and a harness evolved with Gemini 3.5 Flash is handed unchanged to Gemini 3.1 Flash Lite, which never took part in the search, lifting Terminal-Bench from 11.2 to 14.6.</p>
+    <div class="troubleshooting-table">
+      <table>
+        <thead>
+          <tr>
+            <th data-lang-content="zh">评测 policy</th>
+            <th data-lang-content="en">Evaluation policy</th>
+            <th data-lang-content="zh">Terminal-Bench 2.1（演化集）</th>
+            <th data-lang-content="en">Terminal-Bench 2.1 (evolve)</th>
+            <th data-lang-content="zh">SWE-bench（分布外）</th>
+            <th data-lang-content="en">SWE-bench (OOD)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Claude Opus 4.8</td><td>74.2 → 80.2</td><td>82.0 → 83.8</td></tr>
+          <tr><td>Gemini 3.5 Flash</td><td>64.6 → 78.7</td><td>76.8 → 79.0</td></tr>
+          <tr><td data-lang-content="zh">Gemini 3.1 Flash Lite（未参与搜索）</td><td data-lang-content="en">Gemini 3.1 Flash Lite (unseen)</td><td>11.2 → 14.6</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="cost" class="workflow-section">
+    <h2 data-lang-content="zh">成本：省的是相对值，不是绝对值</h2>
+    <h2 data-lang-content="en">Cost: cheaper than the alternative, not than nothing</h2>
+    <p data-lang-content="zh">摘要里那句「比未正则化演化少 30% 的 policy token」很容易被误读。它的比较对象是未正则化演化（3.80M），而不是「不演化」；按原文 Table 2 计算实际是 −36.3%，而不是 30%。</p>
+    <p data-lang-content="en">The abstract's claim of running on 30% fewer policy tokens than unregularised evolution is easy to misread. The comparison is against unregularised evolution (3.80M), not against not evolving at all, and the figures in Table 2 actually give −36.3%, not 30%.</p>
+    <figure class="story-figure">
+      <img data-lang-content="zh" src="/img/RRSI/cost-zh.svg" alt="各演化臂的 policy token 与分布外平均分散点图，以及每 trial 步数条形图">
+      <img data-lang-content="en" src="/img/RRSI/cost-en.svg" alt="Scatter of policy tokens per trial against out-of-distribution average for each arm, plus a bar chart of steps per trial">
+      <figcaption data-lang-content="zh">图 4 · RRSI 是四个演化臂里最便宜的，但相对未演化的起点其实是多花 55% 的 token（1.56M 到 2.42M）。论文正文诚实地写了「没有哪个演化后的 harness 像起点一样便宜」，只是摘要的表述容易被误读。数据来源：原文 p.10 Fig.4、p.9 Table 2 与 p.10 Sec.4.3。</figcaption>
+      <figcaption data-lang-content="en">Figure 4 - RRSI is the cheapest of the four evolved arms, yet it spends 55% more tokens than the unevolved starting point (1.56M to 2.42M). The body text is candid that no evolved harness is as cheap as the starting point; the abstract wording is where the misreading creeps in. Source: p.10 Fig.4, p.9 Table 2 and p.10 Sec.4.3.</figcaption>
+    </figure>
+    <p data-lang-content="zh">还有一笔账论文完全没有披露：演化过程本身的开销。20 到 40 轮、每轮多个候选、每个候选又要跑 2 到 4 次试验，再加上 proposer 与 critic 的模型调用——而每轮候选数在论文里始终没有给出具体数值。要用这套方法之前，这笔账得先自己算。</p>
+    <p data-lang-content="en">One cost is missing entirely: the evolution process itself. Twenty to forty rounds, several candidates per round, two to four trials per candidate per evaluation, plus proposer and critic calls - and the number of candidates per round is never given a value in the paper. Anyone adopting this should estimate that bill first.</p>
+  </section>
+
+  <section id="critique" class="workflow-section">
+    <h2 data-lang-content="zh">批判性评估</h2>
+    <h2 data-lang-content="en">Critical assessment</h2>
+    <div class="perspective-list">
+      <div class="perspective">
+        <strong data-lang-content="zh">强证据</strong>
+        <strong data-lang-content="en">Strong evidence</strong>
+        <span data-lang-content="zh">三域八个 benchmark 的跨域迁移设计，且每个数字都与同一窗口内的未演化起点对比；工程设计域由冻结模拟器确定性判分，为「增益不是迎合评委」提供了不受 LLM judge 影响的独立证据；消融的三条曲线方向一致（去掉正则即演化分涨、迁移跌、成本涨）；两个 policy 家族加一个更弱 backbone 的迁移，说明收益不绑定单一 policy。</span>
+        <span data-lang-content="en">A cross-domain transfer design over three domains and eight benchmarks, with every number compared against the unevolved starting point in the same window. The engineering-design domain is scored deterministically by frozen simulators, giving independent evidence that the gains are not judge-flattery. The ablation moves consistently in three directions at once, and two policy families plus a weaker backbone show the gains are not tied to one policy.</span>
+      </div>
+      <div class="perspective">
+        <strong data-lang-content="zh">中等或弱证据</strong>
+        <strong data-lang-content="en">Weaker evidence</strong>
+        <span data-lang-content="zh">所有主结果都是单点数值，没有随机种子、方差或置信区间；SWE-bench 的 +1.8 与编码域噪声带 1.7 几乎同量级；消融只做了「提议侧 / 接受侧」的分组，七个具体机制没有逐一隔离，而且只在一个域上做；泄漏筛查的筛除率与误杀率完全没有量化，也缺少人工审计；每轮候选数没有公布，演化总开销无法复算。</span>
+        <span data-lang-content="en">Every main result is a single number with no seeds, variance or confidence intervals. SWE-bench's +1.8 sits almost at the coding noise band of 1.7. The ablation groups the regularisers into proposal and acceptance sides, isolates none of the seven mechanisms individually, and runs in only one domain. The leakage critic's rejection and false-positive rates are never quantified and no human audit is reported, and with no candidate count per round the total search cost cannot be recomputed.</span>
+      </div>
+      <div class="perspective">
+        <strong data-lang-content="zh">结论是否超出证据</strong>
+        <strong data-lang-content="en">Does the claim exceed the evidence</strong>
+        <span data-lang-content="zh">核心结论没有超出证据，但有两处口径需要打折扣。一是摘要把「up to 14.1 points」放在最显眼的位置，而它来自较弱 policy 的那组实验，主实验同项只有 6.0。二是「省 30% token」与 Table 2 算出的 36.3% 不一致，也容易被误读成比不演化还省。此外，原文 Fig.2 里复杂度接受与结构剪枝的 L1、L0 角标相对正文是互换的，属于排版层面的错误，不影响方法理解。</span>
+        <span data-lang-content="en">The core claim stays inside the evidence, but two framings deserve a discount. The abstract leads with "up to 14.1 points", which comes from the weaker-policy experiment, while the main experiment gains 6.0 on the same measure. And the 30% token saving disagrees with the 36.3% that Table 2 implies, while also inviting the misreading that it is cheaper than not evolving. Separately, Figure 2 in the paper swaps the L1 and L0 labels on complexity acceptance and structural pruning relative to the body text - a typesetting error that does not affect understanding.</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="transfer" class="workflow-section">
+    <h2 data-lang-content="zh">可以带走的做法</h2>
+    <h2 data-lang-content="en">What transfers</h2>
+    <div class="editorial-grid">
+      <article class="editorial-card">
+        <h3 data-lang-content="zh">先用未改动的基线标定噪声带</h3>
+        <h3 data-lang-content="en">Calibrate a noise band from the unchanged baseline</h3>
+        <p data-lang-content="zh">在开始任何自动优化之前，把当前系统在同一评测协议下重复跑若干次，得到一个经验噪声带，之后禁止任何低于「历史最好值减噪声带」的候选。这是防止一连串小回退把系统带下坡的最低成本手段，而且不需要置信区间统计。</p>
+        <p data-lang-content="en">Before any automated optimisation starts, run the current system several times under the same evaluation protocol to get an empirical noise band, then refuse any candidate that falls below best-so-far minus that band. It is the cheapest way to stop a chain of small regressions from walking the system downhill, and it needs no confidence-interval machinery.</p>
+      </article>
+      <article class="editorial-card">
+        <h3 data-lang-content="zh">让编辑预算随轮次退火</h3>
+        <h3 data-lang-content="en">Anneal the edit budget over rounds</h3>
+        <p data-lang-content="zh">早期允许多处协同改动以探索新机制，后期收敛到单条可归因的改动。一条余弦退火就够，几乎不增加工程成本；它也是信用分配能够成立的前提。</p>
+        <p data-lang-content="en">Allow several coordinated edits early to explore new mechanisms, then converge on a single attributable edit later. A cosine schedule is enough and costs almost nothing to implement, and it is the precondition that makes credit assignment meaningful.</p>
+      </article>
+      <article class="editorial-card">
+        <h3 data-lang-content="zh">每增加一份成本都要换回可测收益</h3>
+        <h3 data-lang-content="en">Make every extra cost buy measurable gain</h3>
+        <p data-lang-content="zh">把「要让系统变复杂，先证明它更准」写成一条可执行的准入条件。需要一个成本代理量（token、延迟、工具调用次数都行），并且要意识到代理量的选择本身就是一个假设。</p>
+        <p data-lang-content="en">Turn "make it prove it is better before you let it get bigger" into an executable admission rule. That needs a cost proxy - tokens, latency or tool calls all work - and choosing the proxy is itself an assumption worth stating out loud.</p>
+      </article>
+      <article class="editorial-card">
+        <h3 data-lang-content="zh">把泄漏检查放在评测之前</h3>
+        <h3 data-lang-content="en">Screen for leakage before scoring</h3>
+        <p data-lang-content="zh">如果等到打过分再过滤，脏候选已经把虚高的分数写进了历史，后续轮次都会受它影响。放在评测之前，代价是几次模型调用，收益是整条历史干净。</p>
+        <p data-lang-content="en">Filter after scoring and the dirty candidate has already written an inflated number into the history that later rounds will condition on. Screening before evaluation costs a few model calls and keeps the whole history clean.</p>
+      </article>
+      <article class="editorial-card">
+        <h3 data-lang-content="zh">准入条件用 AND，不用加权求和</h3>
+        <h3 data-lang-content="en">Combine admission conditions with AND</h3>
+        <p data-lang-content="zh">多个条件加权求和时，一项优势可以补偿掉另一项严重缺陷，比如省下的 token 抵消掉性能崩塌。论文的表 6 里正好有一个被正确拒绝的例子：候选省了 13.6% 的成本，但分数掉了 2.81 分，因为跌破下限被拦下。</p>
+        <p data-lang-content="en">Under a weighted sum, one strength can compensate for a serious weakness, such as saved tokens offsetting a performance collapse. Table 6 in the paper shows a correctly rejected case: a candidate saving 13.6% cost but losing 2.81 points was stopped by the floor.</p>
+      </article>
+      <article class="editorial-card">
+        <h3 data-lang-content="zh">用确定性判分交叉验证评委打分</h3>
+        <h3 data-lang-content="en">Cross-check judged scores with deterministic grading</h3>
+        <p data-lang-content="zh">这是论文最值得学的实验设计：既然有一部分 benchmark 依赖模型评委，就另找一个由冻结模拟器确定性判分的域，看增益是否依然存在。这一步能直接回应「是不是只是学会了迎合评委」。</p>
+        <p data-lang-content="en">This is the paper's most reusable design move: if part of the evaluation depends on model judges, find another domain scored deterministically by frozen simulators and check whether the gains survive. It answers the "did it just learn to please the judge" objection directly.</p>
+      </article>
+    </div>
+    <p data-lang-content="zh">不能直接照搬的部分：噪声容忍 δ、成本参数 β0 与 β1 的具体数值与 benchmark 量纲、试验数和任务数绑定，迁移到自己的系统时必须重新标定；论文用 policy token 作为复杂度的唯一代理，如果你的瓶颈是延迟或显存，需要换代理量并重新设计接受规则；九类组件的分类体系也要按自己的框架重建。</p>
+    <p data-lang-content="en">What does not carry over: the specific values of δ, β0 and β1 are tied to the benchmark's units, trial count and task count, and must be recalibrated on your own system. The paper uses policy tokens as the sole proxy for complexity; if your bottleneck is latency or memory, you need a different proxy and a redesigned acceptance rule. The nine-type component taxonomy also has to be rebuilt for your own framework.</p>
+  </section>
+
+  <section id="verify" class="workflow-section">
+    <h2 data-lang-content="zh">最小验证实验</h2>
+    <h2 data-lang-content="en">Minimum validation experiments</h2>
+    <p data-lang-content="zh">如果要在自己的系统上验证这套方法，下面几个实验的性价比最高，按成本从低到高排列。</p>
+    <p data-lang-content="en">If you want to validate this on your own system, these experiments give the most information per unit of effort, ordered from cheapest to most expensive.</p>
+    <div class="troubleshooting-table">
+      <table>
+        <thead>
+          <tr>
+            <th data-lang-content="zh">想验证的假设</th>
+            <th data-lang-content="en">Hypothesis</th>
+            <th data-lang-content="zh">最小实验</th>
+            <th data-lang-content="en">Minimum experiment</th>
+            <th data-lang-content="zh">成功标准</th>
+            <th data-lang-content="en">Success criterion</th>
+            <th data-lang-content="zh">成本</th>
+            <th data-lang-content="en">Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-lang-content="zh">泄漏筛查确实抓到了 benchmark 专属编辑</td>
+            <td data-lang-content="en">Leakage screening really catches benchmark-specific edits</td>
+            <td data-lang-content="zh">保存所有被 critic 拒绝的 diff，人工审计 50 条</td>
+            <td data-lang-content="en">Save every rejected diff and manually audit 50 of them</td>
+            <td data-lang-content="zh">真阳性率不低于 80%，且至少发现 1 条会导致分布外下降的漏检</td>
+            <td data-lang-content="en">True-positive rate at least 80%, with at least one miss that would have lowered OOD</td>
+            <td data-lang-content="zh">低</td>
+            <td data-lang-content="en">Low</td>
+          </tr>
+          <tr>
+            <td data-lang-content="zh">主结果是单次运行的噪声</td>
+            <td data-lang-content="en">The main result is noise from a single run</td>
+            <td data-lang-content="zh">对同一演化实例重复 3 次完整演化，使用不同随机种子</td>
+            <td data-lang-content="en">Repeat one full evolution three times with different seeds</td>
+            <td data-lang-content="zh">三次运行的最小值仍显著高于基线均值</td>
+            <td data-lang-content="en">The minimum of the three runs still clears the baseline mean</td>
+            <td data-lang-content="zh">中高</td>
+            <td data-lang-content="en">High</td>
+          </tr>
+          <tr>
+            <td data-lang-content="zh">退火预算是必要的，而不是信用分配的副产品</td>
+            <td data-lang-content="en">The annealed budget matters on its own, not just credit assignment</td>
+            <td data-lang-content="zh">固定编辑预算不变，其余机制照旧，跑一次完整演化</td>
+            <td data-lang-content="en">Hold the edit budget constant and keep everything else</td>
+            <td data-lang-content="zh">演化分上升，分布外相对基线下降至少 1.5 分</td>
+            <td data-lang-content="en">Evolve score rises and OOD drops at least 1.5 points against the baseline</td>
+            <td data-lang-content="zh">中</td>
+            <td data-lang-content="en">Medium</td>
+          </tr>
+          <tr>
+            <td data-lang-content="zh">基线没有被系统性削弱</td>
+            <td data-lang-content="en">Baselines were not systematically weakened</td>
+            <td data-lang-content="zh">用其中一个基线的官方代码跑同一实例</td>
+            <td data-lang-content="en">Run one baseline from its official code on the same instance</td>
+            <td data-lang-content="zh">复现值落在论文报告值正负 1 分之内</td>
+            <td data-lang-content="en">Reproduced value within one point of the reported value</td>
+            <td data-lang-content="zh">中</td>
+            <td data-lang-content="en">Medium</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="story-ending">
+    <p data-lang-content="zh">RRSI 的方法由六个不新的机制组成：退火、熵式探索、静态检查、提前停止式下限、L2 式成本惩罚、剪枝。它的增量不在于发明某个机制，而在于把这些机制组织成「提案侧控制容量分配、选择侧控制状态固化」的一整套搜索纪律，并给出可执行的伪代码与超参表。</p>
+    <p data-lang-content="en">RRSI is built from six mechanisms that are individually familiar: annealing, entropy-style exploration, static screening, an early-stopping floor, an L2-style cost penalty and pruning. The contribution is not any single mechanism but the way they are arranged into one discipline - capacity allocation on the proposal side, state commitment on the acceptance side - with executable pseudocode and a hyperparameter table.</p>
+    <strong data-lang-content="zh">一句话：把这篇论文当工程 checklist 用，而不是当「某机制已被严格证明」的引用来源。最值得带走的是先标定噪声带、让编辑预算退火、每增加成本必须换回可测收益这三条。</strong>
+    <strong data-lang-content="en">In one line: use this paper as an engineering checklist rather than as proof that a mechanism works. The three things worth taking are calibrating a noise band first, annealing the edit budget, and making every extra cost buy measurable gain.</strong>
+  </div>
+
+  <div class="editorial-actions">
+    <a class="button button--dark" href="https://arxiv.org/abs/2609.24972" target="_blank" rel="noopener external nofollow noreferrer"><span data-lang-content="zh">阅读原文（arXiv）</span><span data-lang-content="en">Read the paper (arXiv)</span></a>
+    <a class="button button--outline" href="https://github.com/google-research/rrsi" target="_blank" rel="noopener external nofollow noreferrer"><span data-lang-content="zh">官方代码</span><span data-lang-content="en">Official code</span></a>
+    <a class="button button--outline" href="/tech/tools/paper-reading-workflow/"><span data-lang-content="zh">阅读工作流</span><span data-lang-content="en">Reading workflow</span></a>
+  </div>
+</div>
+</div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By Simon</div><div class="framework-info"><span data-i18n="footer.framework">框架</span><span>&nbsp;</span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span data-i18n="footer.theme">主题</span><span>&nbsp;</span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div><div class="footer_custom_text"><span data-lang-content="zh">把复杂技术讲清楚，也把它做成可验证的系统。</span><span data-lang-content="en">Explain complex systems clearly, then make them verifiable.</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><div class="js-pjax"></div><script src="/js/icons.js" defer></script><script src="/js/site.js" defer></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
