@@ -189,41 +189,6 @@
     })
   }
 
-  function setupFilters() {
-    document.querySelectorAll('[data-filter-group]').forEach((group) => {
-      const buttons = Array.from(group.querySelectorAll('[data-filter]'))
-      const targetSelector = group.getAttribute('data-filter-target')
-      const target = targetSelector ? document.querySelector(targetSelector) : null
-      if (!target) return
-      const cards = Array.from(target.querySelectorAll('[data-tags]'))
-
-      function apply(filter) {
-        buttons.forEach((button) => {
-          button.setAttribute(
-            'aria-pressed',
-            String(button.getAttribute('data-filter') === filter)
-          )
-        })
-
-        cards.forEach((card) => {
-          const tags = (card.getAttribute('data-tags') || '').split(/\s+/)
-          card.hidden = filter !== 'all' && !tags.includes(filter)
-        })
-      }
-
-      buttons.forEach((button) => {
-        button.addEventListener('click', () => {
-          apply(button.getAttribute('data-filter') || 'all')
-        })
-      })
-
-      const initial =
-        buttons.find((button) => button.getAttribute('aria-pressed') === 'true') ||
-        buttons[0]
-      if (initial) apply(initial.getAttribute('data-filter') || 'all')
-    })
-  }
-
   function base64ToBytes(value) {
     const binary = window.atob(value)
     const bytes = new Uint8Array(binary.length)
@@ -355,52 +320,6 @@
     })
   }
 
-  function setupFavicon() {
-    const head = document.head
-    if (!head) return
-
-    head
-      .querySelectorAll(
-        'link[rel~="icon"], link[rel="apple-touch-icon"], link[rel="mask-icon"]'
-      )
-      .forEach((link) => link.remove())
-
-    const icons = [
-      { rel: 'shortcut icon', href: '/img/favicon-robot-v3.ico?v=3' },
-      { rel: 'icon', type: 'image/svg+xml', href: '/img/favicon-robot-v3.svg?v=3' },
-      {
-        rel: 'icon',
-        type: 'image/png',
-        sizes: '32x32',
-        href: '/img/favicon-robot-v3-32.png?v=3'
-      },
-      {
-        rel: 'icon',
-        type: 'image/png',
-        sizes: '16x16',
-        href: '/img/favicon-robot-v3-16.png?v=3'
-      },
-      {
-        rel: 'apple-touch-icon',
-        sizes: '180x180',
-        href: '/img/apple-touch-icon-robot-v3.png?v=3'
-      },
-      {
-        rel: 'mask-icon',
-        href: '/img/favicon-robot-v3.svg?v=3',
-        color: '#151515'
-      }
-    ]
-
-    icons.forEach((attributes) => {
-      const link = document.createElement('link')
-      Object.entries(attributes).forEach(([name, value]) => {
-        link.setAttribute(name, value)
-      })
-      head.appendChild(link)
-    })
-  }
-
   // 内容截图点击放大：桌面截图在手机上直接看会太小，点一下进全屏并可滚动/双指缩放
   function setupLightbox() {
     const container = document.querySelector('#content-inner') || document.body
@@ -465,12 +384,10 @@
   }
 
   function boot() {
-    setupFavicon()
     setupThemeSync()
     setupLanguageSwitch()
     setupReveal()
     setupBriefingCarousel()
-    setupFilters()
     setupExperienceGate()
     setupLightbox()
     setupOfflineCache()
