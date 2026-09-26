@@ -11,16 +11,16 @@
     document.documentElement.lang = 'zh-CN'
     document.documentElement.dataset.language = 'zh'
   }
-})()</script><title>本地 Agent Harness | Simon</title><meta name="author" content="Simon"><meta name="copyright" content="Simon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一套自己拥有的本地 Agent 运行时：自研循环、可替换执行器、文件优先记忆、无人值守调度与代码化验收。">
+})()</script><title>本地 Agent Harness | Simon</title><meta name="author" content="Simon"><meta name="copyright" content="Simon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一套自己拥有的本地 Agent 运行时：自研循环、可替换执行器、文件优先记忆、无人值守调度，以及带类型化决策、可被对抗性测量的验收层。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="本地 Agent Harness">
 <meta property="og:url" content="https://www.simon-zj.top/tech/agent/local-agent-harness/">
 <meta property="og:site_name" content="Simon">
-<meta property="og:description" content="一套自己拥有的本地 Agent 运行时：自研循环、可替换执行器、文件优先记忆、无人值守调度与代码化验收。">
+<meta property="og:description" content="一套自己拥有的本地 Agent 运行时：自研循环、可替换执行器、文件优先记忆、无人值守调度，以及带类型化决策、可被对抗性测量的验收层。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg">
 <meta property="article:published_time" content="2026-09-22T18:00:00.000Z">
-<meta property="article:modified_time" content="2026-09-24T18:11:48.274Z">
+<meta property="article:modified_time" content="2026-09-26T07:49:11.476Z">
 <meta property="article:author" content="Simon">
 <meta property="article:tag" content="机器人,具身智能,Agent,ROS,论文阅读,知识漫游,AI提效,面经,Robotics,Embodied AI">
 <meta name="twitter:card" content="summary">
@@ -153,7 +153,7 @@
   isToc: false,
   pageType: 'page'
 }</script><script type="speculationrules">{"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"a[target='_blank'],a[href^='#'],a[href^='mailto:'],a[download]"}}]},"eagerness":"moderate"}]}</script><link rel="stylesheet" href="/css/site.css"><link rel="manifest" href="/site.webmanifest"><link rel="icon" type="image/svg+xml" href="/img/favicon-robot-v3.svg?v=3"><link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-robot-v3-32.png?v=3"><link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-robot-v3-16.png?v=3"><link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon-robot-v3.png?v=3"><link rel="mask-icon" href="/img/favicon-robot-v3.svg?v=3" color="#151515"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Simon" type="application/atom+xml">
-</head><body class="page type-tech-agent-harness page" data-page-title-zh="本地 Agent Harness" data-page-title-en="Local Agent Harness" data-page-description-zh="一套自己拥有的本地 Agent 运行时：自研循环、可替换执行器、文件优先记忆、无人值守调度与代码化验收。" data-page-description-en="A locally owned agent runtime with its own loop, swappable executors, file-first memory, unattended scheduling and acceptance criteria in code."><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/optimized/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="language-switch language-switch--sidebar" role="group" aria-label="Language"><button class="language-switch__button" type="button" data-language-option="zh" aria-pressed="true">中文</button><button class="language-switch__button" type="button" data-language-option="en" aria-pressed="false">EN</button></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-house"></i><span data-i18n="nav.home"> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tech/"><i class="fa-fw fas fa-lightbulb"></i><span data-i18n="nav.tech"> 技术</span></a></div><div class="menus_item"><a class="site-page" href="/trends/"><i class="fa-fw fas fa-newspaper"></i><span data-i18n="nav.news"> AI资讯速递</span></a></div><div class="menus_item"><a class="site-page" href="/knowledge/"><i class="fa-fw fas fa-compass"></i><span data-i18n="nav.knowledge"> 知识漫游</span></a></div><div class="menus_item"><a class="site-page" href="/experience/"><i class="fa-fw fas fa-lock"></i><span data-i18n="nav.experience"> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span data-i18n="nav.about"> 关于</span></a></div></div></div></div><div class="page type-tech-agent-harness" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav id="nav"><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span data-i18n="nav.search"> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-house"></i><span data-i18n="nav.home"> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tech/"><i class="fa-fw fas fa-lightbulb"></i><span data-i18n="nav.tech"> 技术</span></a></div><div class="menus_item"><a class="site-page" href="/trends/"><i class="fa-fw fas fa-newspaper"></i><span data-i18n="nav.news"> AI资讯速递</span></a></div><div class="menus_item"><a class="site-page" href="/knowledge/"><i class="fa-fw fas fa-compass"></i><span data-i18n="nav.knowledge"> 知识漫游</span></a></div><div class="menus_item"><a class="site-page" href="/experience/"><i class="fa-fw fas fa-lock"></i><span data-i18n="nav.experience"> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span data-i18n="nav.about"> 关于</span></a></div></div><div class="language-switch" role="group" aria-label="Language"><button class="language-switch__button" type="button" data-language-option="zh" aria-pressed="true">中文</button><button class="language-switch__button" type="button" data-language-option="en" aria-pressed="false">EN</button></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav></header><main class="layout hide-aside" id="content-inner"><div class="page-masthead"><div class="page-masthead__grid"><div class="page-masthead__meta"><span class="page-masthead__eyebrow">Agent / Local Harness</span><div class="page-masthead__rule"></div><p data-i18n-zh="一套自己拥有的本地 Agent 运行时：自研循环、可替换执行器、文件优先记忆、无人值守调度与代码化验收。" data-i18n-en="A locally owned agent runtime with its own loop, swappable executors, file-first memory, unattended scheduling and acceptance criteria in code.">一套自己拥有的本地 Agent 运行时：自研循环、可替换执行器、文件优先记忆、无人值守调度与代码化验收。</p></div><div class="page-masthead__body"><h1 data-i18n-zh="本地 Agent Harness" data-i18n-en="Local Agent Harness">本地 Agent Harness</h1><p class="page-masthead__caption" data-i18n-zh="把记忆、权限、触发和验收握在自己手里，让 Agent 真的把事做完。" data-i18n-en="Keep memory, permissions, triggers and acceptance in your own hands so the agent actually finishes the work.">把记忆、权限、触发和验收握在自己手里，让 Agent 真的把事做完。</p></div><div class="page-masthead__art" aria-hidden="true"><span class="page-masthead__index">01.1.1</span><div class="page-masthead__marks"><i></i><i></i><i></i></div><span class="page-masthead__note">Own the loop</span></div></div></div><div id="page"><div class="container" id="article-container"><div class="editorial-page agent-harness-page">
+</head><body class="page type-tech-agent-harness page" data-page-title-zh="本地 Agent Harness" data-page-title-en="Local Agent Harness" data-page-description-zh="一套自己拥有的本地 Agent 运行时：自研循环、可替换执行器、文件优先记忆、无人值守调度，以及带类型化决策、可被对抗性测量的验收层。" data-page-description-en="A locally owned agent runtime with its own loop, swappable executors, file-first memory, unattended scheduling and an acceptance layer built on typed decisions and adversarial measurement."><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/optimized/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="language-switch language-switch--sidebar" role="group" aria-label="Language"><button class="language-switch__button" type="button" data-language-option="zh" aria-pressed="true">中文</button><button class="language-switch__button" type="button" data-language-option="en" aria-pressed="false">EN</button></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-house"></i><span data-i18n="nav.home"> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tech/"><i class="fa-fw fas fa-lightbulb"></i><span data-i18n="nav.tech"> 技术</span></a></div><div class="menus_item"><a class="site-page" href="/trends/"><i class="fa-fw fas fa-newspaper"></i><span data-i18n="nav.news"> AI资讯速递</span></a></div><div class="menus_item"><a class="site-page" href="/knowledge/"><i class="fa-fw fas fa-compass"></i><span data-i18n="nav.knowledge"> 知识漫游</span></a></div><div class="menus_item"><a class="site-page" href="/experience/"><i class="fa-fw fas fa-lock"></i><span data-i18n="nav.experience"> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span data-i18n="nav.about"> 关于</span></a></div></div></div></div><div class="page type-tech-agent-harness" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav id="nav"><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span data-i18n="nav.search"> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-house"></i><span data-i18n="nav.home"> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tech/"><i class="fa-fw fas fa-lightbulb"></i><span data-i18n="nav.tech"> 技术</span></a></div><div class="menus_item"><a class="site-page" href="/trends/"><i class="fa-fw fas fa-newspaper"></i><span data-i18n="nav.news"> AI资讯速递</span></a></div><div class="menus_item"><a class="site-page" href="/knowledge/"><i class="fa-fw fas fa-compass"></i><span data-i18n="nav.knowledge"> 知识漫游</span></a></div><div class="menus_item"><a class="site-page" href="/experience/"><i class="fa-fw fas fa-lock"></i><span data-i18n="nav.experience"> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span data-i18n="nav.about"> 关于</span></a></div></div><div class="language-switch" role="group" aria-label="Language"><button class="language-switch__button" type="button" data-language-option="zh" aria-pressed="true">中文</button><button class="language-switch__button" type="button" data-language-option="en" aria-pressed="false">EN</button></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav></header><main class="layout hide-aside" id="content-inner"><div class="page-masthead"><div class="page-masthead__grid"><div class="page-masthead__meta"><span class="page-masthead__eyebrow">Agent / Local Harness</span><div class="page-masthead__rule"></div><p data-i18n-zh="一套自己拥有的本地 Agent 运行时：自研循环、可替换执行器、文件优先记忆、无人值守调度，以及带类型化决策、可被对抗性测量的验收层。" data-i18n-en="A locally owned agent runtime with its own loop, swappable executors, file-first memory, unattended scheduling and an acceptance layer built on typed decisions and adversarial measurement.">一套自己拥有的本地 Agent 运行时：自研循环、可替换执行器、文件优先记忆、无人值守调度，以及带类型化决策、可被对抗性测量的验收层。</p></div><div class="page-masthead__body"><h1 data-i18n-zh="本地 Agent Harness" data-i18n-en="Local Agent Harness">本地 Agent Harness</h1><p class="page-masthead__caption" data-i18n-zh="把记忆、权限、触发和验收握在自己手里，让 Agent 真的把事做完。" data-i18n-en="Keep memory, permissions, triggers and acceptance in your own hands so the agent actually finishes the work.">把记忆、权限、触发和验收握在自己手里，让 Agent 真的把事做完。</p></div><div class="page-masthead__art" aria-hidden="true"><span class="page-masthead__index">01.1.1</span><div class="page-masthead__marks"><i></i><i></i><i></i></div><span class="page-masthead__note">Own the loop</span></div></div></div><div id="page"><div class="container" id="article-container"><div class="editorial-page agent-harness-page">
   <nav class="topic-breadcrumb" aria-label="当前位置">
     <a href="/tech/"><span data-lang-content="zh">技术笔记</span><span data-lang-content="en">Technology Notes</span></a>
     <span>/</span>
@@ -278,13 +278,49 @@
     <ul>
       <li data-lang-content="zh">发布闸门：结构、引用完整性、来源可核验性、生成物漂移四项校验，全部代码化。</li>
       <li data-lang-content="en">Release gates: structure, reference integrity, source traceability and generated-file drift - all enforced in code.</li>
-      <li data-lang-content="zh">防编造：正文引用的每条来源都必须能在当日原始抓取结果里找到，实测 47/47 可回溯。</li>
-      <li data-lang-content="en">Anti-fabrication: every cited source must exist in that day's raw capture; measured 47 out of 47 traceable.</li>
       <li data-lang-content="zh">真实的失败案例：模型多写了 4 条热点，被上限校验挡下，运行判失败并通知，而不是把超限内容发出去。</li>
       <li data-lang-content="en">A real failure: the model wrote four items over the limit; the gate failed the run and notified instead of publishing over-limit content.</li>
       <li data-lang-content="zh">崩溃恢复：在步骤执行中途强制 kill 进程，下一次运行自动识别并重跑，没有产生重复发布。</li>
       <li data-lang-content="en">Crash recovery: killing the process mid-step led the next run to detect and retry it, with no duplicate release.</li>
     </ul>
+    <h3 data-lang-content="zh">闸门自己也要被测量</h3>
+    <h3 data-lang-content="en">The gate gets measured too</h3>
+    <p data-lang-content="zh">「每条引用都能回溯」这句话曾经是假的。旧闸门只回答是/否，于是"引用了一条真实抓取过的 URL 的前缀延伸"也被算成通过。把它换成类型化决策（通过 / 不通过 / <strong>无法核验</strong>）之后，用 930 条自动生成的标注语料把旧闸门、新闸门和 LLM 裁判放在同一份样本上对比：</p>
+    <p data-lang-content="en">The claim "every citation is traceable" was once false. The old gate only answered yes or no, so a citation that merely extended a genuine fetched URL counted as passing. After replacing it with typed decisions (pass / fail / <strong>cannot verify</strong>), 930 auto-generated labelled samples put the old gate, the new gate and an LLM judge on the same set:</p>
+    <div class="troubleshooting-table">
+      <table>
+        <thead>
+          <tr>
+            <th data-lang-content="zh">判定方式</th><th data-lang-content="en">Matcher</th>
+            <th data-lang-content="zh">漏检率（放行编造来源）</th><th data-lang-content="en">False pass (fabricated source released)</th>
+            <th data-lang-content="zh">误杀率（拦下真实引用）</th><th data-lang-content="en">False reject (real citation blocked)</th>
+            <th data-lang-content="zh">判「无法核验」</th><th data-lang-content="en">Cannot verify</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-lang-content="zh">旧布尔闸门</td><td data-lang-content="en">Old boolean gate</td>
+            <td>50.0%</td><td>50.0%</td><td>0.0%</td><td>0.0%</td><td>0.0%</td><td>0.0%</td>
+          </tr>
+          <tr>
+            <td data-lang-content="zh">类型化决策（当前）</td><td data-lang-content="en">Typed decisions (current)</td>
+            <td><strong>0.0%</strong></td><td><strong>0.0%</strong></td>
+            <td><strong>0.0%</strong></td><td><strong>0.0%</strong></td>
+            <td>28.6%</td><td>28.6%</td>
+          </tr>
+          <tr>
+            <td data-lang-content="zh">LLM 裁判</td><td data-lang-content="en">LLM judge</td>
+            <td>0.0%</td><td>0.0%</td>
+            <td>5.3%</td><td>5.3%</td>
+            <td>0.0%</td><td>0.0%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p data-lang-content="zh">三行不是"谁赢"。LLM 裁判一次都没漏，却会把合法的等价引用判错，而且每次判决要烧掉约 9.2k input token；类型化决策免费、可复现，代价是把两类前缀型攻击显式判成"无法核验"——而这些不确定性全部落在攻击样本上，在 6 天真实内容里一次都没触发。真正错的是旧闸门：它把"不知道"算成了"通过"。</p>
+    <p data-lang-content="en">Three rows, not a leaderboard. The LLM judge never leaked but wrongly rejected legitimate equivalent citations, at roughly 9.2k input tokens per verdict; typed decisions are free and reproducible, paying instead with an explicit "cannot verify" on two attack shapes - and that uncertainty landed only on attacks, never on six days of real content. The old gate was the one that was simply wrong: it counted "I do not know" as "it passed".</p>
+    <p data-lang-content="zh">语料还包含一类"真实但从未被引用"的样本：URL 确实在当天抓取里、文章却没引用它。三种判定全判通过，<strong>而且这是对的</strong>——闸门证明的是来源确实被抓到过，不是来源支撑了那句话。这条边界被写进报告，而不是藏起来。</p>
+    <p data-lang-content="en">The corpus also includes "real but never cited" samples: the URL is genuinely in that day's capture yet the article never used it. All three matchers pass them, <strong>correctly</strong> - the gate proves provenance, not support. That ceiling is stated in the report rather than hidden.</p>
   </section>
 
   <section id="how" class="workflow-section">
@@ -299,6 +335,10 @@
       <code data-lang-content="en">./agent run daily-trends --compose replay --dry-run</code>
       <code data-lang-content="zh">./agent experiment run daily-trends-compare --date 2026-09-22 --allow-llm</code>
       <code data-lang-content="en">./agent experiment run daily-trends-compare --date 2026-09-22 --allow-llm</code>
+      <code data-lang-content="zh">./agent verify eval &nbsp;&nbsp;# 用标注语料测量闸门自身的漏检率与误杀率</code>
+      <code data-lang-content="en">./agent verify eval &nbsp;&nbsp;# measure the gate itself against a labelled corpus</code>
+      <code data-lang-content="zh">./agent verify probes &nbsp;&nbsp;# 用对抗载荷撞校验器的不变式</code>
+      <code data-lang-content="en">./agent verify probes &nbsp;&nbsp;# hit validators with payloads that break their invariants</code>
       <code data-lang-content="zh">./agent status / runs / report &lt;run_id&gt;</code>
       <code data-lang-content="en">./agent status / runs / report &lt;run_id&gt;</code>
     </div>
@@ -314,6 +354,12 @@
       <li data-lang-content="en">Tool calls are bounded by writable paths and a command allow-list; violations are refused and recorded.</li>
       <li data-lang-content="zh">内容必须通过结构、引用与可核验性校验，缺一不发。</li>
       <li data-lang-content="en">Content must pass structure, reference and traceability checks; missing one blocks release.</li>
+      <li data-lang-content="zh">校验器返回的不是布尔值，而是带类型的判决：通过 / 不通过 / <strong>无法核验</strong> / 不适用，外加失败分类与逐条证据。"无法核验"默认按失败处理（fail-closed），只有任务声明里显式放宽才放行。</li>
+      <li data-lang-content="en">Validators return a typed decision - pass, fail, <strong>cannot verify</strong>, not applicable - with a failure class and itemised evidence. "Cannot verify" blocks by default (fail-closed); only an explicit task-level policy can loosen it.</li>
+      <li data-lang-content="zh">被拦下的运行会写出机器可读的修复简报：哪个校验器、哪一条引用、哪个 URL、为什么，以及该怎么修。失败是可交接的，不是一句 exit 1。</li>
+      <li data-lang-content="en">A blocked run writes a machine-readable repair brief: which validator, which citation, which URL, why, and what to do. A failure is handover-ready, not an exit code.</li>
+      <li data-lang-content="zh">指标有基线：冻结一次结果，之后每次测量自动比对，漏检率或误杀率任一回升就报错。闸门变差不会没人发现。</li>
+      <li data-lang-content="en">Metrics have a baseline: freeze a run, and every later measurement compares against it. A rising leak or false-reject rate fails loudly.</li>
       <li data-lang-content="zh">生成物漂移同样会被拦下（例如站点 sitemap 反复累积空行这类问题）。</li>
       <li data-lang-content="en">Generated-file drift is blocked too - for example a sitemap that accumulates blank lines on every run.</li>
     </ul>
@@ -329,6 +375,8 @@
       <li data-lang-content="en">Semantic retrieval is an optional interface only; the current version relies on keyword indexing and structured lookup.</li>
       <li data-lang-content="zh">模型是可换的：云端模型为主，本地模型留同一接口，能力上限由所选模型决定。</li>
       <li data-lang-content="en">Models are swappable: cloud by default with the same interface for a local endpoint, and the ceiling is set by whichever model you pick.</li>
+      <li data-lang-content="zh">闸门能证明来源确实被抓到过，不能证明来源支撑了那句话——后者需要另一层，当前不在范围内。这条边界在测量报告里被显式标出，也计入语料。</li>
+      <li data-lang-content="en">The gate proves that a source was genuinely fetched; it does not prove that the source supports the claim - that needs another layer and is out of scope today. The boundary is named in the measurement report and has its own corpus class.</li>
       <li data-lang-content="zh">密钥不落仓库：所有凭据走环境变量或本地 .env，仓库里不含任何明文密钥。</li>
       <li data-lang-content="en">No secrets in the repository: credentials come from environment variables or a local .env file.</li>
     </ul>
