@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg">
 <meta property="article:published_time" content="2026-09-15T05:30:00.000Z">
-<meta property="article:modified_time" content="2026-09-26T04:11:50.868Z">
+<meta property="article:modified_time" content="2026-09-26T05:35:02.734Z">
 <meta property="article:author" content="Simon">
 <meta property="article:tag" content="机器人,具身智能,Agent,ROS,论文阅读,知识漫游,AI提效,面经,Robotics,Embodied AI">
 <meta name="twitter:card" content="summary">
@@ -165,35 +165,29 @@
       <span data-lang-content="en">Paper Reading</span>
     </span>
   </nav>
-  <div class="editorial-page__lead">
-    <p data-lang-content="zh">好的论文阅读不是复述摘要，而是建立一条能回到图表、实验设置和失败边界的证据链。</p>
-    <p data-lang-content="en">A useful paper note is not a summary. It is an evidence trail that leads back to the figures, experiment setup and failure boundaries.</p>
-    <div class="page-facts">
-      <span data-lang-content="zh">阅读方式</span>
-      <span data-lang-content="en">Reading method</span>
-      <strong data-lang-content="zh">证据 / 边界 / 代价 / 迁移</strong>
-      <strong data-lang-content="en">Evidence / Boundary / Cost / Transfer</strong>
-      <small data-lang-content="zh">把论文变成可以带走的方法，而不是一次性摘要。</small>
-      <small data-lang-content="en">Turn a paper into a reusable method rather than a one-off summary.</small>
-    </div>
-  </div>
-
   <div class="content-index">
     <span class="content-index__label" data-lang-content="zh">目录</span>
     <span class="content-index__label" data-lang-content="en">Contents</span>
-    <a href="#paper-list">
-      <span data-lang-content="zh">全部论文</span>
-      <span data-lang-content="en">All papers</span>
-      <i data-lucide="arrow-down" aria-hidden="true"></i>
+    <a href="/tech/papers/rrsi-harness-rsi/">
+      <span data-lang-content="zh">RRSI：Agent Harness 的递归自改进</span>
+      <span data-lang-content="en">RRSI: Recursive Self-Improvement of Agent Harnesses</span>
+      <i data-lucide="arrow-up-right" aria-hidden="true"></i>
     </a>
-  </div>
-
-  <div class="filter-bar" data-filter-group data-filter-target="#paper-list">
-    <button class="filter-button" type="button" data-filter="all" aria-pressed="true"><span data-lang-content="zh">全部</span><span data-lang-content="en">All</span></button>
-    <button class="filter-button" type="button" data-filter="deepread" aria-pressed="false"><span data-lang-content="zh">论文精读</span><span data-lang-content="en">Deep reads</span></button>
-    <button class="filter-button" type="button" data-filter="agent" aria-pressed="false">Agent</button>
-    <button class="filter-button" type="button" data-filter="robotics" aria-pressed="false"><span data-lang-content="zh">机器人</span><span data-lang-content="en">Robotics</span></button>
-    <button class="filter-button" type="button" data-filter="vla" aria-pressed="false">VLA</button>
+    <a href="/tech/agent/">
+      <span data-lang-content="zh">ReAct：推理与行动交替</span>
+      <span data-lang-content="en">ReAct: Reasoning and Acting</span>
+      <i data-lucide="arrow-up-right" aria-hidden="true"></i>
+    </a>
+    <a href="/tech/robotics/">
+      <span data-lang-content="zh">RT-2：视觉语言知识迁移到机器人动作</span>
+      <span data-lang-content="en">RT-2: Vision-Language Knowledge for Robot Actions</span>
+      <i data-lucide="arrow-up-right" aria-hidden="true"></i>
+    </a>
+    <a href="/tech/robotics/">
+      <span data-lang-content="zh">Diffusion Policy：扩散策略与真机鲁棒性</span>
+      <span data-lang-content="en">Diffusion Policy: Diffusion Policies and Real-Robot Robustness</span>
+      <i data-lucide="arrow-up-right" aria-hidden="true"></i>
+    </a>
   </div>
 
   <div class="paper-grid" id="paper-list">
@@ -227,12 +221,5 @@
     </article>
   </div>
 
-  <h2 data-lang-content="zh">每篇论文只回答三个核心问题</h2>
-  <h2 data-lang-content="en">Three questions for every paper</h2>
-  <ol class="editorial-list">
-    <li><span class="editorial-list__index">01</span><div><h3 data-lang-content="zh">它改变了什么</h3><h3 data-lang-content="en">What changed</h3><p data-lang-content="zh">是表示、规划、控制、数据、评测还是系统集成上的新能力。</p><p data-lang-content="en">A genuine advance in representation, planning, control, data, evaluation or integration.</p></div></li>
-    <li><span class="editorial-list__index">02</span><div><h3 data-lang-content="zh">证据够不够强</h3><h3 data-lang-content="en">Is the evidence strong</h3><p data-lang-content="zh">结论是否建立在合理基线、重复实验、真机环境和清晰消融之上。</p><p data-lang-content="en">Whether the claim rests on fair baselines, repeated experiments, real hardware and clear ablations.</p></div></li>
-    <li><span class="editorial-list__index">03</span><div><h3 data-lang-content="zh">能否迁移</h3><h3 data-lang-content="en">Can it transfer</h3><p data-lang-content="zh">机制能否进入自己的机器人或 Agent 系统，代价是什么。</p><p data-lang-content="en">Whether the mechanism can enter my own robotic or agent system, and at what cost.</p></div></li>
-  </ol>
 </div>
 </div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By Simon</div><div class="framework-info"><span data-i18n="footer.framework">框架</span><span>&nbsp;</span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span data-i18n="footer.theme">主题</span><span>&nbsp;</span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div><div class="footer_custom_text"><span data-lang-content="zh">把复杂技术讲清楚，也把它做成可验证的系统。</span><span data-lang-content="en">Explain complex systems clearly, then make them verifiable.</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><div class="js-pjax"></div><script src="/js/icons.js" defer></script><script src="/js/site.js" defer></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
