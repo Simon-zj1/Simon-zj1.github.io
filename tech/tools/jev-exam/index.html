@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg">
 <meta property="article:published_time" content="2026-09-22T18:00:00.000Z">
-<meta property="article:modified_time" content="2026-09-26T05:46:12.514Z">
+<meta property="article:modified_time" content="2026-09-27T04:42:57.761Z">
 <meta property="article:author" content="Simon">
 <meta property="article:tag" content="机器人,具身智能,Agent,ROS,论文阅读,知识漫游,AI提效,面经,Robotics,Embodied AI">
 <meta name="twitter:card" content="summary">
@@ -441,6 +441,8 @@
       <li data-lang-content="en">The engine is swappable. Grading depends on one interface, currently backed by TypeSafe Jev, so a future self-hosted decision model only replaces that implementation.</li>
       <li data-lang-content="zh">成本与准入可控。每人每天限量，自带密钥（BYOK）不占平台额度；Jev 按输入计费且输出免费，所以「每个得分点问一次」这种暴力拆解在经济上是可行的。</li>
       <li data-lang-content="en">Cost and access stay bounded. Daily quotas apply, BYOK calls bypass platform quota, and because Jev charges for input only, one question per rubric point is affordable.</li>
+      <li data-lang-content="zh">数据层不是「能跑就行」。Postgres 表之间带 <code>ON DELETE CASCADE</code> 外键，出题、删材料、删账号等关键多步写入在单事务里提交；每日额度用条件更新原子占用，避免并发请求同时穿过闸门。数据库当前按 Neon Free Tier 起步，备份、监控与升级触发写进了 <code>docs/operating.md</code>。</li>
+      <li data-lang-content="en">The data layer is not "good enough to run". Postgres tables carry <code>ON DELETE CASCADE</code> foreign keys; critical multi-step writes such as creating an exam or deleting material/account commit in one transaction; daily quotas are reserved atomically with conditional updates. The database starts on Neon Free Tier, with backups, monitoring and upgrade triggers documented in <code>docs/operating.md</code>.</li>
     </ul>
     <figure class="story-figure">
       <picture>
