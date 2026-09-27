@@ -186,6 +186,65 @@
   text-decoration: none;
 }
 
+/* ---------- 结构化条目字段（主编式总结） ---------- */
+.trend-fields {
+  margin-top: 14px;
+  border-top: 1px dashed var(--site-line);
+}
+
+.trend-field {
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr);
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px dashed var(--site-line);
+}
+
+.trend-field__label {
+  color: var(--page-accent, var(--site-accent));
+  font-size: 12px;
+  font-weight: 680;
+  line-height: 1.7;
+}
+
+.trend-field__value {
+  color: var(--site-ink);
+  font-size: 14.5px;
+  line-height: 1.75;
+}
+
+.trend-field__value p {
+  margin: 0 0 6px;
+}
+
+.trend-field__value p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- 全局总结 ---------- */
+.trend-overview__block {
+  margin-top: 18px;
+}
+
+.trend-overview__block h3 {
+  margin: 0 0 6px;
+  font-size: 15px;
+}
+
+.trend-overview__block .trend-field__value,
+.trend-overview__block div[data-lang-content] {
+  color: var(--site-muted);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+@media (max-width: 768px) {
+  .trend-field {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}
+
 /* ---------- 来源与说明 ---------- */
 .trend-refs ol {
   margin: 0;
