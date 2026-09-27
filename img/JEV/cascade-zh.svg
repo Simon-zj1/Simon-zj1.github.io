@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 600" width="1240" height="600" role="img">
+<rect x="0" y="0" width="1240" height="600" rx="0" fill="#eeeee8"/>
+<text x="60" y="66" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="27" font-weight="650" fill="#151515" text-anchor="start" opacity="1">置信度把错误排在了前面</text>
+<text x="60" y="96" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="400" fill="#666862" text-anchor="start" opacity="1">左：按最大标签概率分箱后的 JEV 准确率。右：τ=0.9 的升级策略与全程用强判官对比。</text>
+<text x="60" y="154" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="620" fill="#666862" text-anchor="start" opacity="1">按置信度分箱的准确率</text>
+<text x="700" y="154" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="620" fill="#666862" text-anchor="start" opacity="1">τ=0.9 的策略对比</text>
+<rect x="84" y="320.28999999999996" width="92" height="109.71000000000001" rx="6" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="130" y="310.28999999999996" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="650" fill="#1f6f68" text-anchor="middle" opacity="1">47.7%</text>
+<text x="130" y="452" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#151515" text-anchor="middle" opacity="1">q &lt; 0.6</text>
+<text x="130" y="470" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="middle" opacity="1">n = 65</text>
+<rect x="216" y="254.04999999999998" width="92" height="175.95000000000002" rx="6" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="262" y="244.04999999999998" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="650" fill="#1f6f68" text-anchor="middle" opacity="1">76.5%</text>
+<text x="262" y="452" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#151515" text-anchor="middle" opacity="1">0.7 – 0.8</text>
+<text x="262" y="470" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="middle" opacity="1">n = 85</text>
+<rect x="348" y="214.02999999999997" width="92" height="215.97000000000003" rx="6" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="394" y="204.02999999999997" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="650" fill="#1f6f68" text-anchor="middle" opacity="1">93.9%</text>
+<text x="394" y="452" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#151515" text-anchor="middle" opacity="1">0.95 – 0.99</text>
+<text x="394" y="470" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="middle" opacity="1">n = 147</text>
+<rect x="480" y="202.07" width="92" height="227.93" rx="6" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="526" y="192.07" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="650" fill="#1f6f68" text-anchor="middle" opacity="1">99.1%</text>
+<text x="526" y="452" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#151515" text-anchor="middle" opacity="1">q = 1</text>
+<text x="526" y="470" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="middle" opacity="1">n = 322</text>
+<line x1="60" y1="430" x2="620" y2="430" stroke="rgba(21,21,21,0.24)" stroke-width="1.4"/>
+<text x="60" y="500" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">q 越低越容易错：低置信区间只有 47.7% 正确</text>
+<text x="700" y="200" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="680" fill="#151515" text-anchor="start" opacity="1">级联（τ=0.9，升级 34%）</text>
+<rect x="700" y="210" width="273.9" height="26" rx="5" fill="#e05a36" stroke="none" stroke-width="1"/>
+<text x="985.9" y="229" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="650" fill="#e05a36" text-anchor="start" opacity="1">91.3%</text>
+<text x="1047.9" y="229" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">费用 47%</text>
+<text x="700" y="274" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="520" fill="#151515" text-anchor="start" opacity="1">全程 GPT-6</text>
+<rect x="700" y="284" width="275.1" height="26" rx="5" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="987.1" y="303" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="650" fill="#315f86" text-anchor="start" opacity="1">91.7%</text>
+<text x="1049.1" y="303" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">费用 100%</text>
+<text x="700" y="348" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="520" fill="#151515" text-anchor="start" opacity="1">同预算随机升级</text>
+<rect x="700" y="358" width="264.29999999999995" height="26" rx="5" fill="#6b6a64" stroke="none" stroke-width="1"/>
+<text x="976.3" y="377" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="650" fill="#6b6a64" text-anchor="start" opacity="1">88.1%</text>
+<text x="1038.3" y="377" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">费用 47%</text>
+<text x="700" y="422" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="520" fill="#151515" text-anchor="start" opacity="1">按标签升级（oracle 上界）</text>
+<rect x="700" y="432" width="283.20000000000005" height="26" rx="5" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="995.2" y="451" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="650" fill="#1f6f68" text-anchor="start" opacity="1">94.4%</text>
+<text x="1057.2" y="451" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">费用 47%</text>
+<line x1="700" y1="480" x2="1180" y2="480" stroke="rgba(21,21,21,0.24)" stroke-width="1.4"/>
+<text x="700" y="508" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">同一预算下随机升级只有 88.1%，标签感知上界 94.4%</text>
+<text x="60" y="556" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">数据来源：原文 Sec.7「Confidence orders the errors」与「Single-order cascades」。右侧为离线模拟，阈值是在同一批被评分条目上读出的（post hoc），原文明确区分于其冻结的双序策略。</text>
+</svg>

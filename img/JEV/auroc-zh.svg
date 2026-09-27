@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 614" width="1240" height="614" role="img">
+<rect x="0" y="0" width="1240" height="614" rx="0" fill="#eeeee8"/>
+<text x="60" y="66" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="27" font-weight="650" fill="#151515" text-anchor="start" opacity="1">置信度在哪里还管用</text>
+<text x="60" y="96" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="400" fill="#666862" text-anchor="start" opacity="1">置信度区分对错的 AUROC（0.5 = 完全没有信息）。同一套门控换到对抗性输入上就会失效。</text>
+<rect x="60" y="132" width="14" height="14" rx="3" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="82" y="144" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">可用</text>
+<rect x="210" y="132" width="14" height="14" rx="3" fill="#a86b18" stroke="none" stroke-width="1"/>
+<text x="232" y="144" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">变弱</text>
+<rect x="360" y="132" width="14" height="14" rx="3" fill="#e05a36" stroke="none" stroke-width="1"/>
+<text x="382" y="144" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">失效</text>
+<line x1="330" y1="176" x2="330" y2="524" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="330" y="194" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="middle" opacity="1">0.5</text>
+<line x1="476" y1="176" x2="476" y2="524" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="476" y="194" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="middle" opacity="1">0.6</text>
+<line x1="622" y1="176" x2="622" y2="524" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="622" y="194" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="middle" opacity="1">0.7</text>
+<line x1="768" y1="176" x2="768" y2="524" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="768" y="194" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="middle" opacity="1">0.8</text>
+<line x1="914" y1="176" x2="914" y2="524" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="914" y="194" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="middle" opacity="1">0.9</text>
+<line x1="1060" y1="176" x2="1060" y2="524" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="1060" y="194" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="middle" opacity="1">1.0</text>
+<line x1="330" y1="176" x2="330" y2="524" stroke="rgba(21,21,21,0.24)" stroke-width="1.6" stroke-dasharray="5 5"/>
+<text x="338" y="544" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">0.5 = 无信息</text>
+<rect x="60" y="200" width="1120" height="40" rx="8" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="80" y="226" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="540" fill="#151515" text-anchor="start" opacity="1">RM-Bench 易对</text>
+<rect x="330" y="209" width="610.2800000000001" height="20" rx="4" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="952.2800000000001" y="225" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="650" fill="#1f6f68" text-anchor="start" opacity="1">0.918</text>
+<rect x="60" y="248" width="1120" height="40" rx="8" fill="none" stroke="none" stroke-width="1"/>
+<text x="80" y="274" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="540" fill="#151515" text-anchor="start" opacity="1">RM-Bench 普通对</text>
+<rect x="330" y="257" width="586.9200000000001" height="20" rx="4" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="928.9200000000001" y="273" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="650" fill="#1f6f68" text-anchor="start" opacity="1">0.902</text>
+<rect x="60" y="296" width="1120" height="40" rx="8" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="80" y="322" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="540" fill="#151515" text-anchor="start" opacity="1">RewardBench</text>
+<rect x="330" y="305" width="538.74" height="20" rx="4" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="880.74" y="321" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="650" fill="#1f6f68" text-anchor="start" opacity="1">0.869</text>
+<rect x="60" y="344" width="1120" height="40" rx="8" fill="none" stroke="none" stroke-width="1"/>
+<text x="80" y="370" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="540" fill="#151515" text-anchor="start" opacity="1">HaluEval</text>
+<rect x="330" y="353" width="529.98" height="20" rx="4" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="871.98" y="369" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="650" fill="#1f6f68" text-anchor="start" opacity="1">0.863</text>
+<rect x="60" y="392" width="1120" height="40" rx="8" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="80" y="418" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="540" fill="#151515" text-anchor="start" opacity="1">RM-Bench 硬对</text>
+<rect x="330" y="401" width="394.20000000000005" height="20" rx="4" fill="#a86b18" stroke="none" stroke-width="1"/>
+<text x="736.2" y="417" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="650" fill="#a86b18" text-anchor="start" opacity="1">0.770</text>
+<rect x="60" y="440" width="1120" height="40" rx="8" fill="none" stroke="none" stroke-width="1"/>
+<text x="80" y="466" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="540" fill="#151515" text-anchor="start" opacity="1">JudgeBench</text>
+<rect x="330" y="449" width="357.70000000000005" height="20" rx="4" fill="#a86b18" stroke="none" stroke-width="1"/>
+<text x="699.7" y="465" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="650" fill="#a86b18" text-anchor="start" opacity="1">0.745</text>
+<rect x="60" y="488" width="1120" height="40" rx="8" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="80" y="514" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="540" fill="#151515" text-anchor="start" opacity="1">无参考散文</text>
+<rect x="330" y="497" width="26.28000000000003" height="20" rx="4" fill="#e05a36" stroke="none" stroke-width="1"/>
+<text x="368.28000000000003" y="513" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="650" fill="#e05a36" text-anchor="start" opacity="1">0.518</text>
+<text x="60" y="570" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">数据来源：原文 Sec.6 Table 7（RewardBench 0.869 / JudgeBench 0.745 / HaluEval 0.863）与 Sec.7「Where the signal weakens」（RM-Bench 易 0.918 / 普通 0.902 / 硬 0.770、无参考散文 0.518）。</text>
+<text x="1080" y="194" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="620" fill="#666862" text-anchor="start" opacity="1">AUROC</text>
+</svg>
