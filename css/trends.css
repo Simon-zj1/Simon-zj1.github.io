@@ -134,6 +134,14 @@
   margin: 0 0 10px;
 }
 
+/* 重点突出：加粗 + 极淡的底色，保持段落观感 */
+.trend-item__prose strong,
+.trend-item__body strong {
+  color: var(--site-ink);
+  font-weight: 700;
+  background: linear-gradient(transparent 62%, rgba(224, 90, 54, 0.18) 62%);
+}
+
 .trend-comment {
   margin-top: 16px;
   padding: 16px 18px;
