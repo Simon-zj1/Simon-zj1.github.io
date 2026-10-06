@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 606" width="1240" height="606" role="img">
+<rect x="0" y="0" width="1240" height="606" rx="0" fill="#eeeee8"/>
+<text x="60" y="66" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="27" font-weight="650" fill="#151515" text-anchor="start">CrossFit lowers false agreement and raises true correctness</text>
+<text x="60" y="96" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="400" fill="#666862" text-anchor="start">Means over the 43 scheduled steps of round 3; lower is better on the left, higher on the right.</text>
+<text x="60" y="152" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="620" fill="#666862" text-anchor="start">False-agreement mass F (lower is better)</text>
+<text x="660" y="152" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="620" fill="#666862" text-anchor="start">Adopted-label truth T_P (higher is better)</text>
+<rect x="60" y="180" width="540" height="350" rx="10" fill="#f7f6f1" stroke="none" stroke-width="1"/>
+<rect x="660" y="180" width="520" height="350" rx="10" fill="#f7f6f1" stroke="none" stroke-width="1"/>
+<line x1="240" y1="190" x2="240" y2="516" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="240" y="527" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="middle">0%</text>
+<line x1="405" y1="190" x2="405" y2="516" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="405" y="527" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="middle">5%</text>
+<line x1="570" y1="190" x2="570" y2="516" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="570" y="527" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="middle">10%</text>
+<line x1="800" y1="190" x2="800" y2="516" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="800" y="527" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="middle">70%</text>
+<line x1="970.0000000000001" y1="190" x2="970.0000000000001" y2="516" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="970.0000000000001" y="527" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="middle">80%</text>
+<line x1="1140" y1="190" x2="1140" y2="516" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="1140" y="527" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="middle">90%</text>
+<text x="72" y="216" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="680" fill="#9d9c96" text-anchor="start">Qwen3.5-4B</text>
+<text x="150" y="216" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="520" fill="#151515" text-anchor="start">Dr. Zero</text>
+<rect x="240" y="206" width="201.29999999999995" height="16" rx="4" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="449.29999999999995" y="219" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#666862" text-anchor="start">0.061</text>
+<rect x="800" y="206" width="79.90000000000009" height="16" rx="4" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="887.9000000000001" y="219" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#315f86" text-anchor="start">0.747</text>
+<text x="72" y="256" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="680" fill="#9d9c96" text-anchor="start">Qwen3.5-4B</text>
+<text x="150" y="256" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="520" fill="#151515" text-anchor="start">MSV</text>
+<rect x="240" y="246" width="188.10000000000002" height="16" rx="4" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="436.1" y="259" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#666862" text-anchor="start">0.057</text>
+<rect x="800" y="246" width="79.90000000000009" height="16" rx="4" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="887.9000000000001" y="259" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#315f86" text-anchor="start">0.747</text>
+<text x="72" y="296" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="680" fill="#9d9c96" text-anchor="start">Qwen3.5-4B</text>
+<text x="150" y="296" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="680" fill="#e05a36" text-anchor="start">CrossFit</text>
+<rect x="240" y="286" width="99" height="16" rx="4" fill="#e05a36" stroke="none" stroke-width="1"/>
+<text x="347" y="299" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#e05a36" text-anchor="start">0.030</text>
+<rect x="800" y="286" width="202.29999999999995" height="16" rx="4" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="1010.3" y="299" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#1f6f68" text-anchor="start">0.819</text>
+<text x="72" y="336" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="680" fill="#9d9c96" text-anchor="start">Qwen3.5-4B</text>
+<text x="150" y="336" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="520" fill="#151515" text-anchor="start">MSV+CrossFit</text>
+<rect x="240" y="326" width="66" height="16" rx="4" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="314" y="339" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#666862" text-anchor="start">0.020</text>
+<rect x="800" y="326" width="243.0999999999999" height="16" rx="4" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="1051.1" y="339" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#315f86" text-anchor="start">0.843</text>
+<text x="72" y="376" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="680" fill="#315f86" text-anchor="start">Qwen3.5-9B</text>
+<text x="150" y="376" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="520" fill="#151515" text-anchor="start">Dr. Zero</text>
+<rect x="240" y="366" width="290.4" height="16" rx="4" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="538.4" y="379" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#666862" text-anchor="start">0.088</text>
+<rect x="800" y="366" width="62.90000000000009" height="16" rx="4" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="870.9000000000001" y="379" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#315f86" text-anchor="start">0.737</text>
+<text x="72" y="416" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="680" fill="#315f86" text-anchor="start">Qwen3.5-9B</text>
+<text x="150" y="416" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="520" fill="#151515" text-anchor="start">MSV</text>
+<rect x="240" y="406" width="237.59999999999997" height="16" rx="4" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="485.59999999999997" y="419" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#666862" text-anchor="start">0.072</text>
+<rect x="800" y="406" width="119.00000000000011" height="16" rx="4" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="927.0000000000001" y="419" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#315f86" text-anchor="start">0.770</text>
+<text x="72" y="456" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="680" fill="#315f86" text-anchor="start">Qwen3.5-9B</text>
+<text x="150" y="456" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="680" fill="#e05a36" text-anchor="start">CrossFit</text>
+<rect x="240" y="446" width="122.09999999999997" height="16" rx="4" fill="#e05a36" stroke="none" stroke-width="1"/>
+<text x="370.09999999999997" y="459" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#e05a36" text-anchor="start">0.037</text>
+<rect x="800" y="446" width="256.70000000000005" height="16" rx="4" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="1064.7" y="459" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#1f6f68" text-anchor="start">0.851</text>
+<text x="72" y="496" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="680" fill="#315f86" text-anchor="start">Qwen3.5-9B</text>
+<text x="150" y="496" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="520" fill="#151515" text-anchor="start">MSV+CrossFit</text>
+<rect x="240" y="486" width="56.10000000000002" height="16" rx="4" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="304.1" y="499" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#666862" text-anchor="start">0.017</text>
+<rect x="800" y="486" width="302.60000000000014" height="16" rx="4" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="1110.6000000000001" y="499" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#315f86" text-anchor="start">0.878</text>
+<text x="60" y="560" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start">Source: Table 4. Note that CrossFit also lowers the in-loop agreement A from 0.710/0.752 to 0.679/0.709 — watching internal agreement alone would call this a regression.</text>
+</svg>

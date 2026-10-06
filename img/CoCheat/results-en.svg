@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 560" width="1240" height="560" role="img">
+<rect x="0" y="0" width="1240" height="560" rx="0" fill="#eeeee8"/>
+<text x="60" y="66" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="27" font-weight="650" fill="#151515" text-anchor="start">Average gain across seven search benchmarks</text>
+<text x="60" y="96" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="400" fill="#666862" text-anchor="start">Left: macro-average Cover-EM over seven benchmarks. Right: CrossFit minus Dr. Zero per benchmark.</text>
+<rect x="64" y="124" width="14" height="14" rx="3" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="86" y="136" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#666862" text-anchor="start">Qwen3.5-4B</text>
+<rect x="230" y="124" width="14" height="14" rx="3" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="252" y="136" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#666862" text-anchor="start">Qwen3.5-9B</text>
+<line x1="70" y1="440" x2="700" y2="440" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="56" y="444" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="end">0.3</text>
+<line x1="70" y1="332" x2="700" y2="332" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="56" y="336" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="end">0.4</text>
+<line x1="70" y1="224.00000000000006" x2="700" y2="224.00000000000006" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="56" y="228.00000000000006" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="end">0.5</text>
+<line x1="70" y1="440" x2="700" y2="440" stroke="rgba(21,21,21,0.24)" stroke-width="1.4"/>
+<rect x="96" y="349.28" width="34" height="90.72000000000003" rx="4" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="113" y="341.28" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="600" fill="#9d9c96" text-anchor="middle">0.384</text>
+<rect x="138" y="322.28000000000003" width="34" height="117.71999999999997" rx="4" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="155" y="314.28000000000003" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="600" fill="#315f86" text-anchor="middle">0.409</text>
+<text x="134" y="462" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="500" fill="#151515" text-anchor="middle">Base</text>
+<rect x="196" y="330.91999999999996" width="34" height="109.08000000000004" rx="4" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="213" y="322.91999999999996" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="600" fill="#9d9c96" text-anchor="middle">0.401</text>
+<rect x="238" y="295.28000000000003" width="34" height="144.71999999999997" rx="4" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="255" y="287.28000000000003" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="600" fill="#315f86" text-anchor="middle">0.434</text>
+<text x="234" y="462" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="500" fill="#151515" text-anchor="middle">Search-R1</text>
+<rect x="296" y="332" width="34" height="108" rx="4" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="313" y="324" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="600" fill="#9d9c96" text-anchor="middle">0.400</text>
+<rect x="338" y="301.76" width="34" height="138.24" rx="4" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="355" y="293.76" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="600" fill="#315f86" text-anchor="middle">0.428</text>
+<text x="334" y="462" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="500" fill="#151515" text-anchor="middle">Dr. Zero</text>
+<rect x="396" y="324.44000000000005" width="34" height="115.55999999999995" rx="4" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="413" y="316.44000000000005" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="600" fill="#9d9c96" text-anchor="middle">0.407</text>
+<rect x="438" y="293.12" width="34" height="146.88" rx="4" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="455" y="285.12" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="600" fill="#315f86" text-anchor="middle">0.436</text>
+<text x="434" y="462" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="500" fill="#151515" text-anchor="middle">MSV</text>
+<rect x="496" y="236.96000000000006" width="34" height="203.03999999999994" rx="4" fill="#e05a36" stroke="none" stroke-width="1"/>
+<text x="513" y="228.96000000000006" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="600" fill="#e05a36" text-anchor="middle">0.488</text>
+<rect x="538" y="211.04000000000005" width="34" height="228.95999999999995" rx="4" fill="#e05a36" stroke="none" stroke-width="1"/>
+<text x="555" y="203.04000000000005" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="600" fill="#e05a36" text-anchor="middle">0.512</text>
+<text x="534" y="462" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="680" fill="#e05a36" text-anchor="middle">CrossFit</text>
+<rect x="596" y="233.72000000000006" width="34" height="206.27999999999994" rx="4" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="613" y="225.72000000000006" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="600" fill="#9d9c96" text-anchor="middle">0.491</text>
+<rect x="638" y="207.80000000000004" width="34" height="232.19999999999996" rx="4" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="655" y="199.80000000000004" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="600" fill="#315f86" text-anchor="middle">0.515</text>
+<text x="634" y="462" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="500" fill="#151515" text-anchor="middle">MSV+CrossFit</text>
+<text x="780" y="172" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="620" fill="#666862" text-anchor="start">CrossFit minus Dr. Zero (points)</text>
+<text x="780" y="204" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="520" fill="#151515" text-anchor="start">NQ</text>
+<rect x="900" y="192" width="131" height="12" rx="3" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="1039" y="203" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#666862" text-anchor="start">6.5</text>
+<rect x="900" y="208" width="131" height="12" rx="3" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="1039" y="219" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#315f86" text-anchor="start">6.5</text>
+<text x="780" y="244" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="520" fill="#151515" text-anchor="start">TriviaQA</text>
+<rect x="900" y="232" width="131" height="12" rx="3" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="1039" y="243" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#666862" text-anchor="start">6.5</text>
+<rect x="900" y="248" width="70.53846153846153" height="12" rx="3" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="978.5384615384615" y="259" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#315f86" text-anchor="start">3.5</text>
+<text x="780" y="284" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="520" fill="#151515" text-anchor="start">PopQA</text>
+<rect x="900" y="272" width="181.3846153846154" height="12" rx="3" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="1089.3846153846155" y="283" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#666862" text-anchor="start">9.0</text>
+<rect x="900" y="288" width="110.84615384615384" height="12" rx="3" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="1018.8461538461538" y="299" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#315f86" text-anchor="start">5.5</text>
+<text x="780" y="324" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="520" fill="#151515" text-anchor="start">HotpotQA</text>
+<rect x="900" y="312" width="191.46153846153845" height="12" rx="3" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="1099.4615384615386" y="323" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#666862" text-anchor="start">9.5</text>
+<rect x="900" y="328" width="241.84615384615387" height="12" rx="3" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="1149.8461538461538" y="339" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#315f86" text-anchor="start">12.0</text>
+<text x="780" y="364" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="520" fill="#151515" text-anchor="start">2WikiMQA</text>
+<rect x="900" y="352" width="181.3846153846154" height="12" rx="3" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="1089.3846153846155" y="363" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#666862" text-anchor="start">9.0</text>
+<rect x="900" y="368" width="211.6153846153846" height="12" rx="3" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="1119.6153846153845" y="379" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#315f86" text-anchor="start">10.5</text>
+<text x="780" y="404" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="520" fill="#151515" text-anchor="start">MuSiQue</text>
+<rect x="900" y="392" width="251.92307692307693" height="12" rx="3" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="1159.923076923077" y="403" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#666862" text-anchor="start">12.5</text>
+<rect x="900" y="408" width="211.6153846153846" height="12" rx="3" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="1119.6153846153845" y="419" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#315f86" text-anchor="start">10.5</text>
+<text x="780" y="444" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="520" fill="#151515" text-anchor="start">Bamboogle</text>
+<rect x="900" y="432" width="177.35384615384618" height="12" rx="3" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="1085.3538461538462" y="443" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#666862" text-anchor="start">8.8</text>
+<rect x="900" y="448" width="209.60000000000002" height="12" rx="3" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="1117.6" y="459" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#315f86" text-anchor="start">10.4</text>
+<text x="60" y="522" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start">Source: Sec.4.2, Table 1. Multi-hop tasks (HotpotQA, 2WikiMQA, MuSiQue, Bamboogle) gain 10.0 and 10.9 points on average, versus 7.3 and 5.2 for single-hop (NQ, TriviaQA, PopQA).</text>
+</svg>

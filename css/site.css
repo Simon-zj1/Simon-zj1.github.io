@@ -833,6 +833,31 @@ html[data-theme='dark'] .focus-card {
   transition: transform 500ms ease;
 }
 
+.writing-card__media-word {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 26px;
+  background: var(--site-surface-soft);
+}
+
+.writing-card__media-word svg {
+  width: 32px;
+  height: 32px;
+  color: var(--page-accent, var(--site-accent));
+}
+
+.writing-card__media-word span {
+  color: var(--site-ink);
+  font-size: 22px;
+  font-weight: 660;
+  line-height: 1.25;
+}
+
 .writing-card:hover .writing-card__media img {
   transform: scale(1.035);
 }

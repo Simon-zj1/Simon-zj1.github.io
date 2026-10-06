@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 530" width="1240" height="530" role="img">
+<rect x="0" y="0" width="1240" height="530" rx="0" fill="#eeeee8"/>
+<text x="60" y="66" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="27" font-weight="650" fill="#151515" text-anchor="start">Two interventions at two different points</text>
+<text x="60" y="96" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="400" fill="#666862" text-anchor="start">MSV decides which samples enter training; CrossFit decides who supplies the proposer’s feedback.</text>
+<rect x="60" y="130" width="550" height="330" rx="10" fill="#f7f6f1" stroke="rgba(21,21,21,0.24)" stroke-width="1"/>
+<text x="84" y="166" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="650" fill="#315f86" text-anchor="start">MSV multi-sample verification (at admission)</text>
+<rect x="84" y="188" width="502" height="38" rx="10" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="102" y="212" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#151515" text-anchor="start">1. Same model, 3 samples with the source</text>
+<rect x="84" y="234" width="502" height="38" rx="10" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="102" y="258" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#151515" text-anchor="start">2. 3 more samples without the source</text>
+<rect x="84" y="280" width="502" height="38" rx="10" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="102" y="304" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#151515" text-anchor="start">3. Admit only if both majorities exist and agree</text>
+<rect x="84" y="326" width="502" height="38" rx="10" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="102" y="350" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#151515" text-anchor="start">4. The compatible majority replaces the draft label</text>
+<rect x="84" y="374" width="502" height="32" rx="10" fill="#ffffff" stroke="#a86b18" stroke-width="1.2"/>
+<text x="102" y="395" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#a86b18" text-anchor="start">Cost: 6 extra generations per candidate</text>
+<text x="84" y="430" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="620" fill="#666862" text-anchor="start">Limited effect: only 0.7 to 0.8 points over Dr. Zero</text>
+<rect x="630" y="130" width="550" height="330" rx="10" fill="#f7f6f1" stroke="rgba(21,21,21,0.24)" stroke-width="1"/>
+<text x="654" y="166" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="650" fill="#e05a36" text-anchor="start">CrossFit cross-fitted feedback (at scoring)</text>
+<rect x="654" y="188" width="502" height="34" rx="10" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="672" y="210" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#151515" text-anchor="start">1. Source documents split into two folds by ancestry</text>
+<rect x="654" y="230" width="502" height="34" rx="10" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="672" y="252" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#151515" text-anchor="start">2. Auxiliary solver 0 trains on fold 0 only</text>
+<rect x="654" y="272" width="502" height="34" rx="10" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="672" y="294" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#151515" text-anchor="start">3. Auxiliary solver 1 trains on fold 1 only</text>
+<rect x="654" y="314" width="502" height="38" rx="10" fill="#ffffff" stroke="#e05a36" stroke-width="1.4"/>
+<text x="672" y="338" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#e05a36" text-anchor="start">Fold 1 questions are scored by solver 0, and vice versa</text>
+<rect x="654" y="358" width="502" height="32" rx="10" fill="#ffffff" stroke="#315f86" stroke-width="1.2"/>
+<text x="672" y="379" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#315f86" text-anchor="start">The main solver’s update rule is unchanged</text>
+<text x="654" y="410" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#a86b18" text-anchor="start">Cost: about 72% and 79% more budget</text>
+<text x="654" y="432" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="620" fill="#e05a36" text-anchor="start">Effect: 8.8 and 8.4 points over Dr. Zero</text>
+<text x="60" y="496" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start">Source: Sec.3.1, Sec.3.2, Figure 2 and Table 3. CrossFit keeps Dr. Zero’s frontier reward and only swaps the solver that supplies it.</text>
+</svg>
