@@ -11,6 +11,83 @@
   border-bottom: 1px solid var(--site-line);
 }
 
+/* 今日速读：正文之前的一屏，按关注方向选出的 Top N */
+.trend-brief {
+  margin-bottom: 8px;
+}
+
+.trend-brief__lead {
+  margin: 0 0 26px;
+  color: var(--site-muted);
+  font-size: 14px;
+}
+
+.trend-brief__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.trend-brief__item {
+  padding: 26px 0;
+  border-top: 1px solid var(--site-line);
+}
+
+.trend-brief__item:last-child {
+  border-bottom: 1px solid var(--site-line);
+}
+
+.trend-brief__head {
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+}
+
+.trend-brief__rank {
+  color: var(--page-accent, var(--site-accent));
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.trend-brief__head h3 {
+  margin: 0;
+  color: var(--site-ink);
+  font-size: 19px;
+  line-height: 1.45;
+}
+
+.trend-brief__why {
+  margin: 10px 0 0;
+  color: var(--page-accent, var(--site-accent));
+  font-size: 13px;
+}
+
+.trend-brief__body {
+  margin-top: 10px;
+  color: var(--site-ink);
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.trend-brief__limit {
+  margin: 10px 0 0;
+  padding-left: 12px;
+  border-left: 2px solid var(--site-line);
+  color: var(--site-muted);
+  font-size: 13.5px;
+}
+
+.trend-brief__src {
+  margin: 8px 0 0;
+  color: var(--site-muted);
+  font-size: 12.5px;
+}
+
+.trend-brief__src a {
+  margin-right: 10px;
+}
+
 .trend-hero__eyebrow {
   color: var(--page-accent, var(--site-accent));
   font-size: 11px;
