@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg">
 <meta property="article:published_time" content="2026-10-06T20:00:00.000Z">
-<meta property="article:modified_time" content="2026-10-06T18:48:19.395Z">
+<meta property="article:modified_time" content="2026-10-06T18:50:01.522Z">
 <meta property="article:author" content="Simon">
 <meta property="article:tag" content="机器人,具身智能,Agent,ROS,论文阅读,知识漫游,AI提效,面经,Robotics,Embodied AI">
 <meta name="twitter:card" content="summary">
@@ -234,4 +234,236 @@
       <p data-lang-content="en">Reproduction depends on the Dr. Zero implementation and checkpoints; the audit depends on a specific commercial model (gpt-6-astra/high).</p>
     </div>
   </div>
+
+  <section id="problem" class="workflow-section">
+    <h2 data-lang-content="zh">问题：闭环里的「一致陷阱」</h2>
+    <h2 data-lang-content="en">Problem: the agreement trap</h2>
+    <p data-lang-content="zh">自演化搜索 agent 的闭环是：proposer 把源文档变成问题与伪标签，准入的样本训练 solver，而 solver 在<strong>新提案</strong>上的表现决定 proposer 的奖励。循环往复会让提案逐渐逼近 solver 的能力前沿，从而形成无需人工标注的自动课程。</p>
+    <p data-lang-content="en">The loop is: a proposer turns source documents into questions and pseudo-labels, admitted samples train the solver, and the solver's performance on <strong>new proposals</strong> determines the proposer's reward. Repeating this pushes proposals toward the solver's capability frontier, producing an automated curriculum with no human labels.</p>
+    <p data-lang-content="zh">问题在于，这条闭环<strong>让一致率变成了正确率的内生代理</strong>：一条错误的伪标签可以训练 solver 在该来源的后续问题上重复同一错误，而这份一致性又被回报给 proposer，强化了下一轮课程里的同一个错误。论文把由此产生的失效模式命名为 <strong>co-cheating（共谋作弊）</strong>：出题者与解题者逐渐在同一批错误上达成一致，内部奖励上升，外部正确率却不涨甚至下降。</p>
+    <p data-lang-content="en">The problem is that the loop <strong>turns agreement into an endogenous proxy for correctness</strong>: a wrong pseudo-label can train the solver to repeat that error on later questions from the same source, and the resulting agreement is paid back to the proposer, reinforcing the same error in the next round's curriculum. The paper names this failure <strong>co-cheating</strong>: proposer and solver converge on the same errors, so internal reward rises while external correctness does not.</p>
+    <div class="quote-panel">
+      <p data-lang-content="zh">需要说清的是：这里的「共谋」是一个统计现象，作者自己补了一句「不代表有意协调」。引用时宜按「共享错误的自增强」理解，而不是把模型拟人化。</p>
+      <p data-lang-content="en">One clarification: co-cheating is a statistical outcome, and the authors themselves note it does not imply intentional coordination. Read it as a self-reinforcing agreement on shared errors rather than anthropomorphising the models.</p>
+    </div>
+  </section>
+
+  <section id="diagnosis" class="workflow-section">
+    <h2 data-lang-content="zh">诊断：把真一致与假一致分开</h2>
+    <h2 data-lang-content="en">Diagnosis: separating real from false agreement</h2>
+    <p data-lang-content="zh">论文的做法是加一个<strong>完全不参与训练的事后审计</strong>：在每一步保存源文档、采纳的伪标签与用于 proposer 奖励的那 5 条 solver 回答，再由一个独立裁判从源文档构造基于证据的参考来判定。审计器不影响准入、模型更新或奖励，因此它测的是训练信号背后的原始样本，而不是循环自己的输出。</p>
+    <p data-lang-content="en">The method adds a <strong>post-hoc audit that never touches training</strong>: at every scheduled step it saves the source document, the adopted pseudo-label and the five solver responses used for proposer reward, and an independent judge builds an evidence-backed reference from the source to score them. Because the auditor affects neither admission, updates nor reward, it measures the samples behind the training signal rather than the loop's own output.</p>
+    <figure class="story-figure">
+      <img data-lang-content="zh" src="/img/CoCheat/loop-zh.svg" alt="自演化闭环与回流路径，以及循环一致率、假一致质量、应得分数被剥夺三个指标">
+      <img data-lang-content="en" src="/img/CoCheat/loop-en.svg" alt="The self-evolution loop with its return path, plus agreement, false-agreement mass and withheld-credit metrics">
+      <figcaption data-lang-content="zh">图 1 · 闭环里多了一条回流路径。只看循环内一致率 A 会被骗过：一致率上升不等于正确率上升，必须把假一致质量 F 与「应得分数被剥夺」L 一起看。依据原文 Figure 1、Sec.2 与 Table 4 重绘。</figcaption>
+      <figcaption data-lang-content="en">Figure 1 - The loop carries an extra return path. Watching in-loop agreement A alone is misleading: rising agreement is not rising correctness, so false-agreement mass F and withheld credit L must be read alongside it. Redrawn from Figure 1, Sec.2 and Table 4.</figcaption>
+    </figure>
+    <div class="troubleshooting-table">
+      <table>
+        <thead>
+          <tr>
+            <th data-lang-content="zh">指标</th>
+            <th data-lang-content="en">Metric</th>
+            <th data-lang-content="zh">含义</th>
+            <th data-lang-content="en">Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>A</td>
+            <td data-lang-content="zh">循环观测到的一致率</td>
+            <td data-lang-content="en">Agreement as the loop sees it</td>
+            <td data-lang-content="zh">伪标签与 solver 回答匹配的比例——这正是进入奖励的那个信号</td>
+            <td data-lang-content="en">The share of label-response pairs that match — the signal that actually enters the reward</td>
+          </tr>
+          <tr>
+            <td>T_P</td>
+            <td data-lang-content="zh">采纳标签正确率</td>
+            <td data-lang-content="en">Adopted-label truth</td>
+            <td data-lang-content="zh">由审计器对照来源判定标签本身是否成立</td>
+            <td data-lang-content="en">Whether the label itself holds up against the source, per the auditor</td>
+          </tr>
+          <tr>
+            <td>T_S</td>
+            <td data-lang-content="zh">solver 回答正确率</td>
+            <td data-lang-content="en">Solver-response truth</td>
+            <td data-lang-content="zh">解除标签噪声后的真实解题能力</td>
+            <td data-lang-content="en">Real solving ability with label noise removed</td>
+          </tr>
+          <tr>
+            <td data-lang-content="zh">F</td>
+            <td data-lang-content="en">F</td>
+            <td data-lang-content="zh">假一致质量</td>
+            <td data-lang-content="en">False-agreement mass</td>
+            <td data-lang-content="zh">在同一<strong>错误</strong>答案上达成一致的比例——本文的核心指标</td>
+            <td data-lang-content="en">The share of pairs agreeing on the same <strong>incorrect</strong> answer — the core metric here</td>
+          </tr>
+          <tr>
+            <td>L</td>
+            <td data-lang-content="zh">应得分数被剥夺</td>
+            <td data-lang-content="en">Withheld credit</td>
+            <td data-lang-content="zh">回答正确却因标签错误而拿不到分数的比例</td>
+            <td data-lang-content="en">Correct responses denied credit because the label was wrong</td>
+          </tr>
+          <tr>
+            <td>J/E</td>
+            <td data-lang-content="zh">审计覆盖率</td>
+            <td data-lang-content="en">Audit coverage</td>
+            <td data-lang-content="zh">审计器能给出参考的比例；判不了的样本保持未解决</td>
+            <td data-lang-content="en">The share the auditor could resolve; unresolved items stay unresolved</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p data-lang-content="zh">判据很简单：只有当一致率 A 上升、同时 T_P 与 T_S 也上升、且 F 保持低位时，一致率才是可靠的信号。</p>
+    <p data-lang-content="en">The reading rule is simple: agreement is only a trustworthy signal when A rises while T_P and T_S also rise and F stays low.</p>
+  </section>
+
+  <section id="methods" class="workflow-section">
+    <h2 data-lang-content="zh">两种干预与各自的作用点</h2>
+    <h2 data-lang-content="en">Two interventions at two different points</h2>
+    <p data-lang-content="zh">论文比较了两条路线，它们作用在闭环的不同位置：MSV 管「哪些样本能进训练集」，CrossFit 管「谁来给 proposer 反馈」。</p>
+    <p data-lang-content="en">The paper compares two routes that act at different points of the loop: MSV decides which samples enter training, CrossFit decides who supplies the proposer's feedback.</p>
+    <figure class="story-figure">
+      <img data-lang-content="zh" src="/img/CoCheat/methods-zh.svg" alt="MSV 在准入时做多样本验证，CrossFit 在打分时用另一折训练的辅助 solver 提供反馈">
+      <img data-lang-content="en" src="/img/CoCheat/methods-en.svg" alt="MSV verifies multi-sample consistency at admission, while CrossFit scores with an auxiliary solver trained on the other fold">
+      <figcaption data-lang-content="zh">图 2 · 两种干预。MSV 用同一模型带源采 3 次、不带源采 3 次，两者兼容才准入；CrossFit 把源文档按血缘分成两折，让每个问题都由没见过该来源伪标签的 solver 打分。数据来源：原文 Sec.3.1、Sec.3.2、Figure 2 与 Table 3。</figcaption>
+      <figcaption data-lang-content="en">Figure 2 - The two interventions. MSV samples the same model three times with the source and three times without, admitting only compatible majorities; CrossFit splits source documents into two folds so every question is scored by a solver that never saw that source's pseudo-labels. Source: Sec.3.1, Sec.3.2, Figure 2 and Table 3.</figcaption>
+    </figure>
+    <p data-lang-content="zh">CrossFit 的关键设计有三点。第一，<strong>划分必须在源文档级别</strong>：同一文档派生的问题若分处两折，仍然保留着要消除的复用路径。第二，<strong>主 solver 的训练规则完全不变</strong>——它依然用全部已准入问题训练，只有塑造 proposer 课程的反馈被替换，因此这是最干净的单变量干预。第三，作者明确它<strong>不是把辅助 solver 当成真值判官</strong>：两个 solver 仍可能共享预训练错误与重叠证据，它阻断的只是「同源错误被直接回报成奖励」这一条路径。</p>
+    <p data-lang-content="en">Three design points matter in CrossFit. First, <strong>the split must happen at the source-document level</strong>: if questions derived from one document land in both folds, the reuse path survives. Second, <strong>the main solver's update rule is untouched</strong> — it still trains on every admitted question from both folds, and only the feedback shaping the proposer's curriculum is swapped, which makes this a clean single-variable intervention. Third, the authors state plainly that this <strong>does not turn the auxiliary solver into a truth oracle</strong>: the two solvers can still share pretraining errors and overlapping evidence; what is blocked is the specific path where a same-source error returns as reward.</p>
+  </section>
+
+  <section id="results" class="workflow-section">
+    <h2 data-lang-content="zh">主结果：七个搜索 benchmark</h2>
+    <h2 data-lang-content="en">Results: seven search benchmarks</h2>
+    <p data-lang-content="zh">评测集固定为 1325 题（NQ、TriviaQA、PopQA、HotpotQA、2WikiMQA、MuSiQue 各 200，Bamboogle 125），每个问题一条贪心搜索轨迹，工具预算与答案抽取一致；所有自演化处理都从同一个公共 checkpoint 出发，且不使用任何人工标注的 QA 训练数据。</p>
+    <p data-lang-content="en">The evaluation set is fixed at 1,325 questions (200 each from NQ, TriviaQA, PopQA, HotpotQA, 2WikiMQA and MuSiQue, plus all 125 Bamboogle items), with one greedy search trajectory per question and identical tool budgets and answer extraction. Every self-evolution treatment starts from the same public checkpoint and uses no human-annotated QA training data.</p>
+    <figure class="story-figure">
+      <img data-lang-content="zh" src="/img/CoCheat/results-zh.svg" alt="七 benchmark 宏平均 Cover-EM 对比，以及 CrossFit 相对 Dr. Zero 的逐 benchmark 差值">
+      <img data-lang-content="en" src="/img/CoCheat/results-en.svg" alt="Macro-average Cover-EM across seven benchmarks, plus the per-benchmark difference of CrossFit over Dr. Zero">
+      <figcaption data-lang-content="zh">图 3 · 下游结果。宏平均从 Dr. Zero 的 0.400 / 0.428 提到 CrossFit 的 0.488 / 0.512，即提升 8.8 / 8.4 个百分点；多跳任务的增益（10.0 / 10.9）明显大于单跳（7.3 / 5.2）。数据来源：原文 Sec.4.2, Table 1。</figcaption>
+      <figcaption data-lang-content="en">Figure 3 - Downstream results. The macro average rises from 0.400 / 0.428 for Dr. Zero to 0.488 / 0.512 for CrossFit, a gain of 8.8 / 8.4 points; multi-hop tasks gain more (10.0 / 10.9) than single-hop ones (7.3 / 5.2). Source: Sec.4.2, Table 1.</figcaption>
+    </figure>
+    <div class="troubleshooting-table">
+      <table>
+        <thead>
+          <tr>
+            <th data-lang-content="zh">方法</th>
+            <th data-lang-content="en">Method</th>
+            <th>Qwen3.5-4B</th>
+            <th>Qwen3.5-9B</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td data-lang-content="zh">起点（不训练）</td><td data-lang-content="en">Base</td><td>0.384</td><td>0.409</td></tr>
+          <tr><td>Prompting</td><td>0.304</td><td>0.332</td></tr>
+          <tr><td>R1-Instruct</td><td>0.349</td><td>0.379</td></tr>
+          <tr><td>Search-R1</td><td>0.401</td><td>0.434</td></tr>
+          <tr><td>Dr. Zero（耦合闭环）</td><td>0.400</td><td>0.428</td></tr>
+          <tr><td>MSV</td><td>0.407</td><td>0.436</td></tr>
+          <tr><td>CrossFit</td><td>0.488</td><td>0.512</td></tr>
+          <tr><td>MSV+CrossFit</td><td>0.491</td><td>0.515</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p data-lang-content="zh">两个对比值得单独强调。第一，<strong>只做验证远远不够</strong>：MSV 相对 Dr. Zero 只提升 0.7 到 0.8 个百分点，叠加 CrossFit 之后也只比单用 CrossFit 多 0.3 个百分点——改变反馈血缘比改善伪标签质量重要得多。第二，自演化本身并不自动带来收益：耦合闭环（0.400 / 0.428）与外部监督的 Search-R1（0.401 / 0.434）几乎持平，真正的跃升来自修好这条回流路径。</p>
+    <p data-lang-content="en">Two comparisons stand out. First, <strong>verification alone is far from enough</strong>: MSV adds only 0.7 to 0.8 points over Dr. Zero, and combining it with CrossFit adds just 0.3 points beyond CrossFit alone — changing feedback provenance matters much more than improving pseudo-label quality. Second, self-evolution does not pay off by itself: the coupled loop (0.400 / 0.428) sits level with externally supervised Search-R1 (0.401 / 0.434), and the real jump comes from repairing the return path.</p>
+  </section>
+
+  <section id="ablations" class="workflow-section">
+    <h2 data-lang-content="zh">机制消融：为什么必须按来源切</h2>
+    <h2 data-lang-content="en">Ablations: why the split must follow sources</h2>
+    <p data-lang-content="zh">这是全文方法上最扎实的一节。作者构造了一个<strong>固定回放库</strong>（3000 条已保存的问题与标签），冻结题库、标签、答案匹配器与评测流程，只改变反馈 solver 的训练来源——这样就能把「机制效果」与「课程变化」分开。</p>
+    <p data-lang-content="en">This is the most solid part of the paper. The authors build a <strong>fixed replay bank</strong> of 3,000 saved questions and labels, then freeze the bank, the labels, the answer matcher and the evaluation procedure while varying only the training provenance of the feedback solver — which separates the mechanism from any change in the curriculum.</p>
+    <div class="troubleshooting-table">
+      <table>
+        <thead>
+          <tr>
+            <th data-lang-content="zh">对照</th>
+            <th data-lang-content="en">Control</th>
+            <th data-lang-content="zh">目的</th>
+            <th data-lang-content="en">Purpose</th>
+            <th data-lang-content="zh">假一致质量（4B / 9B）</th>
+            <th data-lang-content="en">False agreement (4B / 9B)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-lang-content="zh">同源辅助 solver</td>
+            <td data-lang-content="en">Same-source auxiliary</td>
+            <td data-lang-content="zh">排除「只是换了个模型」</td>
+            <td data-lang-content="en">Rule out "just another model"</td>
+            <td>0.064 / 0.087</td>
+          </tr>
+          <tr>
+            <td data-lang-content="zh">全量数据辅助 solver</td>
+            <td data-lang-content="en">Full-data auxiliary</td>
+            <td data-lang-content="zh">排除「多训练了一份」</td>
+            <td data-lang-content="en">Rule out "one extra training run"</td>
+            <td>0.058 / 0.069</td>
+          </tr>
+          <tr>
+            <td data-lang-content="zh">问题级随机划分</td>
+            <td data-lang-content="en">Question-level random split</td>
+            <td data-lang-content="zh">检验划分粒度</td>
+            <td data-lang-content="en">Test the split granularity</td>
+            <td>0.050 / 0.062</td>
+          </tr>
+          <tr>
+            <td data-lang-content="zh">源级划分（主方法）</td>
+            <td data-lang-content="en">Source-level split (main)</td>
+            <td data-lang-content="zh">按数据血缘排除</td>
+            <td data-lang-content="en">Exclusion by data ancestry</td>
+            <td>0.004 / 0.001</td>
+          </tr>
+          <tr>
+            <td data-lang-content="zh">半预算版本</td>
+            <td data-lang-content="en">Half-budget variant</td>
+            <td data-lang-content="zh">排除「多更新」解释</td>
+            <td data-lang-content="en">Rule out "more updates"</td>
+            <td>0.005 / 0.002</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p data-lang-content="zh">结论很干净：<strong>仅仅「另起一个评测模型」不够，按问题随机划分也不够，关键是评测者没见过被评来源派生的伪标签。</strong>源级划分还把固定库上的 solver 正确率从 0.687 提到 0.770（4B）、从 0.717 提到 0.868（9B），回放准确率从 88.1% 提到 91.5%、87.0% 提到 91.7%；半预算对照几乎持平，说明增益不是靠更多更新换来的。</p>
+    <p data-lang-content="en">The conclusion is clean: <strong>adding a second evaluator model is not enough, and neither is a question-level random split; what matters is that the evaluator never saw pseudo-labels derived from the source it judges.</strong> The source-level split also raises fixed-bank solver truth from 0.687 to 0.770 (4B) and from 0.717 to 0.868 (9B), with replay accuracy moving from 88.1% to 91.5% and 87.0% to 91.7%; the half-budget control matches this, so the gain does not come from more updates.</p>
+    <div class="quote-panel">
+      <p data-lang-content="zh">还有一组数字值得单独记下：第 3 轮审计里，CrossFit 把假一致质量从 0.061 / 0.088 降到 0.030 / 0.037，把采纳标签正确率从 0.747 / 0.737 提到 0.819 / 0.851。但<strong>它同时把循环内一致率从 0.710 / 0.752 降到 0.679 / 0.709</strong>，并把「正确回答被误判」的比例抬高。只看内部指标的运维者会认为这个方法在变差——这正是全文最实用的一条工程结论。</p>
+      <p data-lang-content="en">One further set of numbers deserves recording: in the round-3 audit CrossFit cuts false agreement from 0.061 / 0.088 to 0.030 / 0.037 and lifts adopted-label truth from 0.747 / 0.737 to 0.819 / 0.851. But <strong>it also lowers in-loop agreement from 0.710 / 0.752 to 0.679 / 0.709</strong> and raises the share of correct answers wrongly denied credit. An operator watching only internal metrics would call this a regression — which is the most practical finding in the paper.</p>
+    </div>
+  </section>
+
+  <section id="cost" class="workflow-section">
+    <h2 data-lang-content="zh">成本</h2>
+    <h2 data-lang-content="en">Cost</h2>
+    <div class="troubleshooting-table">
+      <table>
+        <thead>
+          <tr>
+            <th data-lang-content="zh">处理</th>
+            <th data-lang-content="en">Treatment</th>
+            <th>H200 小时（4B / 9B）</th>
+            <th data-lang-content="zh">输入 token（百万）</th>
+            <th data-lang-content="en">Input tokens (M)</th>
+            <th data-lang-content="zh">裁判请求（千）</th>
+            <th data-lang-content="en">Judge requests (k)</th>
+            <th data-lang-content="zh">墙钟（小时）</th>
+            <th data-lang-content="en">Wall clock (h)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Dr. Zero</td><td>379 / 476</td><td>696</td><td>60.4</td><td>47 / 60</td></tr>
+          <tr><td>MSV</td><td>719 / 903</td><td>1,811</td><td>296.9</td><td>90 / 113</td></tr>
+          <tr><td data-lang-content="zh">CrossFit（每折 25 次）</td><td data-lang-content="en">CrossFit (25 per fold)</td><td>650 / 854</td><td>1,081</td><td>113.8</td><td>81 / 107</td></tr>
+          <tr><td data-lang-content="zh">CrossFit（每轮 25 次总计）</td><td data-lang-content="en">CrossFit (25 total)</td><td>515 / 665</td><td>889</td><td>87.1</td><td>64 / 83</td></tr>
+          <tr><td>MSV+CrossFit</td><td>990 / 1,281</td><td>2,196</td><td>350.3</td><td>124 / 160</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p data-lang-content="zh">CrossFit 增加约 72% 与 79% 的训练预算，MSV 增加约 90%，两者叠加是 2.6 到 2.7 倍；但把辅助预算减半（每轮 25 次总计）可以把增量压到 36% 与 40%，而假一致质量几乎不变（0.005 对 0.004、0.002 对 0.001）。论文没有给出性价比曲线，也没有与「直接用外部监督数据」的成本对比；H200 小时是预留预算（含等待时间），外部审计服务的 GPU 消耗未计入。</p>
+    <p data-lang-content="en">CrossFit adds roughly 72% and 79% to the training budget, MSV about 90%, and the combination 2.6 to 2.7 times. Halving the auxiliary budget (25 total updates per round) cuts the overhead to 36% and 40% with almost identical false agreement (0.005 versus 0.004, 0.002 versus 0.001). The paper gives no cost-effectiveness curve and no comparison against simply using externally supervised data; the H200-hours are reserved budgets including waiting time, and the external audit service's GPU usage is not counted.</p>
+  </section>
 </div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By Simon</div><div class="framework-info"><span data-i18n="footer.framework">框架</span><span>&nbsp;</span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span data-i18n="footer.theme">主题</span><span>&nbsp;</span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div><div class="footer_custom_text"><span data-lang-content="zh">把复杂技术讲清楚，也把它做成可验证的系统。</span><span data-lang-content="en">Explain complex systems clearly, then make them verifiable.</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><div class="js-pjax"></div><script src="/js/icons.js" defer></script><script src="/js/site.js" defer></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

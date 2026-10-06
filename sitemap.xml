@@ -11,6 +11,24 @@
   </url>
   
   <url>
+    <loc>https://www.simon-zj.top/tech/tools/</loc>
+    
+    <lastmod>2026-10-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.simon-zj.top/tech/tools/answer-me-with-html/</loc>
+    
+    <lastmod>2026-10-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.simon-zj.top/posts/5ec7e920</loc>
     
     <lastmod>2026-10-06</lastmod>
@@ -65,25 +83,7 @@
   </url>
   
   <url>
-    <loc>https://www.simon-zj.top/tech/tools/</loc>
-    
-    <lastmod>2026-10-06</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.simon-zj.top/tech/papers/</loc>
-    
-    <lastmod>2026-10-06</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.simon-zj.top/tech/tools/codex-skill-trigger/</loc>
     
     <lastmod>2026-10-06</lastmod>
     
