@@ -1,0 +1,237 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><script>(() => {
+  try {
+    const requestedLanguage = new URLSearchParams(window.location.search).get('lang')
+    const storedLanguage = localStorage.getItem('simon-language')
+    const language = requestedLanguage === 'en' || requestedLanguage === 'zh'
+      ? requestedLanguage
+      : storedLanguage === 'en' ? 'en' : 'zh'
+    document.documentElement.lang = language === 'en' ? 'en' : 'zh-CN'
+    document.documentElement.dataset.language = language
+  } catch (error) {
+    document.documentElement.lang = 'zh-CN'
+    document.documentElement.dataset.language = 'zh'
+  }
+})()</script><title>自演化的共谋作弊 | Simon</title><meta name="author" content="Simon"><meta name="copyright" content="Simon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="论文精读：自演化搜索 agent 的共谋作弊——出题者与解题者逐渐在同一批错误上达成一致，内部奖励上升而外部正确率不动；CrossFit 用源级交叉拟合反馈把这条回流路径切断。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="自演化的共谋作弊">
+<meta property="og:url" content="https://www.simon-zj.top/tech/papers/cocheating-search-agents/">
+<meta property="og:site_name" content="Simon">
+<meta property="og:description" content="论文精读：自演化搜索 agent 的共谋作弊——出题者与解题者逐渐在同一批错误上达成一致，内部奖励上升而外部正确率不动；CrossFit 用源级交叉拟合反馈把这条回流路径切断。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg">
+<meta property="article:published_time" content="2026-10-06T20:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-06T18:48:19.395Z">
+<meta property="article:author" content="Simon">
+<meta property="article:tag" content="机器人,具身智能,Agent,ROS,论文阅读,知识漫游,AI提效,面经,Robotics,Embodied AI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg"><link rel="shortcut icon" href="/img/favicon-robot-v3.ico?v=3"><link rel="canonical" href="https://www.simon-zj.top/tech/papers/cocheating-search-agents/"><meta name="google-site-verification" content="v8upAgqbj73wNa2JwNefCRjNHGTmyXKN1v9xIx-xsTY"/><meta name="msvalidate.01" content="998791418970E8CF5EBDB5F160F2BD89"/><meta name="baidu-site-verification" content="codeva-ePm0SowACw"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: '/pluginsSrc/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '自演化的共谋作弊',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><script type="speculationrules">{"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"a[target='_blank'],a[href^='#'],a[href^='mailto:'],a[download]"}}]},"eagerness":"moderate"}]}</script><link rel="stylesheet" href="/css/site.css"><link rel="manifest" href="/site.webmanifest"><link rel="icon" type="image/svg+xml" href="/img/favicon-robot-v3.svg?v=3"><link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-robot-v3-32.png?v=3"><link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-robot-v3-16.png?v=3"><link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon-robot-v3.png?v=3"><link rel="mask-icon" href="/img/favicon-robot-v3.svg?v=3" color="#151515"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Simon" type="application/atom+xml">
+</head><body class="page type-tech-papers-cocheat page" data-page-title-zh="自演化的共谋作弊" data-page-title-en="Co-Cheating in Self-Evolution" data-page-description-zh="论文精读：自演化搜索 agent 的共谋作弊——出题者与解题者逐渐在同一批错误上达成一致，内部奖励上升而外部正确率不动；CrossFit 用源级交叉拟合反馈把这条回流路径切断。" data-page-description-en="A deep read: co-cheating in self-evolving search agents, where proposer and solver converge on shared errors, and CrossFit, which cuts the return path by cross-fitting feedback at the source level."><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/optimized/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="language-switch language-switch--sidebar" role="group" aria-label="Language"><button class="language-switch__button" type="button" data-language-option="zh" aria-pressed="true">中文</button><button class="language-switch__button" type="button" data-language-option="en" aria-pressed="false">EN</button></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-house"></i><span data-i18n="nav.home"> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tech/"><i class="fa-fw fas fa-lightbulb"></i><span data-i18n="nav.tech"> 技术</span></a></div><div class="menus_item"><a class="site-page" href="/trends/"><i class="fa-fw fas fa-newspaper"></i><span data-i18n="nav.news"> AI资讯速递</span></a></div><div class="menus_item"><a class="site-page" href="/knowledge/"><i class="fa-fw fas fa-compass"></i><span data-i18n="nav.knowledge"> 知识漫游</span></a></div><div class="menus_item"><a class="site-page" href="/experience/"><i class="fa-fw fas fa-lock"></i><span data-i18n="nav.experience"> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span data-i18n="nav.about"> 关于</span></a></div></div></div></div><div class="page type-tech-papers-cocheat" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav id="nav"><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span data-i18n="nav.search"> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-house"></i><span data-i18n="nav.home"> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tech/"><i class="fa-fw fas fa-lightbulb"></i><span data-i18n="nav.tech"> 技术</span></a></div><div class="menus_item"><a class="site-page" href="/trends/"><i class="fa-fw fas fa-newspaper"></i><span data-i18n="nav.news"> AI资讯速递</span></a></div><div class="menus_item"><a class="site-page" href="/knowledge/"><i class="fa-fw fas fa-compass"></i><span data-i18n="nav.knowledge"> 知识漫游</span></a></div><div class="menus_item"><a class="site-page" href="/experience/"><i class="fa-fw fas fa-lock"></i><span data-i18n="nav.experience"> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span data-i18n="nav.about"> 关于</span></a></div></div><div class="language-switch" role="group" aria-label="Language"><button class="language-switch__button" type="button" data-language-option="zh" aria-pressed="true">中文</button><button class="language-switch__button" type="button" data-language-option="en" aria-pressed="false">EN</button></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav></header><main class="layout hide-aside" id="content-inner"><div class="page-masthead"><div class="page-masthead__grid"><div class="page-masthead__meta"><span class="page-masthead__eyebrow">Paper Reading / Self-Evolution</span><div class="page-masthead__rule"></div><p data-i18n-zh="论文精读：自演化搜索 agent 的共谋作弊——出题者与解题者逐渐在同一批错误上达成一致，内部奖励上升而外部正确率不动；CrossFit 用源级交叉拟合反馈把这条回流路径切断。" data-i18n-en="A deep read: co-cheating in self-evolving search agents, where proposer and solver converge on shared errors, and CrossFit, which cuts the return path by cross-fitting feedback at the source level.">论文精读：自演化搜索 agent 的共谋作弊——出题者与解题者逐渐在同一批错误上达成一致，内部奖励上升而外部正确率不动；CrossFit 用源级交叉拟合反馈把这条回流路径切断。</p></div><div class="page-masthead__body"><h1 data-i18n-zh="自演化的共谋作弊" data-i18n-en="Co-Cheating in Self-Evolution">自演化的共谋作弊</h1><p class="page-masthead__caption" data-i18n-zh="自己出题、自己判卷、再按「判得有多一致」发奖励，系统就会一起错。" data-i18n-en="Write the questions, grade them, pay the writer for agreement — and the system learns to be wrong together.">自己出题、自己判卷、再按「判得有多一致」发奖励，系统就会一起错。</p></div><div class="page-masthead__art" aria-hidden="true"><span class="page-masthead__index">01.3.4</span><div class="page-masthead__marks"><i></i><i></i><i></i></div><span class="page-masthead__note">Agreement is not correctness</span></div></div></div><div id="page"><div class="container" id="article-container"><div class="editorial-page paper-reading-page">
+  <nav class="topic-breadcrumb" aria-label="当前位置">
+    <a href="/tech/"><span data-lang-content="zh">技术笔记</span><span data-lang-content="en">Technology Notes</span></a>
+    <span>/</span>
+    <a href="/tech/papers/"><span data-lang-content="zh">论文阅读</span><span data-lang-content="en">Paper Reading</span></a>
+    <span>/</span>
+    <span><span data-lang-content="zh">共谋作弊</span><span data-lang-content="en">Co-Cheating</span></span>
+  </nav>
+
+  <div class="editorial-page__lead">
+    <div data-lang-content="zh">
+      <p>自演化 agent 不需要人工出题：proposer 从源文档生成问题与伪标签，solver 作答，再用 solver 在<strong>新提案</strong>上的表现给 proposer 发奖励。论文指出这条闭环里多了一条回流路径——错误的伪标签训练出会重复该错误的解题者，而这份「一致」又被当成进步回报给出题者。</p>
+    </div>
+    <div data-lang-content="en">
+      <p>Self-evolving agents do not need human-written questions: a proposer turns source documents into questions and pseudo-labels, a solver answers them, and the solver's performance on <strong>new proposals</strong> pays the proposer. The paper shows this loop carries an extra return path — a wrong pseudo-label trains a solver that repeats the error, and that agreement is then rewarded as progress.</p>
+    </div>
+    <div class="page-facts">
+      <span data-lang-content="zh">阅读结论</span>
+      <span data-lang-content="en">Verdict</span>
+      <strong data-lang-content="zh">诊断扎实 / 外部锚点仍是模型</strong>
+      <strong data-lang-content="en">Strong diagnosis, model-based ground truth</strong>
+      <small data-lang-content="zh">机制消融与固定回放做得很干净；但「外部正确性」由 LLM 审计者判定，且主表无方差、训练预算增加七成以上。</small>
+      <small data-lang-content="en">The mechanism ablations and fixed-bank replay are clean; but external correctness is judged by an LLM, the main table has no variance, and training cost rises by more than 70%.</small>
+    </div>
+  </div>
+
+  <div class="content-index">
+    <span class="content-index__label" data-lang-content="zh">目录</span>
+    <span class="content-index__label" data-lang-content="en">Contents</span>
+    <a href="#problem"><span data-lang-content="zh">问题：闭环里的「一致陷阱」</span><span data-lang-content="en">Problem: the agreement trap</span></a>
+    <a href="#diagnosis"><span data-lang-content="zh">诊断：把真一致与假一致分开</span><span data-lang-content="en">Diagnosis: separating real from false agreement</span></a>
+    <a href="#methods"><span data-lang-content="zh">两种干预与各自的作用点</span><span data-lang-content="en">Two interventions at two points</span></a>
+    <a href="#results"><span data-lang-content="zh">主结果：七个搜索 benchmark</span><span data-lang-content="en">Results: seven search benchmarks</span></a>
+    <a href="#ablations"><span data-lang-content="zh">机制消融：为什么必须按来源切</span><span data-lang-content="en">Ablations: why the split must follow sources</span></a>
+    <a href="#cost"><span data-lang-content="zh">成本</span><span data-lang-content="en">Cost</span></a>
+    <a href="#critique"><span data-lang-content="zh">批判性评估</span><span data-lang-content="en">Critical assessment</span></a>
+    <a href="#meaning"><span data-lang-content="zh">对本机两个项目的意义</span><span data-lang-content="en">What it means for two local projects</span></a>
+  </div>
+
+  <div class="story-facts">
+    <div>
+      <strong>0.004 → 0.061</strong>
+      <span data-lang-content="zh">假一致质量随轮次上升（Qwen3.5-4B 的第 1 轮到第 3 轮；9B 从 0.003 升到 0.088）</span>
+      <span data-lang-content="en">False-agreement mass grows by round for Qwen3.5-4B, from 0.004 to 0.061 (and 0.003 to 0.088 at 9B)</span>
+    </div>
+    <div>
+      <strong>0.7 对 8.8</strong>
+      <span data-lang-content="zh">只做标签验证（MSV）与改反馈来源（CrossFit）带来的下游平均提升，单位是百分点</span>
+      <span data-lang-content="en">Downstream average gain in points from verifying labels (MSV) versus changing feedback provenance (CrossFit)</span>
+    </div>
+    <div>
+      <strong>0.710 → 0.679</strong>
+      <span data-lang-content="zh">CrossFit 反而让循环内一致率下降，却把真实标签正确率从 0.747 提到 0.819</span>
+      <span data-lang-content="en">CrossFit lowers in-loop agreement while raising true label correctness from 0.747 to 0.819</span>
+    </div>
+  </div>
+
+  <div class="research-meta">
+    <div class="research-meta__card">
+      <span data-lang-content="zh">论文</span>
+      <span data-lang-content="en">Paper</span>
+      <h3>False Frontiers: Diagnosing and Mitigating Co-Cheating in Self-Evolving Search Agents</h3>
+      <p data-lang-content="zh">Meijia Chen、Hao Li、Zheng Lu（共同一作）等 15 位作者；Rutgers、UCSD、Michigan、McGill、KFUPM 与独立研究者。</p>
+      <p data-lang-content="en">Meijia Chen, Hao Li and Zheng Lu (equal contribution) with 12 co-authors, from Rutgers, UCSD, Michigan, McGill, KFUPM and independent researchers.</p>
+    </div>
+    <a class="research-meta__card" href="https://arxiv.org/abs/2609.39102" target="_blank" rel="noopener external nofollow noreferrer">
+      <span data-lang-content="zh">来源</span>
+      <span data-lang-content="en">Source</span>
+      <h3>arXiv:2609.39102v2</h3>
+      <p data-lang-content="zh">2026-09-30 提交、2026-10-03 修订，21 页。本页按官方 HTML 版精读。</p>
+      <p data-lang-content="en">Submitted 2026-09-30, revised 2026-10-03, 21 pages. This note reads the official HTML version.</p>
+    </a>
+    <div class="research-meta__card">
+      <span data-lang-content="zh">官方资源</span>
+      <span data-lang-content="en">Artifacts</span>
+      <h3 data-lang-content="zh">论文未给出代码或数据</h3>
+      <h3 data-lang-content="en">No code or data provided</h3>
+      <p data-lang-content="zh">复现依赖 Dr. Zero 的实现与检查点；审计依赖具体商业模型（gpt-6-astra/high）。</p>
+      <p data-lang-content="en">Reproduction depends on the Dr. Zero implementation and checkpoints; the audit depends on a specific commercial model (gpt-6-astra/high).</p>
+    </div>
+  </div>
+</div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By Simon</div><div class="framework-info"><span data-i18n="footer.framework">框架</span><span>&nbsp;</span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span data-i18n="footer.theme">主题</span><span>&nbsp;</span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div><div class="footer_custom_text"><span data-lang-content="zh">把复杂技术讲清楚，也把它做成可验证的系统。</span><span data-lang-content="en">Explain complex systems clearly, then make them verifiable.</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><div class="js-pjax"></div><script src="/js/icons.js" defer></script><script src="/js/site.js" defer></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
