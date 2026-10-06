@@ -1,0 +1,331 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><script>(() => {
+  try {
+    const requestedLanguage = new URLSearchParams(window.location.search).get('lang')
+    const storedLanguage = localStorage.getItem('simon-language')
+    const language = requestedLanguage === 'en' || requestedLanguage === 'zh'
+      ? requestedLanguage
+      : storedLanguage === 'en' ? 'en' : 'zh'
+    document.documentElement.lang = language === 'en' ? 'en' : 'zh-CN'
+    document.documentElement.dataset.language = language
+  } catch (error) {
+    document.documentElement.lang = 'zh-CN'
+    document.documentElement.dataset.language = 'zh'
+  }
+})()</script><title>Codex Skill 按需触发 | Simon</title><meta name="author" content="Simon"><meta name="copyright" content="Simon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在 Codex 里安装 answer-me-with-html 并把它调成按需触发：两层防线（skill 描述 + 全局规则）、skills 路径不一致的坑，以及一套可复现的验证方法。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Codex Skill 按需触发">
+<meta property="og:url" content="https://www.simon-zj.top/tech/tools/codex-skill-trigger/">
+<meta property="og:site_name" content="Simon">
+<meta property="og:description" content="在 Codex 里安装 answer-me-with-html 并把它调成按需触发：两层防线（skill 描述 + 全局规则）、skills 路径不一致的坑，以及一套可复现的验证方法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg">
+<meta property="article:published_time" content="2026-10-07T14:40:00.000Z">
+<meta property="article:modified_time" content="2026-10-06T16:31:31.460Z">
+<meta property="article:author" content="Simon">
+<meta property="article:tag" content="机器人,具身智能,Agent,ROS,论文阅读,知识漫游,AI提效,面经,Robotics,Embodied AI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg"><link rel="shortcut icon" href="/img/favicon-robot-v3.ico?v=3"><link rel="canonical" href="https://www.simon-zj.top/tech/tools/codex-skill-trigger/"><meta name="google-site-verification" content="v8upAgqbj73wNa2JwNefCRjNHGTmyXKN1v9xIx-xsTY"/><meta name="msvalidate.01" content="998791418970E8CF5EBDB5F160F2BD89"/><meta name="baidu-site-verification" content="codeva-ePm0SowACw"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: '/pluginsSrc/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Codex Skill 按需触发',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><script type="speculationrules">{"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"a[target='_blank'],a[href^='#'],a[href^='mailto:'],a[download]"}}]},"eagerness":"moderate"}]}</script><link rel="stylesheet" href="/css/site.css"><link rel="manifest" href="/site.webmanifest"><link rel="icon" type="image/svg+xml" href="/img/favicon-robot-v3.svg?v=3"><link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-robot-v3-32.png?v=3"><link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-robot-v3-16.png?v=3"><link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon-robot-v3.png?v=3"><link rel="mask-icon" href="/img/favicon-robot-v3.svg?v=3" color="#151515"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Simon" type="application/atom+xml">
+</head><body class="page type-tech-tools page" data-page-title-zh="Codex Skill 按需触发" data-page-title-en="On-Demand Skill Triggers" data-page-description-zh="在 Codex 里安装 answer-me-with-html 并把它调成按需触发：两层防线（skill 描述 + 全局规则）、skills 路径不一致的坑，以及一套可复现的验证方法。" data-page-description-en="Installing answer-me-with-html in Codex and tuning it to fire on demand: a two-layer guard, the skills-path mismatch, and a reproducible way to verify it."><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/optimized/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="language-switch language-switch--sidebar" role="group" aria-label="Language"><button class="language-switch__button" type="button" data-language-option="zh" aria-pressed="true">中文</button><button class="language-switch__button" type="button" data-language-option="en" aria-pressed="false">EN</button></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-house"></i><span data-i18n="nav.home"> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tech/"><i class="fa-fw fas fa-lightbulb"></i><span data-i18n="nav.tech"> 技术</span></a></div><div class="menus_item"><a class="site-page" href="/trends/"><i class="fa-fw fas fa-newspaper"></i><span data-i18n="nav.news"> AI资讯速递</span></a></div><div class="menus_item"><a class="site-page" href="/knowledge/"><i class="fa-fw fas fa-compass"></i><span data-i18n="nav.knowledge"> 知识漫游</span></a></div><div class="menus_item"><a class="site-page" href="/experience/"><i class="fa-fw fas fa-lock"></i><span data-i18n="nav.experience"> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span data-i18n="nav.about"> 关于</span></a></div></div></div></div><div class="page type-tech-tools" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav id="nav"><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span data-i18n="nav.search"> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-house"></i><span data-i18n="nav.home"> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tech/"><i class="fa-fw fas fa-lightbulb"></i><span data-i18n="nav.tech"> 技术</span></a></div><div class="menus_item"><a class="site-page" href="/trends/"><i class="fa-fw fas fa-newspaper"></i><span data-i18n="nav.news"> AI资讯速递</span></a></div><div class="menus_item"><a class="site-page" href="/knowledge/"><i class="fa-fw fas fa-compass"></i><span data-i18n="nav.knowledge"> 知识漫游</span></a></div><div class="menus_item"><a class="site-page" href="/experience/"><i class="fa-fw fas fa-lock"></i><span data-i18n="nav.experience"> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span data-i18n="nav.about"> 关于</span></a></div></div><div class="language-switch" role="group" aria-label="Language"><button class="language-switch__button" type="button" data-language-option="zh" aria-pressed="true">中文</button><button class="language-switch__button" type="button" data-language-option="en" aria-pressed="false">EN</button></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav></header><main class="layout hide-aside" id="content-inner"><div class="page-masthead"><div class="page-masthead__grid"><div class="page-masthead__meta"><span class="page-masthead__eyebrow">AI Productivity / Agent Skills</span><div class="page-masthead__rule"></div><p data-i18n-zh="在 Codex 里安装 answer-me-with-html 并把它调成按需触发：两层防线（skill 描述 + 全局规则）、skills 路径不一致的坑，以及一套可复现的验证方法。" data-i18n-en="Installing answer-me-with-html in Codex and tuning it to fire on demand: a two-layer guard, the skills-path mismatch, and a reproducible way to verify it.">在 Codex 里安装 answer-me-with-html 并把它调成按需触发：两层防线（skill 描述 + 全局规则）、skills 路径不一致的坑，以及一套可复现的验证方法。</p></div><div class="page-masthead__body"><h1 data-i18n-zh="Codex Skill 按需触发" data-i18n-en="On-Demand Skill Triggers">Codex Skill 按需触发</h1><p class="page-masthead__caption" data-i18n-zh="工具的触发时机是产品决策，不该是默认值。" data-i18n-en="When a tool fires is a product decision, not a default.">工具的触发时机是产品决策，不该是默认值。</p></div><div class="page-masthead__art" aria-hidden="true"><span class="page-masthead__index">01.4.3</span><div class="page-masthead__marks"><i></i><i></i><i></i></div><span class="page-masthead__note">Explicit over Eager</span></div></div></div><div id="page"><div class="container" id="article-container"><div class="editorial-page codex-skill-page">
+  <nav class="topic-breadcrumb" aria-label="当前位置">
+    <a href="/tech/"><span data-lang-content="zh">技术笔记</span><span data-lang-content="en">Technology Notes</span></a>
+    <span>/</span>
+    <a href="/tech/tools/"><span data-lang-content="zh">AI 提效</span><span data-lang-content="en">AI Productivity</span></a>
+    <span>/</span>
+    <span><span data-lang-content="zh">Codex Skill 按需触发</span><span data-lang-content="en">On-Demand Skill Triggers</span></span>
+  </nav>
+
+  <div class="content-index">
+    <span class="content-index__label" data-lang-content="zh">目录</span>
+    <span class="content-index__label" data-lang-content="en">Contents</span>
+    <a href="#why"><span data-lang-content="zh">为什么做</span><span data-lang-content="en">Why</span></a>
+    <a href="#problem"><span data-lang-content="zh">三个具体问题</span><span data-lang-content="en">Three problems</span></a>
+    <a href="#install"><span data-lang-content="zh">安装与路径</span><span data-lang-content="en">Install and path</span></a>
+    <a href="#trigger"><span data-lang-content="zh">两层触发防线</span><span data-lang-content="en">Two-layer guard</span></a>
+    <a href="#verify"><span data-lang-content="zh">怎么验证</span><span data-lang-content="en">Verification</span></a>
+    <a href="#use"><span data-lang-content="zh">怎么用</span><span data-lang-content="en">How to use</span></a>
+    <a href="#limits"><span data-lang-content="zh">边界与注意事项</span><span data-lang-content="en">Limits and caveats</span></a>
+    <a href="#takeaway"><span data-lang-content="zh">可迁移的经验</span><span data-lang-content="en">What generalises</span></a>
+  </div>
+
+  <section id="why" class="workflow-section">
+    <h2 data-lang-content="zh">为什么做</h2>
+    <h2 data-lang-content="en">Why this exists</h2>
+    <p data-lang-content="zh">我想要的是一个"需要时才出现"的工具，而不是一个"每次回答都顺手带一页"的工具。<code>answer-me-with-html</code> 能把复杂问题变成一页可读的讲解，但它的上游默认姿态是尽量多用：描述里明确写着"没被要求也要用、拿不准就用"。在普通问答里，这种主动性会变成噪音——我只是想知道 Redis 和 Memcached 的取舍，却被附带了一整页。</p>
+    <p data-lang-content="en">I wanted a tool that appears when the task needs it, not one that attaches a page to every answer. <code>answer-me-with-html</code> turns a complex question into a readable single page, but its upstream default posture is eager: the description literally asks for it to fire even when nobody asked. On ordinary Q&amp;A that eagerness becomes noise.</p>
+    <div class="quote-panel">
+      <p data-lang-content="zh">能力越主动的工具，越需要一条明确的"什么时候不许动"的规则。</p>
+      <p data-lang-content="en">The more eager a tool is, the more it needs an explicit rule about when it must not fire.</p>
+    </div>
+    <p data-lang-content="zh">这件事的本质不是"装一个 skill"，而是把触发时机从模型的默认倾向，改成一个由我定义、并且能被验证的策略。</p>
+    <p data-lang-content="en">The real work is not installing a skill. It is turning the trigger condition into a policy I define and can verify.</p>
+  </section>
+
+  <section id="problem" class="workflow-section">
+    <h2 data-lang-content="zh">三个具体问题</h2>
+    <h2 data-lang-content="en">Three problems to solve</h2>
+    <ol class="editorial-list">
+      <li><span class="editorial-list__index">01</span><div><h3 data-lang-content="zh">默认姿态过于宽松</h3><h3 data-lang-content="en">An eager default</h3><p data-lang-content="zh">skill 描述决定它会不会被自动选中。上游写的"主动且宽松地使用"，等于把决定权交给了模型的即时判断。</p><p data-lang-content="en">The skill description decides whether it gets selected automatically. An upstream description that says "use it proactively" hands that decision to the model's momentary judgement.</p></div></li>
+      <li><span class="editorial-list__index">02</span><div><h3 data-lang-content="zh">装了却看不见</h3><h3 data-lang-content="en">Installed but invisible</h3><p data-lang-content="zh">安装器把 skill 放在 <code>~/.agents/skills/</code>，而 Codex 读的是 <code>~/.codex/skills/</code>。路径不一致时，装完不会报错，只是永远不触发。</p><p data-lang-content="en">The installer writes to <code>~/.agents/skills/</code>, while Codex reads <code>~/.codex/skills/</code>. When the paths disagree nothing errors — the skill simply never fires.</p></div></li>
+      <li><span class="editorial-list__index">03</span><div><h3 data-lang-content="zh">只改描述不够稳</h3><h3 data-lang-content="en">Editing the description is not enough</h3><p data-lang-content="zh">skill 更新会用上游版本覆盖描述文件。任何"只靠改描述"的方案，都会在下一次更新时被静默回退。</p><p data-lang-content="en">A skill update overwrites the description with the upstream copy, so any fix that lives only there is silently reverted the next time you update.</p></div></li>
+    </ol>
+  </section>
+
+  <section id="install" class="workflow-section">
+    <h2 data-lang-content="zh">安装与路径</h2>
+    <h2 data-lang-content="en">Install and path</h2>
+    <p data-lang-content="zh">用官方安装器装到全局，装完先做安全扫描的确认：Socket 0 alerts、Snyk low risk。真身落在 <code>~/.agents/skills/answer-me-with-html</code>。</p>
+    <p data-lang-content="en">Install globally with the official installer, then confirm the security scan reports (Socket 0 alerts, Snyk low risk). The real files land in <code>~/.agents/skills/answer-me-with-html</code>.</p>
+    <div class="prompt-examples">
+      <code data-lang-content="zh">npx skills add QingYunA/answer-me-with-html -g -y -a codex</code>
+      <code data-lang-content="en">npx skills add QingYunA/answer-me-with-html -g -y -a codex</code>
+      <code data-lang-content="zh"># 安装器落在 ~/.agents/skills/，Codex 读的是 ~/.codex/skills/，需要一条软链</code>
+      <code data-lang-content="en"># The installer writes to ~/.agents/skills/; Codex reads ~/.codex/skills/, so link the two</code>
+      <code data-lang-content="zh">ln -s ~/.agents/skills/answer-me-with-html ~/.codex/skills/answer-me-with-html</code>
+      <code data-lang-content="en">ln -s ~/.agents/skills/answer-me-with-html ~/.codex/skills/answer-me-with-html</code>
+      <code data-lang-content="zh">ls -l ~/.codex/skills/answer-me-with-html &nbsp;&nbsp;# 确认链接指向真身</code>
+      <code data-lang-content="en">ls -l ~/.codex/skills/answer-me-with-html &nbsp;&nbsp;# confirm the link target</code>
+    </div>
+    <p data-lang-content="zh">用软链而不是复制，是因为以后 <code>npx skills update</code> 更新的是真身，链接自动跟着新版本走。复制一份的话，第一次更新就会产生两个版本，而你调用的可能还是旧的。</p>
+    <p data-lang-content="en">Prefer a symlink over a copy: <code>npx skills update</code> refreshes the real directory and the link follows. A copy diverges on the first update, and the stale one may be the one that gets loaded.</p>
+  </section>
+
+  <section id="trigger" class="workflow-section">
+    <h2 data-lang-content="zh">两层触发防线</h2>
+    <h2 data-lang-content="en">A two-layer trigger policy</h2>
+    <p data-lang-content="zh">关键是分清楚两件事：模型"想不想得起来用它"和"能不能自己决定用它"。前者由 skill 描述决定，后者由规则决定。两层一起做，才不会互相抵消。</p>
+    <p data-lang-content="en">Separate two questions: whether the model thinks of the tool, and whether the model is allowed to use it on its own. The skill description controls the first; a rule controls the second. Both layers are needed.</p>
+    <div class="workflow-figure workflow-figure--five" aria-label="Two-layer trigger policy">
+      <div class="workflow-figure__line"></div>
+      <div class="workflow-figure__step"><span>01</span><strong data-lang-content="zh">安装到全局</strong><strong data-lang-content="en">Install globally</strong><small data-lang-content="zh">真身 + 软链，先让它看得见</small><small data-lang-content="en">Real files plus symlink, so Codex sees it</small></div>
+      <div class="workflow-figure__step"><span>02</span><strong data-lang-content="zh">收紧描述</strong><strong data-lang-content="en">Tighten the description</strong><small data-lang-content="zh">只在你要求时使用，不主动附带</small><small data-lang-content="en">Fire only on request, never attach unasked</small></div>
+      <div class="workflow-figure__step"><span>03</span><strong data-lang-content="zh">加全局规则</strong><strong data-lang-content="en">Add a global rule</strong><small data-lang-content="zh">写进 AGENTS.md，更新也不会被动</small><small data-lang-content="en">Written to AGENTS.md, survives updates</small></div>
+      <div class="workflow-figure__step"><span>04</span><strong data-lang-content="zh">新会话验证</strong><strong data-lang-content="en">Verify in a new session</strong><small data-lang-content="zh">反例不出页面，正例正常出页面</small><small data-lang-content="en">No page when it should not, a page when it should</small></div>
+    </div>
+    <div class="editorial-grid">
+      <article class="editorial-card"><h3 data-lang-content="zh">第一层：skill 描述</h3><h3 data-lang-content="en">Layer one: the description</h3><p data-lang-content="zh">描述决定 skill 会不会被自动选中，属于软约束。把它改成"只在你要求页面、图示、可视化或视频，或点名这个 skill 时使用；不要自作主张给普通回答附带页面"。</p><p data-lang-content="en">The description decides automatic selection, so it is a soft control. Rewrite it to: fire only when asked for a page, diagram, visual explanation or video, or when named directly; never attach a page to an ordinary answer.</p></article>
+      <article class="editorial-card"><h3 data-lang-content="zh">第二层：全局规则</h3><h3 data-lang-content="en">Layer two: the global rule</h3><p data-lang-content="zh">在 <code>~/.codex/AGENTS.md</code> 里加一条按需触发条款。它不随 skill 更新变化，是描述被改回宽松版之后的唯一防线。</p><p data-lang-content="en">Add an on-demand clause to <code>~/.codex/AGENTS.md</code>. It does not change when the skill updates, so it is the backstop for the day the description is restored upstream.</p></article>
+    </div>
+    <div class="quote-panel">
+      <p data-lang-content="zh">写进全局规则的那条：除非我明确要求生成页面、图示、可视化讲解或视频，否则不要使用 answer-me-with-html skill，也不要在普通回答里附带生成好的页面。</p>
+      <p data-lang-content="en">The clause that went into the global rules: unless a page, diagram, visual explanation or video is explicitly requested, do not use the answer-me-with-html skill and do not attach a generated page to an ordinary answer.</p>
+    </div>
+  </section>
+
+  <section id="verify" class="workflow-section">
+    <h2 data-lang-content="zh">怎么验证</h2>
+    <h2 data-lang-content="en">How to verify</h2>
+    <p data-lang-content="zh">只测"该出页面时出了页面"是不够的——那可能只是 skill 根本没装上。验证要同时覆盖反向：不该触发的时候，既不出页面，也不产生任何副作用。</p>
+    <p data-lang-content="en">Testing only the positive case is not enough: a missing skill also produces no page. Verification must cover the negative case too — no page and no side effects.</p>
+    <div class="troubleshooting-table">
+      <table>
+        <thead>
+          <tr><th data-lang-content="zh">测试</th><th data-lang-content="en">Test</th><th data-lang-content="zh">期望</th><th data-lang-content="en">Expected</th><th data-lang-content="zh">实测结果</th><th data-lang-content="en">Observed</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-lang-content="zh">新会话里问"讲讲 TCP 三次握手和四次挥手"（上游默认配置下必然出页面的题目）</td><td data-lang-content="en">A new session asks about the TCP three-way handshake (a question that always produced a page under the default config)</td>
+            <td data-lang-content="zh">不出页面，且不产生文件</td><td data-lang-content="en">No page, no files</td>
+            <td data-lang-content="zh">没出页面，<code>~/.answer-me-with-html</code> 目录没有被创建</td><td data-lang-content="en">No page, and the page directory was never created</td>
+          </tr>
+          <tr>
+            <td data-lang-content="zh">新会话里说"用 HTML 讲一下 Redis 和 Memcached 怎么选"</td><td data-lang-content="en">A new session asks for an HTML explanation of Redis versus Memcached</td>
+            <td data-lang-content="zh">正常出页面，写作检查通过</td><td data-lang-content="en">A page renders and passes the writing check</td>
+            <td data-lang-content="zh">出了页面：7 个面板、sheet + blueprint 主题、STE 写作检查 0 警告</td><td data-lang-content="en">Page rendered: seven panels, sheet plus blueprint theme, zero writing warnings</td>
+          </tr>
+          <tr>
+            <td data-lang-content="zh">新会话的 skill 清单</td><td data-lang-content="en">Skill list in a new session</td>
+            <td data-lang-content="zh">能看见这个 skill</td><td data-lang-content="en">The skill is listed</td>
+            <td data-lang-content="zh">已包含 answer-me-with-html</td><td data-lang-content="en">answer-me-with-html is present</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ul>
+      <li data-lang-content="zh">用"目录有没有被创建"当客观信号，比"我觉得没出页面"硬得多——它是可复查的副作用。</li>
+      <li data-lang-content="en">Use "was the output directory created" as the objective signal. It is a checkable side effect, not an impression.</li>
+      <li data-lang-content="zh">第三条不能省：没有它，"没触发"也可能只是"没装上"，前两条就都失去意义。</li>
+      <li data-lang-content="en">Do not skip the third check. Without it, "did not fire" may simply mean "was never installed".</li>
+      <li data-lang-content="zh">skill 清单在会话启动时读取，所以改完必须新开会话才算真正验证。</li>
+      <li data-lang-content="en">The skill list is read when a session starts, so the verification only counts in a new session.</li>
+    </ul>
+  </section>
+
+  <section id="use" class="workflow-section">
+    <h2 data-lang-content="zh">怎么用</h2>
+    <h2 data-lang-content="en">How to use it</h2>
+    <p data-lang-content="zh">要页面就直接说，不需要记住任何命令；不想经过 Agent 时，也可以直接用 CLI 渲染本地草稿。</p>
+    <p data-lang-content="en">Ask in plain language when you want a page. When you would rather skip the agent, render a local draft straight from the CLI.</p>
+    <div class="prompt-examples">
+      <code data-lang-content="zh">用 HTML 讲一下 X / 画个图 / 出个页面 / 没看懂，给我看一页</code>
+      <code data-lang-content="en">Explain X in HTML / draw it / make a page / I do not get it, show me one page</code>
+      <code data-lang-content="zh">做个 3b1b 风格视频</code>
+      <code data-lang-content="en">Make a 3b1b-style video</code>
+      <code data-lang-content="zh">AM=~/.codex/skills/answer-me-with-html/scripts/am.mjs &nbsp;&nbsp;# CLI 入口</code>
+      <code data-lang-content="en">AM=~/.codex/skills/answer-me-with-html/scripts/am.mjs &nbsp;&nbsp;# CLI entry point</code>
+      <code data-lang-content="zh">node $AM render notes.md --no-open -o out.html</code>
+      <code data-lang-content="en">node $AM render notes.md --no-open -o out.html</code>
+      <code data-lang-content="zh">node $AM config &nbsp;&nbsp;# 主题、是否自动开浏览器、写作检查强度、配音</code>
+      <code data-lang-content="en">node $AM config &nbsp;&nbsp;# theme, auto-open, writing-check level, narration</code>
+      <code data-lang-content="zh">node $AM help flow &nbsp;&nbsp;# 组件语法，如 flow / sequence / tree</code>
+      <code data-lang-content="en">node $AM help flow &nbsp;&nbsp;# component syntax such as flow, sequence, tree</code>
+    </div>
+  </section>
+
+  <section id="limits" class="workflow-section">
+    <h2 data-lang-content="zh">边界与注意事项</h2>
+    <h2 data-lang-content="en">Limits and caveats</h2>
+    <div class="editorial-grid">
+      <article class="editorial-card"><h3 data-lang-content="zh">更新会覆盖描述</h3><h3 data-lang-content="en">Updates overwrite the description</h3><p data-lang-content="zh">跑 <code>npx skills update answer-me-with-html -y</code> 之后，描述会变回"主动且宽松"。全局规则仍然拦得住，但第一层退化成软约束，需要重新收紧一次。</p><p data-lang-content="en">After <code>npx skills update answer-me-with-html -y</code> the description returns to the eager upstream wording. The global rule still holds, but layer one becomes soft again.</p></article>
+      <article class="editorial-card"><h3 data-lang-content="zh">安装器有 Node 版本门槛</h3><h3 data-lang-content="en">The installer needs a newer Node</h3><p data-lang-content="zh"><code>skills@1.7.0</code> 要求 Node 不小于 22.20.0，本机 v22.15.0 只报了警告，安装照常完成。以后再遇到奇怪的安装错误，先升级 Node 再排查。</p><p data-lang-content="en"><code>skills@1.7.0</code> asks for Node 22.20.0 or newer. The local v22.15.0 only produced a warning and the install completed; treat the version as the first suspect for odd install errors.</p></article>
+      <article class="editorial-card"><h3 data-lang-content="zh">可以更严格</h3><h3 data-lang-content="en">You can go stricter</h3><p data-lang-content="zh">在 skill 目录下加 <code>agents/openai.yaml</code>，写 <code>policy: allow_implicit_invocation: false</code>，模型就完全不会自主调用，只有点名才生效。代价是"用 HTML 讲一下"这类自然语言也不再触发。</p><p data-lang-content="en">Add <code>agents/openai.yaml</code> in the skill directory with <code>policy: allow_implicit_invocation: false</code> and the model can never invoke it on its own. The cost is that plain-language requests stop working too.</p></article>
+      <article class="editorial-card"><h3 data-lang-content="zh">页面目录按需创建</h3><h3 data-lang-content="en">The page directory appears on demand</h3><p data-lang-content="zh">第一次真正出页面时才会创建 <code>~/.answer-me-with-html/</code>。验证过程会临时写到隔离目录，不污染家目录；清理前可以先用 <code>am clean --dry-run</code> 看会删什么。</p><p data-lang-content="en">The real page directory is created the first time a page is produced. Verification writes to an isolated temp home instead; run <code>am clean --dry-run</code> before deleting anything.</p></article>
+    </div>
+  </section>
+
+  <section id="takeaway" class="workflow-section">
+    <h2 data-lang-content="zh">可迁移的经验</h2>
+    <h2 data-lang-content="en">What generalises</h2>
+    <ul>
+      <li data-lang-content="zh">工具的触发时机是产品决策。同一个能力，"什么时候用"要和"怎么用"一起设计，否则能力越强噪音越大。</li>
+      <li data-lang-content="en">Trigger policy is a product decision. Design when a capability fires alongside how it works, or stronger tools only add noise.</li>
+      <li data-lang-content="zh">配置和规则要分工：声明式描述决定"想不想得起来"，硬规则决定"能不能自己动手"。只做一层，迟早被更新或误判冲掉。</li>
+      <li data-lang-content="en">Split the responsibilities: the declarative description controls recall, a hard rule controls autonomous action. One layer alone gets eroded by updates or bad judgement.</li>
+      <li data-lang-content="zh">验证要挑可复查的信号（目录、文件、清单），而不是感觉。反向用例和正向用例同等重要。</li>
+      <li data-lang-content="en">Verify with checkable signals — directories, files, lists — not impressions, and treat the negative case as equal to the positive one.</li>
+    </ul>
+  </section>
+
+  <div class="editorial-actions">
+    <a class="button button--dark" href="https://github.com/QingYunA/answer-me-with-html" target="_blank" rel="noopener external nofollow noreferrer"><i data-lucide="github" aria-hidden="true"></i><span data-lang-content="zh">查看 skill 仓库</span><span data-lang-content="en">View the skill repository</span></a>
+    <a class="button button--outline" href="/tech/tools/"><span data-lang-content="zh">返回 AI 提效</span><span data-lang-content="en">Back to AI Productivity</span></a>
+  </div>
+</div>
+</div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By Simon</div><div class="framework-info"><span data-i18n="footer.framework">框架</span><span>&nbsp;</span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span data-i18n="footer.theme">主题</span><span>&nbsp;</span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div><div class="footer_custom_text"><span data-lang-content="zh">把复杂技术讲清楚，也把它做成可验证的系统。</span><span data-lang-content="en">Explain complex systems clearly, then make them verifiable.</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><div class="js-pjax"></div><script src="/js/icons.js" defer></script><script src="/js/site.js" defer></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
