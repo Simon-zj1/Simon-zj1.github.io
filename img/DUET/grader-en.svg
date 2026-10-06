@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 562" width="1240" height="562" role="img">
+<rect x="0" y="0" width="1240" height="562" rx="0" fill="#eeeee8"/>
+<text x="60" y="66" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="27" font-weight="650" fill="#151515" text-anchor="start" opacity="1">The grader improves, but only materially on two benchmarks</text>
+<text x="60" y="96" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="400" fill="#666862" text-anchor="start" opacity="1">Pairwise agreement: 1 for preferring the reference-preferred output, 0.5 for a tie, 0 for an inversion.</text>
+<rect x="64" y="124" width="14" height="14" rx="3" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="86" y="136" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#666862" text-anchor="start" opacity="1">Initial grader G0</text>
+<rect x="250" y="124" width="14" height="14" rx="3" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="272" y="136" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#666862" text-anchor="start" opacity="1">After DUET</text>
+<line x1="394.5945945945946" y1="176" x2="394.5945945945946" y2="476" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="394.5945945945946" y="194" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="middle" opacity="1">60</text>
+<line x1="583.7837837837837" y1="176" x2="583.7837837837837" y2="476" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="583.7837837837837" y="194" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="middle" opacity="1">70</text>
+<line x1="772.9729729729729" y1="176" x2="772.9729729729729" y2="476" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="772.9729729729729" y="194" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="middle" opacity="1">80</text>
+<line x1="962.1621621621622" y1="176" x2="962.1621621621622" y2="476" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="962.1621621621622" y="194" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="middle" opacity="1">90</text>
+<text x="80" y="226" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="560" fill="#151515" text-anchor="start" opacity="1">Finance Agent Benchmark</text>
+<rect x="300" y="206" width="244.05405405405418" height="18" rx="4" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="554.0540540540542" y="220" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#666862" text-anchor="start" opacity="1">67.9</text>
+<rect x="300" y="230" width="378.37837837837833" height="18" rx="4" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="688.3783783783783" y="244" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="620" fill="#1f6f68" text-anchor="start" opacity="1">75.0</text>
+<text x="1080" y="234" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="680" fill="#e05a36" text-anchor="start" opacity="1">+7.1</text>
+<text x="80" y="300" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="560" fill="#151515" text-anchor="start" opacity="1">GDPval</text>
+<rect x="300" y="280" width="253.51351351351354" height="18" rx="4" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="563.5135135135135" y="294" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#666862" text-anchor="start" opacity="1">68.4</text>
+<rect x="300" y="304" width="444.5945945945946" height="18" rx="4" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="754.5945945945946" y="318" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="620" fill="#1f6f68" text-anchor="start" opacity="1">78.5</text>
+<text x="1080" y="308" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="680" fill="#e05a36" text-anchor="start" opacity="1">+10.1</text>
+<text x="80" y="374" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="560" fill="#151515" text-anchor="start" opacity="1">SpreadsheetBench</text>
+<rect x="300" y="354" width="319.7297297297298" height="18" rx="4" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="629.7297297297298" y="368" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#666862" text-anchor="start" opacity="1">71.9</text>
+<rect x="300" y="378" width="336.75675675675666" height="18" rx="4" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="646.7567567567567" y="392" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="620" fill="#1f6f68" text-anchor="start" opacity="1">72.8</text>
+<text x="1080" y="382" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="680" fill="#666862" text-anchor="start" opacity="1">+0.9</text>
+<text x="80" y="448" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="560" fill="#151515" text-anchor="start" opacity="1">τ²-Bench</text>
+<rect x="300" y="428" width="637.5675675675676" height="18" rx="4" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="947.5675675675676" y="442" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#666862" text-anchor="start" opacity="1">88.7</text>
+<rect x="300" y="452" width="648.9189189189188" height="18" rx="4" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="958.9189189189188" y="466" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="620" fill="#1f6f68" text-anchor="start" opacity="1">89.3</text>
+<text x="1080" y="456" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="680" fill="#666862" text-anchor="start" opacity="1">+0.6</text>
+<text x="60" y="516" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">Source: Sec.5.1, Table 1. The authors explain the small gains on τ²-Bench and SpreadsheetBench by their binary native evaluators, which only allow one-correct-one-wrong preference pairs.</text>
+</svg>

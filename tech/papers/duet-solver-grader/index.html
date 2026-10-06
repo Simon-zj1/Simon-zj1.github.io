@@ -1,0 +1,505 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><script>(() => {
+  try {
+    const requestedLanguage = new URLSearchParams(window.location.search).get('lang')
+    const storedLanguage = localStorage.getItem('simon-language')
+    const language = requestedLanguage === 'en' || requestedLanguage === 'zh'
+      ? requestedLanguage
+      : storedLanguage === 'en' ? 'en' : 'zh'
+    document.documentElement.lang = language === 'en' ? 'en' : 'zh-CN'
+    document.documentElement.dataset.language = language
+  } catch (error) {
+    document.documentElement.lang = 'zh-CN'
+    document.documentElement.dataset.language = 'zh'
+  }
+})()</script><title>DUET：评测者一起进化 | Simon</title><meta name="author" content="Simon"><meta name="copyright" content="Simon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="DUET 论文精读：把 grader 从固定反馈源变成一等优化目标，用交替更新、自适应选任务和编辑预算三条纪律，在四个 agent benchmark 上同时提升执行与评测。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="DUET：评测者一起进化">
+<meta property="og:url" content="https://www.simon-zj.top/tech/papers/duet-solver-grader/">
+<meta property="og:site_name" content="Simon">
+<meta property="og:description" content="DUET 论文精读：把 grader 从固定反馈源变成一等优化目标，用交替更新、自适应选任务和编辑预算三条纪律，在四个 agent benchmark 上同时提升执行与评测。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg">
+<meta property="article:published_time" content="2026-10-06T19:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-06T18:28:37.260Z">
+<meta property="article:author" content="Simon">
+<meta property="article:tag" content="机器人,具身智能,Agent,ROS,论文阅读,知识漫游,AI提效,面经,Robotics,Embodied AI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg"><link rel="shortcut icon" href="/img/favicon-robot-v3.ico?v=3"><link rel="canonical" href="https://www.simon-zj.top/tech/papers/duet-solver-grader/"><meta name="google-site-verification" content="v8upAgqbj73wNa2JwNefCRjNHGTmyXKN1v9xIx-xsTY"/><meta name="msvalidate.01" content="998791418970E8CF5EBDB5F160F2BD89"/><meta name="baidu-site-verification" content="codeva-ePm0SowACw"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: '/pluginsSrc/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'DUET：评测者一起进化',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><script type="speculationrules">{"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"a[target='_blank'],a[href^='#'],a[href^='mailto:'],a[download]"}}]},"eagerness":"moderate"}]}</script><link rel="stylesheet" href="/css/site.css"><link rel="manifest" href="/site.webmanifest"><link rel="icon" type="image/svg+xml" href="/img/favicon-robot-v3.svg?v=3"><link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-robot-v3-32.png?v=3"><link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-robot-v3-16.png?v=3"><link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon-robot-v3.png?v=3"><link rel="mask-icon" href="/img/favicon-robot-v3.svg?v=3" color="#151515"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Simon" type="application/atom+xml">
+</head><body class="page type-tech-papers-duet page" data-page-title-zh="DUET：评测者一起进化" data-page-title-en="DUET: Evolving the Grader" data-page-description-zh="DUET 论文精读：把 grader 从固定反馈源变成一等优化目标，用交替更新、自适应选任务和编辑预算三条纪律，在四个 agent benchmark 上同时提升执行与评测。" data-page-description-en="A deep read of DUET - turning the grader from a fixed feedback source into a first-class optimisation target, with alternating updates, adaptive task selection and an edit budget."><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/optimized/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="language-switch language-switch--sidebar" role="group" aria-label="Language"><button class="language-switch__button" type="button" data-language-option="zh" aria-pressed="true">中文</button><button class="language-switch__button" type="button" data-language-option="en" aria-pressed="false">EN</button></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-house"></i><span data-i18n="nav.home"> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tech/"><i class="fa-fw fas fa-lightbulb"></i><span data-i18n="nav.tech"> 技术</span></a></div><div class="menus_item"><a class="site-page" href="/trends/"><i class="fa-fw fas fa-newspaper"></i><span data-i18n="nav.news"> AI资讯速递</span></a></div><div class="menus_item"><a class="site-page" href="/knowledge/"><i class="fa-fw fas fa-compass"></i><span data-i18n="nav.knowledge"> 知识漫游</span></a></div><div class="menus_item"><a class="site-page" href="/experience/"><i class="fa-fw fas fa-lock"></i><span data-i18n="nav.experience"> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span data-i18n="nav.about"> 关于</span></a></div></div></div></div><div class="page type-tech-papers-duet" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav id="nav"><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span data-i18n="nav.search"> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-house"></i><span data-i18n="nav.home"> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tech/"><i class="fa-fw fas fa-lightbulb"></i><span data-i18n="nav.tech"> 技术</span></a></div><div class="menus_item"><a class="site-page" href="/trends/"><i class="fa-fw fas fa-newspaper"></i><span data-i18n="nav.news"> AI资讯速递</span></a></div><div class="menus_item"><a class="site-page" href="/knowledge/"><i class="fa-fw fas fa-compass"></i><span data-i18n="nav.knowledge"> 知识漫游</span></a></div><div class="menus_item"><a class="site-page" href="/experience/"><i class="fa-fw fas fa-lock"></i><span data-i18n="nav.experience"> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span data-i18n="nav.about"> 关于</span></a></div></div><div class="language-switch" role="group" aria-label="Language"><button class="language-switch__button" type="button" data-language-option="zh" aria-pressed="true">中文</button><button class="language-switch__button" type="button" data-language-option="en" aria-pressed="false">EN</button></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav></header><main class="layout hide-aside" id="content-inner"><div class="page-masthead"><div class="page-masthead__grid"><div class="page-masthead__meta"><span class="page-masthead__eyebrow">Paper Reading / Agent Optimisation</span><div class="page-masthead__rule"></div><p data-i18n-zh="DUET 论文精读：把 grader 从固定反馈源变成一等优化目标，用交替更新、自适应选任务和编辑预算三条纪律，在四个 agent benchmark 上同时提升执行与评测。" data-i18n-en="A deep read of DUET - turning the grader from a fixed feedback source into a first-class optimisation target, with alternating updates, adaptive task selection and an edit budget.">DUET 论文精读：把 grader 从固定反馈源变成一等优化目标，用交替更新、自适应选任务和编辑预算三条纪律，在四个 agent benchmark 上同时提升执行与评测。</p></div><div class="page-masthead__body"><h1 data-i18n-zh="DUET：评测者一起进化" data-i18n-en="DUET: Evolving the Grader">DUET：评测者一起进化</h1><p class="page-masthead__caption" data-i18n-zh="被优化的东西在变，评价它的标准就会过时。" data-i18n-en="When the thing you optimise keeps changing, so must the thing that scores it.">被优化的东西在变，评价它的标准就会过时。</p></div><div class="page-masthead__art" aria-hidden="true"><span class="page-masthead__index">01.3.3</span><div class="page-masthead__marks"><i></i><i></i><i></i></div><span class="page-masthead__note">Evaluate the evaluator</span></div></div></div><div id="page"><div class="container" id="article-container"><div class="editorial-page paper-reading-page">
+  <nav class="topic-breadcrumb" aria-label="当前位置">
+    <a href="/tech/"><span data-lang-content="zh">技术笔记</span><span data-lang-content="en">Technology Notes</span></a>
+    <span>/</span>
+    <a href="/tech/papers/"><span data-lang-content="zh">论文阅读</span><span data-lang-content="en">Paper Reading</span></a>
+    <span>/</span>
+    <span><span data-lang-content="zh">DUET</span><span data-lang-content="en">DUET</span></span>
+  </nav>
+
+  <div class="editorial-page__lead">
+    <div data-lang-content="zh">
+      <p>主流 agent 优化方法都把评测者当成常量：用它的分数去改 agent，自己却一动不动。DUET 指出这个假设会随 agent 变强而失效——弱 agent 的失败很显眼，强 agent 的错藏在<strong>看起来合理的产物</strong>里。于是它把评测者本身也变成优化目标，让两者轮流进化。</p>
+    </div>
+    <div data-lang-content="en">
+      <p>Most agent-optimisation methods treat the evaluator as a constant: its scores update the agent, while the evaluator itself never moves. DUET points out that this assumption decays as the agent improves — a weak agent fails visibly, a strong one fails inside <strong>plausible-looking artifacts</strong>. So it makes the grader an optimisation target too, and lets the two evolve in turns.</p>
+    </div>
+    <div class="page-facts">
+      <span data-lang-content="zh">阅读结论</span>
+      <span data-lang-content="en">Verdict</span>
+      <strong data-lang-content="zh">三条纪律可直接搬 / 成本账没算清</strong>
+      <strong data-lang-content="en">Three reusable rules, one missing cost account</strong>
+      <small data-lang-content="zh">交替更新、用分数变化挑任务、编辑预算当学习率——这三条与 benchmark 解耦；但优化过程的开销从未与基线对齐比较。</small>
+      <small data-lang-content="en">Alternating updates, selecting tasks by score change, and treating the edit budget as a learning rate are all benchmark-agnostic — but the optimisation cost is never compared against the baselines.</small>
+    </div>
+  </div>
+
+  <div class="content-index">
+    <span class="content-index__label" data-lang-content="zh">目录</span>
+    <span class="content-index__label" data-lang-content="en">Contents</span>
+    <a href="#problem"><span data-lang-content="zh">问题：评测者被当成常量</span><span data-lang-content="en">Problem: the grader treated as a constant</span></a>
+    <a href="#method"><span data-lang-content="zh">方法：三步闭环与三条纪律</span><span data-lang-content="en">Method: a three-step loop and three rules</span></a>
+    <a href="#setup"><span data-lang-content="zh">实验设置：四个 benchmark</span><span data-lang-content="en">Setup: four benchmarks</span></a>
+    <a href="#results"><span data-lang-content="zh">主结果：solver 全面领先</span><span data-lang-content="en">Results: the strongest solver on all four</span></a>
+    <a href="#grader"><span data-lang-content="zh">评测者真的变好了吗</span><span data-lang-content="en">Did the grader actually improve</span></a>
+    <a href="#ablation"><span data-lang-content="zh">消融：三组对照</span><span data-lang-content="en">Ablations: three controls</span></a>
+    <a href="#critique"><span data-lang-content="zh">批判性评估</span><span data-lang-content="en">Critical assessment</span></a>
+    <a href="#meaning"><span data-lang-content="zh">对本机两个项目的意义</span><span data-lang-content="en">What it means for two local projects</span></a>
+  </div>
+
+  <div class="story-facts">
+    <div>
+      <strong>96.5 / 89.4</strong>
+      <span data-lang-content="zh">Finance Agent Benchmark 与 τ²-Bench 上参考无关的 solver 分数，均高于使用参考评测器的基线</span>
+      <span data-lang-content="en">Reference-free solver scores on Finance Agent Benchmark and τ²-Bench, both above baselines that use the benchmark reference evaluator</span>
+    </div>
+    <div>
+      <strong>67.9 → 75.0</strong>
+      <span data-lang-content="zh">grader 成对一致率的提升，但四个 benchmark 里只有两个有实质变化</span>
+      <span data-lang-content="en">Grader pairwise agreement, up from 67.9 — but only two of the four benchmarks moved materially</span>
+    </div>
+    <div>
+      <strong>95.4 / 70.1</strong>
+      <span data-lang-content="zh">每轮同时更新两个 agent 的结果，明显差于交替更新（96.5 / 75.0）</span>
+      <span data-lang-content="en">Updating both agents every round scores clearly worse than alternating (96.5 / 75.0)</span>
+    </div>
+  </div>
+
+  <div class="research-meta">
+    <div class="research-meta__card">
+      <span data-lang-content="zh">论文</span>
+      <span data-lang-content="en">Paper</span>
+      <h3>DUET: Co-Evolving Solver and Grader Agents</h3>
+      <p data-lang-content="zh">Fengyu Gao（University of Virginia，实习期间完成）、Sourav Pal、Austin Z. Henley、Arjun Radhakrishna、Gustavo Soares（Microsoft）。</p>
+      <p data-lang-content="en">Fengyu Gao (University of Virginia, work done during an internship at Microsoft), Sourav Pal, Austin Z. Henley, Arjun Radhakrishna and Gustavo Soares (Microsoft).</p>
+    </div>
+    <a class="research-meta__card" href="https://arxiv.org/abs/2610.04087v1" target="_blank" rel="noopener external nofollow noreferrer">
+      <span data-lang-content="zh">来源</span>
+      <span data-lang-content="en">Source</span>
+      <h3>arXiv:2610.04087v1</h3>
+      <p data-lang-content="zh">2026-10-02 提交。本页按官方 HTML 版精读，Figure 3 的三张消融图为原图读数。</p>
+      <p data-lang-content="en">Submitted 2026-10-02. This note reads the official HTML version; the three ablation charts in Figure 3 were read off the original figures.</p>
+    </a>
+    <div class="research-meta__card">
+      <span data-lang-content="zh">官方资源</span>
+      <span data-lang-content="en">Artifacts</span>
+      <h3 data-lang-content="zh">论文未给出代码或数据</h3>
+      <h3 data-lang-content="en">No code or data link provided</h3>
+      <p data-lang-content="zh">论文未提供代码仓库或项目页；默认模型为 Claude Opus 4.8，更新模块基于 GitHub Copilot CLI。</p>
+      <p data-lang-content="en">The paper provides no repository or project page. The default model is Claude Opus 4.8 and the update module runs on GitHub Copilot CLI.</p>
+    </div>
+  </div>
+
+  <section id="problem" class="workflow-section">
+    <h2 data-lang-content="zh">问题：评测者被当成常量</h2>
+    <h2 data-lang-content="en">Problem: the grader treated as a constant</h2>
+    <p data-lang-content="zh">GEPA、SkillOpt 这类方法共用同一套流程：执行 agent、评测输出、用分数或评语更新 agent 组件。论文把执行任务的叫 solver，把评测它的叫 grader，并指出整个循环的效果直接取决于 grader 反馈的质量。</p>
+    <p data-lang-content="en">Methods such as GEPA and SkillOpt share one loop: run the agent, evaluate the output, update the agent components using the scores or critiques. The paper calls the task-performing side the solver and the evaluating side the grader, and notes that the loop's effectiveness depends directly on the quality of the grader's feedback.</p>
+    <p data-lang-content="zh">缺口不是「grader 不够准」，而是<strong>grader 被当成静止的</strong>。这个假设在 solver 变强之后就不成立了：弱 solver 的失败显而易见，强 solver 会产出看起来合理、需要细看才发现错误的结果。原有 grader 捕捉不到这些新失败模式与更细的质量差异，反馈的信息量随之下降。开放式任务尤其严重——多条执行路径都可能有效，质量取决于完整的执行过程与产物，而不是单一参考答案。</p>
+    <p data-lang-content="en">The gap is not that the grader is inaccurate; it is that <strong>the grader is treated as static</strong>. That assumption breaks as the solver improves: a weak solver fails obviously, while a strong one produces results that look reasonable and only reveal their errors on closer inspection. The original grader misses those new failure modes and finer quality differences, so its feedback carries less information. This bites hardest on open-ended tasks, where several execution paths can be valid and quality depends on the full process and artifacts rather than a single reference answer.</p>
+    <div class="quote-panel">
+      <p data-lang-content="zh">于是两个问题互相耦合：agent 该怎么进化，以及在 agent 不断进化时该怎么评测它。论文的答案是让两者一起进化——评测从固定的反馈源，变成一等优化目标。</p>
+      <p data-lang-content="en">So two questions couple: how should the agent evolve, and how should we evaluate an agent that keeps evolving? The answer here is to evolve both — evaluation stops being a fixed feedback source and becomes a first-class optimisation target.</p>
+    </div>
+  </section>
+
+  <section id="method" class="workflow-section">
+    <h2 data-lang-content="zh">方法：三步闭环与三条纪律</h2>
+    <h2 data-lang-content="en">Method: a three-step loop and three rules</h2>
+    <p data-lang-content="zh">形式化很克制：只优化 solver 的组件 θ 与 grader 的组件 φ（系统提示、技能库，或两者），底层模型、工具与执行环境全部冻结。训练<strong>不使用参考答案或真值标签</strong>；单独的标注验证集只用于 checkpoint 选择与早停。</p>
+    <p data-lang-content="en">The formal setup is deliberately narrow: only the solver's component θ and the grader's component φ are optimised (a system prompt, a skill library, or both), while the underlying models, tools and environments stay frozen. Training uses <strong>no reference answers and no ground-truth labels</strong>; a separate labelled validation set is used only for checkpoint selection and early stopping.</p>
+    <figure class="story-figure">
+      <img data-lang-content="zh" src="/img/DUET/loop-zh.svg" alt="DUET 的三步闭环：自适应选任务、solver 执行与 grader 评测、交替与有界更新">
+      <img data-lang-content="en" src="/img/DUET/loop-en.svg" alt="The DUET loop in three steps: adaptive task selection, solver execution and grader evaluation, alternating bounded updates">
+      <figcaption data-lang-content="zh">图 1 · 每轮只改一边。奇数轮更新 grader，偶数轮更新 solver，未更新的一侧冻结——这样后面表现的变化才能归因到某一次具体更新。依据原文 Figure 1 与 Algorithm 1 重绘。</figcaption>
+      <figcaption data-lang-content="en">Figure 1 - One side changes per round. The grader is updated on odd rounds, the solver on even rounds, and the other stays frozen so later changes can be attributed to a specific update. Redrawn from Figure 1 and Algorithm 1.</figcaption>
+    </figure>
+    <div class="troubleshooting-table">
+      <table>
+        <thead>
+          <tr>
+            <th data-lang-content="zh">设计要素</th>
+            <th data-lang-content="en">Design element</th>
+            <th data-lang-content="zh">怎么做</th>
+            <th data-lang-content="en">How it works</th>
+            <th data-lang-content="zh">为什么</th>
+            <th data-lang-content="en">Why</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-lang-content="zh">自适应选任务</td>
+            <td data-lang-content="en">Adaptive task selection</td>
+            <td data-lang-content="zh">用同一任务相邻两次评测的分数差 r 等于 s(k) 减 s(k−1) 的绝对值衡量训练价值，在滑动窗口内取均值，再叠加 SW-UCB 的探索项挑批；热身阶段先用轮询保证每个任务跑过两次。</td>
+            <td data-lang-content="en">Training value is measured by the score change between two consecutive runs of the same task — the absolute difference of s(k) and s(k−1) — averaged over a sliding window and combined with a SW-UCB exploration term; a round-robin warm-up runs every task twice first.</td>
+            <td data-lang-content="zh">分数还在变意味着任务还在暴露新的 solver 行为或 grader 弱点；分数稳定说明它已饱和或当前太难。</td>
+            <td data-lang-content="en">A score that still moves means the task is still exposing new solver behaviour or grader weaknesses; a stable score means it is saturated or currently too hard.</td>
+          </tr>
+          <tr>
+            <td data-lang-content="zh">交替更新</td>
+            <td data-lang-content="en">Alternating updates</td>
+            <td data-lang-content="zh">奇数轮只改 grader，偶数轮只改 solver。</td>
+            <td data-lang-content="en">Only the grader changes on odd rounds, only the solver on even rounds.</td>
+            <td data-lang-content="zh">同时改两边会同时改变求解行为和评测策略，无法判断是谁带来的变化。</td>
+            <td data-lang-content="en">Changing both at once alters both the solving behaviour and the evaluation policy, so the cause of any change becomes unattributable.</td>
+          </tr>
+          <tr>
+            <td data-lang-content="zh">有界更新</td>
+            <td data-lang-content="en">Bounded update</td>
+            <td data-lang-content="zh">把编辑预算当文本学习率，限制单次修订的离散改动条数，并随轮次余弦递减（4 降到 2）。更新 agent 被要求只做证据支持的最小修订，并避免任务专属规则。</td>
+            <td data-lang-content="en">An edit budget acts as a textual learning rate, capping discrete changes per revision and decaying on a cosine schedule (4 down to 2). The update agent is asked to make the smallest evidence-supported revision and to avoid task-specific rules.</td>
+            <td data-lang-content="zh">早期允许大改以探索新机制，后期只允许可归因的细修，避免过拟合到单个任务。</td>
+            <td data-lang-content="en">Broad changes early allow exploration, while late rounds only permit attributable refinements, limiting overfitting to individual tasks.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p data-lang-content="zh">更新模块本身也是一个会用工具的 agent：它读本轮证据与全部历史，被要求先核对 grader 的反馈与执行产物是否一致，然后才提出修订。论文还让它检索网页上的相关实践——这是全文最不可复现的一环，后文会展开。</p>
+    <p data-lang-content="en">The update module is itself a tool-using agent: it reads the round evidence and the full history, is asked to verify the grader's feedback against the execution artifacts first, and only then proposes a revision. The paper also has it search the web for relevant current practices — the least reproducible element in the whole pipeline, revisited below.</p>
+  </section>
+
+  <section id="setup" class="workflow-section">
+    <h2 data-lang-content="zh">实验设置：四个 benchmark</h2>
+    <h2 data-lang-content="en">Setup: four benchmarks</h2>
+    <p data-lang-content="zh">四个 benchmark 横跨表格操作、经济价值任务、多轮客服与检索增强问答。它们的指标语义各不相同，因此不能横向比较绝对值。</p>
+    <p data-lang-content="en">The four benchmarks span spreadsheet manipulation, economically valuable tasks, multi-turn customer service and retrieval-augmented QA. Their metrics mean different things, so absolute values are not comparable across them.</p>
+    <div class="troubleshooting-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Benchmark</th>
+            <th data-lang-content="zh">规模与划分</th>
+            <th data-lang-content="en">Size and split</th>
+            <th data-lang-content="zh">任务类型</th>
+            <th data-lang-content="en">Task type</th>
+            <th data-lang-content="zh">指标</th>
+            <th data-lang-content="en">Metric</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>SpreadsheetBench Verified</td>
+            <td data-lang-content="zh">400 题（275 单元格级、125 工作表级）；60 训练 / 20 验证 / 320 测试</td>
+            <td data-lang-content="en">400 tasks (275 cell-level, 125 sheet-level); 60 train / 20 val / 320 test</td>
+            <td data-lang-content="zh">按自然语言指令修改真实 Excel 工作簿</td>
+            <td data-lang-content="en">Editing real Excel workbooks from natural-language instructions</td>
+            <td data-lang-content="zh">任务准确率（所有被评单元格一致）</td>
+            <td data-lang-content="en">Task accuracy (all evaluated cells match)</td>
+          </tr>
+          <tr>
+            <td>GDPval</td>
+            <td data-lang-content="zh">参考交付物含 Excel 的全部 60 题</td>
+            <td data-lang-content="en">All 60 tasks whose reference deliverable includes an Excel workbook</td>
+            <td data-lang-content="zh">经济价值任务</td>
+            <td data-lang-content="en">Economically valuable tasks</td>
+            <td data-lang-content="zh">与人类金标准交付物的成对胜率</td>
+            <td data-lang-content="en">Pairwise win rate against the human gold deliverable</td>
+          </tr>
+          <tr>
+            <td>τ²-Bench</td>
+            <td data-lang-content="zh">150 题（航空、零售、电信）</td>
+            <td data-lang-content="en">150 tasks (airline, retail, telecom)</td>
+            <td data-lang-content="zh">有状态环境中的多轮客服，模拟用户与领域工具</td>
+            <td data-lang-content="en">Multi-turn customer service in a stateful environment with a simulated user</td>
+            <td data-lang-content="zh">成功率</td>
+            <td data-lang-content="en">Success rate</td>
+          </tr>
+          <tr>
+            <td>Finance Agent Benchmark</td>
+            <td data-lang-content="zh">126 题</td>
+            <td data-lang-content="en">126 tasks</td>
+            <td data-lang-content="zh">需要检索与引用的长文本金融问答</td>
+            <td data-lang-content="en">Long-form financial QA requiring retrieval and citations</td>
+            <td data-lang-content="zh">七个 rubric 维度的评委均分</td>
+            <td data-lang-content="en">Mean judge score over seven rubric dimensions</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p data-lang-content="zh">默认 solver 与 grader 都用 Claude Opus 4.8，跑 3 个随机种子；更新模块基于 GitHub Copilot CLI。超参按 benchmark 规模启发式选取：批大小 8 / 4 / 8 / 8，SW-UCB 窗口 20 / 8 / 10 / 10，最大轮数 50 / 40 / 30 / 30，探索系数 0.01，停等耐心 10 轮。全部实验在一台 Azure VM 上完成（8 物理核、64 GB 内存、Windows 11，表格实验依赖本地 Excel），金融 benchmark 跑一次约 15 小时。</p>
+    <p data-lang-content="en">Both the solver and the grader default to Claude Opus 4.8 across 3 random seeds, with the update module running on GitHub Copilot CLI. Hyperparameters are chosen heuristically per benchmark: batch size 8 / 4 / 8 / 8, SW-UCB window 20 / 8 / 10 / 10, maximum rounds 50 / 40 / 30 / 30, exploration coefficient 0.01 and stopping patience 10 rounds. Everything runs on a single Azure VM (8 physical cores, 64 GB RAM, Windows 11, with a local Excel install for the spreadsheet work); one finance run takes roughly 15 hours.</p>
+    <p data-lang-content="zh">grader 的评测方式是<strong>成对一致率</strong>：grader 独立给两个输出打分，偏向参考更优的输出得 1 分，平局 0.5 分，反向 0 分。评测集这样构造——Finance 与 GDPval 先用 Claude Opus 4.8 为每题生成多个候选，再用 benchmark 参考评测器确定相对质量，保留偏好可靠的对并进一步挑出「表面线索偏向较差输出」的难例；τ² 与 Spreadsheet 的原生评测器只给二值结果，就用不同模型各生成一个输出，保留一对一错的对。</p>
+    <p data-lang-content="en">Grader performance is measured by <strong>pairwise agreement</strong>: the grader scores each output independently and earns 1 for preferring the reference-preferred output, 0.5 for a tie and 0 for an inversion. The evaluation sets are built accordingly — for Finance and GDPval, multiple candidates are generated per task and ranked by the benchmark reference evaluator, keeping only reliable preferences and further selecting cases where surface cues favour the worse output; for τ² and Spreadsheet, whose native evaluators are binary, one output per task is generated by a different model so each pair has exactly one correct answer.</p>
+  </section>
+
+  <section id="results" class="workflow-section">
+    <h2 data-lang-content="zh">主结果：solver 在四个 benchmark 上都最强</h2>
+    <h2 data-lang-content="en">Results: the strongest solver on all four benchmarks</h2>
+    <p data-lang-content="zh">起点是空提示的 solver 与 grader——也就是说，DUET 从一个没有任何领域知识的评测者开始优化。</p>
+    <p data-lang-content="en">The starting point is an empty-prompt solver and grader — DUET begins with an evaluator that has no domain knowledge at all.</p>
+    <figure class="story-figure">
+      <img data-lang-content="zh" src="/img/DUET/results-zh.svg" alt="四个 benchmark 上未优化起点、SkillOpt、GEPA 与 DUET 的 solver 分数，以及相对起点的提升">
+      <img data-lang-content="en" src="/img/DUET/results-en.svg" alt="Solver scores for the unoptimised start, SkillOpt, GEPA and DUET across four benchmarks, plus the gain over the start">
+      <figcaption data-lang-content="zh">图 2 · 参考无关设置下的 solver 分数（Claude Opus 4.8，3 seeds 均值）。四个 benchmark 的指标各不相同，只能各自与自己的起点比较。数据来源：原文 Sec.5.1, Table 1。</figcaption>
+      <figcaption data-lang-content="en">Figure 2 - Solver scores with a reference-free grader (Claude Opus 4.8, 3-seed mean). The four benchmarks use different metrics, so each row should be read against its own starting point rather than across. Source: Sec.5.1, Table 1.</figcaption>
+    </figure>
+    <div class="troubleshooting-table">
+      <table>
+        <thead>
+          <tr>
+            <th data-lang-content="zh">方法</th>
+            <th data-lang-content="en">Method</th>
+            <th>Finance</th>
+            <th>τ²-Bench</th>
+            <th>GDPval</th>
+            <th>SpreadsheetBench</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td data-lang-content="zh">未优化起点</td><td data-lang-content="en">Unoptimised A0</td><td>92.8</td><td>80.3</td><td>47.6</td><td>72.6</td></tr>
+          <tr><td>SkillOpt</td><td>94.0</td><td>84.7</td><td>48.8</td><td>81.6</td></tr>
+          <tr><td>GEPA</td><td>94.4</td><td>83.3</td><td>50.7</td><td>82.8</td></tr>
+          <tr><td>DUET</td><td>96.5</td><td>89.4</td><td>52.2</td><td>84.7</td></tr>
+          <tr><td>SkillOpt（参考评测器）</td><td>95.7</td><td>83.9</td><td>47.1</td><td>83.4</td></tr>
+          <tr><td>GEPA（参考评测器）</td><td>95.9</td><td>82.0</td><td>50.7</td><td>83.0</td></tr>
+          <tr><td>DUET（参考评测器）</td><td>96.0</td><td>86.1</td><td>54.9</td><td>84.7</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p data-lang-content="zh">表里有个容易被读错的地方。参考无关的 DUET 在 Finance（96.5）与 τ²-Bench（89.4）上超过了<strong>使用 benchmark 参考评测器的基线</strong>（95.7 与 95.9、83.9 与 82.0），这正是作者强调的点。但它在 GDPval 上低于<strong>自己的</strong> oracle 变体（52.2 对 54.9），在 SpreadsheetBench 上与 oracle 变体打平。所以准确的表述是「参考无关的共同进化不逊于使用参考评测器的基线」，而不是「参考无关总是更好」。</p>
+    <p data-lang-content="en">One row is easy to misread. Reference-free DUET beats the <strong>baselines that use the benchmark reference evaluator</strong> on Finance (96.5 against 95.7 and 95.9) and τ²-Bench (89.4 against 83.9 and 82.0) — the point the authors emphasise. But it sits below <strong>its own</strong> oracle variant on GDPval (52.2 against 54.9) and ties it on SpreadsheetBench. The accurate reading is that reference-free co-evolution is no worse than baselines given a reference evaluator, not that reference-free is always better.</p>
+    <p data-lang-content="zh">另外两项属性值得记下：把优化目标从系统提示扩展到提示与技能库之后，τ²-Bench 上进一步提升到 91.9（仅提示时为 89.4）；换成 Claude Sonnet 4.6 后 Finance 上从 89.6 升到 91.3，结论方向不变。</p>
+    <p data-lang-content="en">Two further properties are worth noting. Extending the optimisable target from the system prompt to prompt plus skill library lifts τ²-Bench to 91.9 (from 89.4 with prompt only). And on Claude Sonnet 4.6 the Finance score rises from 89.6 to 91.3, so the direction survives a model swap.</p>
+  </section>
+
+  <section id="grader" class="workflow-section">
+    <h2 data-lang-content="zh">评测者真的变好了吗</h2>
+    <h2 data-lang-content="en">Did the grader actually improve</h2>
+    <p data-lang-content="zh">这是全文最需要仔细读的一节。grader 的成对一致率在四个 benchmark 上的变化是这样的：</p>
+    <p data-lang-content="en">This is the section that most rewards careful reading. Here is how grader pairwise agreement moves across the four benchmarks:</p>
+    <figure class="story-figure">
+      <img data-lang-content="zh" src="/img/DUET/grader-zh.svg" alt="四个 benchmark 上 grader 初始与训练后的成对一致率对比">
+      <img data-lang-content="en" src="/img/DUET/grader-en.svg" alt="Initial versus post-training grader pairwise agreement across four benchmarks">
+      <figcaption data-lang-content="zh">图 3 · 提升集中在两个 benchmark：Finance 增加 7.1 分、GDPval 增加 10.1 分；τ²-Bench 只有 0.6 分、SpreadsheetBench 只有 0.9 分。数据来源：原文 Sec.5.1, Table 1。</figcaption>
+      <figcaption data-lang-content="en">Figure 3 - The gains concentrate in two benchmarks: Finance +7.1 and GDPval +10.1, against only +0.6 on τ²-Bench and +0.9 on SpreadsheetBench. Source: Sec.5.1, Table 1.</figcaption>
+    </figure>
+    <p data-lang-content="zh">作者自己给出了解释，而且解释是合理的：τ²-Bench 与 SpreadsheetBench 的原生评测器只给二值成败，因此只能构造「一对一错」的偏好对，初始 grader 已经能识别这类粗粒度差异，真正能体现判断力提升的细分比较根本没有出现在评测集里。反过来说也成立——「共同进化能显著提升评测者」这一结论，目前只在两个 benchmark 上被验证。</p>
+    <p data-lang-content="en">The authors offer an explanation, and it holds up: the native evaluators for τ²-Bench and SpreadsheetBench return only binary success or failure, so the only pairs available are one-correct-one-wrong — a difference the initial grader already recognises. The subtler comparisons that would reveal better judgement never appear in those evaluation sets. The converse also holds: the claim that co-evolution materially improves the evaluator is currently verified on two benchmarks, not four.</p>
+  </section>
+
+  <section id="ablation" class="workflow-section">
+    <h2 data-lang-content="zh">消融：三组对照</h2>
+    <h2 data-lang-content="en">Ablations: three controls</h2>
+    <p data-lang-content="zh">三组消融都在 Finance Agent Benchmark 上做，方向一致，而且都指向同一个结论：<strong>收益主要来自 grader 侧</strong>（67.9 升到 75.0），solver 侧的差异反而很小。</p>
+    <p data-lang-content="en">All three ablations run on Finance Agent Benchmark. They point the same way, and toward the same conclusion: <strong>most of the movement is on the grader side</strong> (67.9 up to 75.0), while the solver differences stay small.</p>
+    <figure class="story-figure">
+      <img data-lang-content="zh" src="/img/DUET/ablation-zh.svg" alt="Finance Agent Benchmark 上三组消融的 solver 分数与 grader 成对一致率">
+      <img data-lang-content="en" src="/img/DUET/ablation-en.svg" alt="Solver score and grader pairwise agreement for three ablations on Finance Agent Benchmark">
+      <figcaption data-lang-content="zh">图 4 · 三组消融。最反直觉的一行是「固定 solver」：只优化 grader 几乎没带来提升（67.9 到 68.8），说明评测者的进步需要持续进化的求解者提供新挑战。数据来源：原文 Sec.5.3, Figure 3(a)(b)(c)，数值按原图读取。</figcaption>
+      <figcaption data-lang-content="en">Figure 4 - The three ablations. The most counter-intuitive row is the fixed solver: optimising only the grader barely moves it (67.9 to 68.8), implying that evaluator progress needs an evolving solver to keep supplying new challenges. Source: Sec.5.3, Figure 3(a)(b)(c), values read off the figures.</figcaption>
+    </figure>
+    <div class="quote-panel">
+      <p data-lang-content="zh">还有一个容易被忽略的细节：第一组消融里，「先优化 grader 再冻结、然后优化 solver」这种顺序式做法已经拿到了大部分 solver 收益（95.7，对比交替的 96.5），交替带来的增量主要体现在 grader 侧（68.8 到 75.0）。正文没有对这个差别展开。</p>
+      <p data-lang-content="en">One easily missed detail: in the first ablation, the sequential scheme — optimise the grader first, freeze it, then optimise the solver — already captures most of the solver gain (95.7 against 96.5 for alternation). What alternation adds shows up mainly on the grader side (68.8 to 75.0), a difference the text does not unpack.</p>
+    </div>
+  </section>
+
+  <section id="critique" class="workflow-section">
+    <h2 data-lang-content="zh">批判性评估</h2>
+    <h2 data-lang-content="en">Critical assessment</h2>
+    <div class="perspective-list">
+      <div class="perspective">
+        <strong data-lang-content="zh">强证据</strong>
+        <strong data-lang-content="en">Strong evidence</strong>
+        <span data-lang-content="zh">四个跨域 benchmark、三个随机种子、报告均值与标准差，并且同时报告 solver 与 grader 两侧；三组消融方向一致、误差棒可见、都在同一 benchmark 上做；起点与基线对齐（空提示），另外做了 oracle 评测器对照与「固定参考评测器只优化 solver」的对照，把信息条件与方法差异分开；专设对抗性初始化实验，并如实报告对抗起点下 grader 几乎没提升（68.0 到 68.8）；连 checkpoint 选择方式也做了消融，而不是只展示最优配置。</span>
+        <span data-lang-content="en">Four cross-domain benchmarks, three seeds, means with standard deviations, and both solver and grader reported. The three ablations agree in direction, show error bars and run on the same benchmark. The starting point matches the baselines (empty prompt), and separate controls for the oracle evaluator and for fixing the reference grader while optimising only the solver disentangle the information condition from the method. There is a dedicated adversarial-initialisation experiment that honestly reports a near-flat grader result (68.0 to 68.8), and even checkpoint selection gets an ablation instead of only the best configuration being shown.</span>
+      </div>
+      <div class="perspective">
+        <strong data-lang-content="zh">中等或弱证据</strong>
+        <strong data-lang-content="en">Weaker evidence</strong>
+        <span data-lang-content="zh">优化过程成本从未与基线对齐比较——成本表只统计最终 agent 的推理开销，而 DUET 有两个优化目标、还要调用更新 agent；grader 的实质提升只在四个 benchmark 中的两个上成立；三组消融只在一个 benchmark 上做；grader 评测集的偏好由 benchmark 参考评测器确定，grader 又被要求去对齐这些偏好，构成一定程度的目标循环，结论应读成「更接近参考评测器」而不是「更接近人类判断」；更新模块会检索网页，既没有做必要性消融，也没有讨论不可复现与测试集泄漏；提示更新的示例是作者挑选的，没有量化任务专属规则的比例；正文写自适应选任务的 grader 一致率为 62.7%，而 Figure 3(b) 标注 62.6%。</span>
+        <span data-lang-content="en">The optimisation cost is never compared against the baselines: the cost table counts only the final agent's inference spend, while DUET carries two optimisation targets and calls an update agent. The grader gains materialise on two of four benchmarks. All three ablations run on a single benchmark. Grader evaluation preferences are set by the benchmark reference evaluator while the grader is being optimised to match them, a degree of objective circularity — read the result as closer to the reference evaluator, not closer to human judgement. The update module searches the web, with no necessity ablation and no discussion of reproducibility or test-set leakage. The prompt-update examples are author-selected, with no quantification of task-specific rules. And the text reports 62.7% for round-robin grader agreement where Figure 3(b) shows 62.6%.</span>
+      </div>
+      <div class="perspective">
+        <strong data-lang-content="zh">结论是否超出证据</strong>
+        <strong data-lang-content="en">Does the claim exceed the evidence</strong>
+        <span data-lang-content="zh">「四个 benchmark 上一致超过固定 grader 的基线」完全成立。「超过使用参考评测器的基线」需要限定到具体 benchmark：成立的是与基线的比较，且在 Finance 与 τ²-Bench 上；GDPval 上它低于自己的 oracle 变体。「可以降低对精心设计初始 grader 的依赖」证据偏中等——空提示起点确实能超过基线，但论文没有对比「精心设计的初始 grader 加 DUET」，而它自己的知情初始化实验里终点反而更低（95.0 对空提示的 96.5）。「不做验证集选择与早停也有相当表现」口径偏宽：solver 相当，但 grader 一致率下降了 4.5 分。</span>
+        <span data-lang-content="en">"Consistently beats fixed-grader baselines on all four benchmarks" holds. "Exceeds baselines that use the reference evaluator" needs a benchmark qualifier: it holds against the baselines on Finance and τ²-Bench, and on GDPval it sits below its own oracle variant. "Reduces the need for a carefully designed initial grader" is moderate at best — the empty-prompt start does beat the baselines, but the paper never compares against a well-designed initial grader plus DUET, and in its own informed-initialisation experiment the endpoint is lower (95.0 against 96.5). "Comparable performance without validation-based selection" overstates things: the solver is comparable, but grader agreement drops 4.5 points.</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="meaning" class="workflow-section">
+    <h2 data-lang-content="zh">对本机两个项目的意义</h2>
+    <h2 data-lang-content="en">What it means for two local projects</h2>
+    <p data-lang-content="zh">这篇论文与我本机的两个项目各有一处直接对应：一个是「验收标准应该被优化」，一个是「判分质量需要自己的指标」。</p>
+    <p data-lang-content="en">This paper lines up with two of my local projects in two different ways: one is about optimising acceptance criteria, the other about giving grading quality its own metric.</p>
+    <div class="editorial-grid">
+      <article class="editorial-card">
+        <h3 data-lang-content="zh">本地 Agent Harness：让验收闸门也成为被优化对象</h3>
+        <h3 data-lang-content="en">Local Agent Harness: make the acceptance gate an optimisation target</h3>
+        <p data-lang-content="zh">harness 目前把验收标准写进 validators 并挂到任务声明上，但它由人工维护、是静态的。DUET 给的做法是让验收标准随被验收对象一起演化，并用三条纪律控制它：每次只改一边（先改闸门还是先改任务要明确）、用「同一任务相邻两次评测的分数变化」挑出还值得重跑的任务、限制单次修订的规模。最值得直接借用的是消融里那条反直觉结论——固定被评对象时，优化评测者几乎没有用，两者必须一起动。</p>
+        <p data-lang-content="en">The harness currently writes acceptance criteria into validators and attaches them to task declarations, but those criteria are human-maintained and static. DUET's move is to let the criteria evolve with the thing they judge, under three rules: change only one side per round, pick the tasks still worth re-running by how much their score moved between consecutive runs, and cap the size of each revision. The most directly transferable finding is the counter-intuitive one from the ablation: with the judged object frozen, optimising the judge does almost nothing.</p>
+      </article>
+      <article class="editorial-card">
+        <h3 data-lang-content="zh">点睛：判分质量需要自己的指标与更新机制</h3>
+        <h3 data-lang-content="en">Eyedot: grading quality needs its own metric and update loop</h3>
+        <p data-lang-content="zh">项目现在的评测只覆盖判分结果（逐点准确率、校准、待复核），没有评测「判分器本身在成对比较上有没有分辨力」。DUET 的成对一致率（胜 1、平 0.5、反向 0）与难例构造方式（多生成几个候选、用参考标准定相对质量、专挑表面线索偏向较差输出的对）可以直接搬过来；而「更新模块只做证据支持的最小修订」这条约束，正好对应评分标准迭代时最容易失控的地方——越改越细、越改越像在背题。</p>
+        <p data-lang-content="en">The project's current evaluation covers grading outcomes — per-point accuracy, calibration, needs-review flags — but not whether the grader itself can tell two candidate answers apart. DUET's pairwise agreement (1 for the preferred output, 0.5 for a tie, 0 for an inversion) and its hard-pair construction (generate several candidates, rank them with a reference standard, then keep the pairs where surface cues favour the worse one) transfer directly. And the constraint that the update module makes the smallest evidence-supported revision addresses exactly where rubric iteration goes wrong: ever finer, ever more aligned to the training items.</p>
+      </article>
+    </div>
+    <div class="quote-panel">
+      <p data-lang-content="zh">两个项目共用一条结论：<strong>验收标准不是一次写好的常量，而是一个需要被评测、也需要被更新的对象</strong>——但每次只改一边，否则改好了也不知道是谁的功劳。</p>
+      <p data-lang-content="en">Both projects share one conclusion: <strong>acceptance criteria are not a constant written once, but an object that needs its own evaluation and its own update loop</strong> — changing one side at a time, or you will not know what deserves the credit.</p>
+    </div>
+  </section>
+
+  <div class="story-ending">
+    <p data-lang-content="zh">DUET 的贡献不是又一种提示优化技巧，而是把一句工程直觉落成了可执行流程：当被优化的对象在变，评价它的标准也会过时。</p>
+    <p data-lang-content="en">DUET's contribution is not another prompt-optimisation trick. It is taking an engineering intuition and making it executable: when the thing being optimised keeps changing, the standard that scores it goes stale.</p>
+    <strong data-lang-content="zh">一句话：把评测者放进优化循环，用两条纪律守住它——每轮只改一边以便归因，只做证据支持的最小修订以便不跑偏；但要自己算一遍优化成本，因为论文没算。</strong>
+    <strong data-lang-content="en">In one line: put the evaluator inside the optimisation loop and hold it with two rules — change one side per round so effects stay attributable, and make only the smallest evidence-supported revision so it does not drift; then do the cost arithmetic yourself, because the paper does not.</strong>
+  </div>
+
+  <div class="editorial-actions">
+    <a class="button button--dark" href="https://arxiv.org/abs/2610.04087v1" target="_blank" rel="noopener external nofollow noreferrer"><span data-lang-content="zh">阅读原文（arXiv）</span><span data-lang-content="en">Read the paper (arXiv)</span></a>
+    <a class="button button--outline" href="/tech/agent/local-agent-harness/"><span data-lang-content="zh">本地 Agent Harness</span><span data-lang-content="en">Local Agent Harness</span></a>
+    <a class="button button--outline" href="/tech/tools/jev-exam/"><span data-lang-content="zh">点睛项目</span><span data-lang-content="en">Eyedot</span></a>
+  </div>
+</div>
+</div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By Simon</div><div class="framework-info"><span data-i18n="footer.framework">框架</span><span>&nbsp;</span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span data-i18n="footer.theme">主题</span><span>&nbsp;</span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div><div class="footer_custom_text"><span data-lang-content="zh">把复杂技术讲清楚，也把它做成可验证的系统。</span><span data-lang-content="en">Explain complex systems clearly, then make them verifiable.</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><div class="js-pjax"></div><script src="/js/icons.js" defer></script><script src="/js/site.js" defer></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

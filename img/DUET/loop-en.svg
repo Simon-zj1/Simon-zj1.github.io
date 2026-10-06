@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 590" width="1240" height="590" role="img">
+<rect x="0" y="0" width="1240" height="590" rx="0" fill="#eeeee8"/>
+<text x="60" y="66" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="27" font-weight="650" fill="#151515" text-anchor="start" opacity="1">The DUET loop in three steps</text>
+<text x="60" y="96" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="400" fill="#666862" text-anchor="start" opacity="1">Only one side changes per round: the grader on odd rounds, the solver on even rounds, so effects stay attributable.</text>
+<line x1="160" y1="128" x2="1080" y2="128" stroke="#1f6f68" stroke-width="1.6"/>
+<line x1="1080" y1="128" x2="1080" y2="150" stroke="#1f6f68" stroke-width="1.6"/>
+<path d="M 1080 158 L 1074 146 L 1086 146 z" fill="#1f6f68"/>
+<rect x="470" y="112" width="300" height="30" rx="15" fill="#f7f6f1" stroke="#1f6f68" stroke-width="1.2"/>
+<text x="620" y="132" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="620" fill="#1f6f68" text-anchor="middle" opacity="1">Round t → round t+1</text>
+<rect x="60" y="176" width="360" height="330" rx="10" fill="#f7f6f1" stroke="rgba(21,21,21,0.24)" stroke-width="1"/>
+<text x="84" y="212" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="650" fill="#a86b18" text-anchor="start" opacity="1">1 Adaptive task selection</text>
+<rect x="440" y="176" width="360" height="330" rx="10" fill="#f7f6f1" stroke="rgba(21,21,21,0.24)" stroke-width="1"/>
+<text x="464" y="212" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="650" fill="#315f86" text-anchor="start" opacity="1">2 Execution and evaluation</text>
+<rect x="820" y="176" width="360" height="330" rx="10" fill="#f7f6f1" stroke="rgba(21,21,21,0.24)" stroke-width="1"/>
+<text x="844" y="212" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="650" fill="#1f6f68" text-anchor="start" opacity="1">3 Alternating, bounded update</text>
+<rect x="84" y="236" width="312" height="44" rx="10" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="104" y="263" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#151515" text-anchor="start" opacity="1">Training tasks D_train</text>
+<line x1="240" y1="280" x2="240" y2="300" stroke="rgba(21,21,21,0.24)" stroke-width="1.4"/>
+<rect x="84" y="300" width="312" height="44" rx="10" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="104" y="327" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#151515" text-anchor="start" opacity="1">Selected batch B_t</text>
+<rect x="84" y="360" width="312" height="52" rx="10" fill="#ffffff" stroke="#a86b18" stroke-width="1.2"/>
+<text x="104" y="383" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">Exploit: recent score still moves</text>
+<text x="104" y="401" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">Explore: rarely visited tasks</text>
+<text x="84" y="440" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#666862" text-anchor="start" opacity="1">u_i(t) = mu + sqrt(c * log / N)</text>
+<text x="84" y="464" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#666862" text-anchor="start" opacity="1">Warm-up: round-robin until every task runs twice</text>
+<rect x="464" y="236" width="312" height="44" rx="10" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="484" y="263" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#151515" text-anchor="start" opacity="1">Solver runs</text>
+<line x1="620" y1="280" x2="620" y2="300" stroke="rgba(21,21,21,0.24)" stroke-width="1.4"/>
+<rect x="464" y="300" width="312" height="44" rx="10" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="484" y="327" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#151515" text-anchor="start" opacity="1">Trajectory and artifacts y</text>
+<line x1="620" y1="344" x2="620" y2="364" stroke="rgba(21,21,21,0.24)" stroke-width="1.4"/>
+<rect x="464" y="364" width="312" height="44" rx="10" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="484" y="391" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#151515" text-anchor="start" opacity="1">Grader evaluates</text>
+<rect x="464" y="420" width="312" height="34" rx="10" fill="#ffffff" stroke="#315f86" stroke-width="1.2"/>
+<text x="484" y="442" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#315f86" text-anchor="start" opacity="1">score s in [0,1] + critique f</text>
+<text x="464" y="476" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#666862" text-anchor="start" opacity="1">Round evidence E_t</text>
+<rect x="844" y="236" width="312" height="44" rx="10" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="864" y="263" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#151515" text-anchor="start" opacity="1">Update module (tools + web search)</text>
+<rect x="844" y="292" width="312" height="44" rx="10" fill="#ffffff" stroke="#e05a36" stroke-width="1.4"/>
+<text x="864" y="319" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#e05a36" text-anchor="start" opacity="1">Odd round: update grader</text>
+<rect x="844" y="346" width="312" height="44" rx="10" fill="#ffffff" stroke="#315f86" stroke-width="1.4"/>
+<text x="864" y="373" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#315f86" text-anchor="start" opacity="1">Even round: update solver</text>
+<rect x="844" y="400" width="312" height="40" rx="10" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="864" y="425" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">Bounded revision: edit budget 4 to 2</text>
+<text x="844" y="464" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#666862" text-anchor="start" opacity="1">History H_t records evidence and both versions</text>
+<line x1="424" y1="340" x2="436" y2="340" stroke="rgba(21,21,21,0.24)" stroke-width="1.6"/>
+<path d="M 440 340 L 430 335 L 430 345 z" fill="rgba(21,21,21,0.24)"/>
+<line x1="804" y1="340" x2="816" y2="340" stroke="rgba(21,21,21,0.24)" stroke-width="1.6"/>
+<path d="M 820 340 L 810 335 L 810 345 z" fill="rgba(21,21,21,0.24)"/>
+<text x="60" y="546" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">Source: Figure 1 and Algorithm 1, redrawn.</text>
+</svg>

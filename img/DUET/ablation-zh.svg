@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 648" width="1240" height="648" role="img">
+<rect x="0" y="0" width="1240" height="648" rx="0" fill="#eeeee8"/>
+<text x="60" y="66" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="27" font-weight="650" fill="#151515" text-anchor="start" opacity="1">三个设计要素各自都有效</text>
+<text x="60" y="96" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="400" fill="#666862" text-anchor="start" opacity="1">Finance Agent Benchmark 上的逐项消融；左为 solver 分数，右为 grader 成对一致率，两栏行序一致。</text>
+<text x="60" y="152" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="620" fill="#666862" text-anchor="start" opacity="1">solver 分数（rubric 分）</text>
+<text x="660" y="152" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="620" fill="#666862" text-anchor="start" opacity="1">grader 成对一致率</text>
+<rect x="60" y="176" width="540" height="398" rx="10" fill="#f7f6f1" stroke="none" stroke-width="1"/>
+<rect x="660" y="176" width="520" height="398" rx="10" fill="#f7f6f1" stroke="none" stroke-width="1"/>
+<line x1="220" y1="186" x2="220" y2="560" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="220" y="571" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="middle" opacity="1">90</text>
+<line x1="395" y1="186" x2="395" y2="560" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="395" y="571" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="middle" opacity="1">95</text>
+<line x1="570" y1="186" x2="570" y2="560" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="570" y="571" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="middle" opacity="1">100</text>
+<line x1="856.6666666666666" y1="186" x2="856.6666666666666" y2="560" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="856.6666666666666" y="571" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="middle" opacity="1">60</text>
+<line x1="970" y1="186" x2="970" y2="560" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="970" y="571" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="middle" opacity="1">70</text>
+<line x1="1083.3333333333335" y1="186" x2="1083.3333333333335" y2="560" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="1083.3333333333335" y="571" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="middle" opacity="1">80</text>
+<text x="72" y="202" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="680" fill="#666862" text-anchor="start" opacity="1">共同进化</text>
+<text x="72" y="224" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="520" fill="#151515" text-anchor="start" opacity="1">固定 grader</text>
+<rect x="220" y="210" width="189.00000000000023" height="16" rx="4" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="417.0000000000002" y="223" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#315f86" text-anchor="start" opacity="1">95.4</text>
+<rect x="800" y="210" width="146.20000000000005" height="16" rx="4" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="954.2" y="223" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#666862" text-anchor="start" opacity="1">67.9</text>
+<text x="72" y="270" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="520" fill="#151515" text-anchor="start" opacity="1">固定 solver</text>
+<rect x="220" y="256" width="97.99999999999989" height="16" rx="4" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="325.9999999999999" y="269" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#315f86" text-anchor="start" opacity="1">92.8</text>
+<rect x="800" y="256" width="156.39999999999998" height="16" rx="4" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="964.4" y="269" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#666862" text-anchor="start" opacity="1">68.8</text>
+<text x="72" y="316" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="520" fill="#151515" text-anchor="start" opacity="1">先 grader 后冻结</text>
+<rect x="220" y="302" width="199.5000000000001" height="16" rx="4" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="427.5000000000001" y="315" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#315f86" text-anchor="start" opacity="1">95.7</text>
+<rect x="800" y="302" width="156.39999999999998" height="16" rx="4" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="964.4" y="315" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#666862" text-anchor="start" opacity="1">68.8</text>
+<text x="72" y="362" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="680" fill="#e05a36" text-anchor="start" opacity="1">DUET（交替）</text>
+<rect x="220" y="348" width="227.5" height="16" rx="4" fill="#e05a36" stroke="none" stroke-width="1"/>
+<text x="455.5" y="361" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#e05a36" text-anchor="start" opacity="1">96.5</text>
+<rect x="800" y="348" width="226.66666666666674" height="16" rx="4" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="1034.6666666666667" y="361" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#1f6f68" text-anchor="start" opacity="1">75.0</text>
+<text x="72" y="386" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="680" fill="#666862" text-anchor="start" opacity="1">选任务方式</text>
+<text x="72" y="408" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="520" fill="#151515" text-anchor="start" opacity="1">轮询选任务</text>
+<rect x="220" y="394" width="206.50000000000017" height="16" rx="4" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="434.50000000000017" y="407" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#315f86" text-anchor="start" opacity="1">95.9</text>
+<rect x="800" y="394" width="86.13333333333333" height="16" rx="4" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="894.1333333333333" y="407" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#666862" text-anchor="start" opacity="1">62.6</text>
+<text x="72" y="454" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="680" fill="#e05a36" text-anchor="start" opacity="1">自适应选任务</text>
+<rect x="220" y="440" width="227.5" height="16" rx="4" fill="#e05a36" stroke="none" stroke-width="1"/>
+<text x="455.5" y="453" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#e05a36" text-anchor="start" opacity="1">96.5</text>
+<rect x="800" y="440" width="226.66666666666674" height="16" rx="4" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="1034.6666666666667" y="453" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#1f6f68" text-anchor="start" opacity="1">75.0</text>
+<text x="72" y="478" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="680" fill="#666862" text-anchor="start" opacity="1">更新方式</text>
+<text x="72" y="500" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="520" fill="#151515" text-anchor="start" opacity="1">每轮同时更新</text>
+<rect x="220" y="486" width="189.00000000000023" height="16" rx="4" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="417.0000000000002" y="499" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#315f86" text-anchor="start" opacity="1">95.4</text>
+<rect x="800" y="486" width="171.13333333333333" height="16" rx="4" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="979.1333333333333" y="499" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#666862" text-anchor="start" opacity="1">70.1</text>
+<text x="72" y="546" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="680" fill="#e05a36" text-anchor="start" opacity="1">交替更新</text>
+<rect x="220" y="532" width="227.5" height="16" rx="4" fill="#e05a36" stroke="none" stroke-width="1"/>
+<text x="455.5" y="545" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#e05a36" text-anchor="start" opacity="1">96.5</text>
+<rect x="800" y="532" width="226.66666666666674" height="16" rx="4" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="1034.6666666666667" y="545" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="620" fill="#1f6f68" text-anchor="start" opacity="1">75.0</text>
+<text x="60" y="602" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start" opacity="1">数据来源：原文 Sec.5.3, Figure 3(a)(b)(c)。正文未给出全部数值，此处按原图读数；正文写轮询的 grader 一致率为 62.7%，图上标注 62.6%。</text>
+</svg>
