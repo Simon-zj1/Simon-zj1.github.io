@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg">
 <meta property="article:published_time" content="2026-10-06T20:00:00.000Z">
-<meta property="article:modified_time" content="2026-10-06T18:50:01.522Z">
+<meta property="article:modified_time" content="2026-10-06T18:52:42.751Z">
 <meta property="article:author" content="Simon">
 <meta property="article:tag" content="机器人,具身智能,Agent,ROS,论文阅读,知识漫游,AI提效,面经,Robotics,Embodied AI">
 <meta name="twitter:card" content="summary">
@@ -466,4 +466,68 @@
     <p data-lang-content="zh">CrossFit 增加约 72% 与 79% 的训练预算，MSV 增加约 90%，两者叠加是 2.6 到 2.7 倍；但把辅助预算减半（每轮 25 次总计）可以把增量压到 36% 与 40%，而假一致质量几乎不变（0.005 对 0.004、0.002 对 0.001）。论文没有给出性价比曲线，也没有与「直接用外部监督数据」的成本对比；H200 小时是预留预算（含等待时间），外部审计服务的 GPU 消耗未计入。</p>
     <p data-lang-content="en">CrossFit adds roughly 72% and 79% to the training budget, MSV about 90%, and the combination 2.6 to 2.7 times. Halving the auxiliary budget (25 total updates per round) cuts the overhead to 36% and 40% with almost identical false agreement (0.005 versus 0.004, 0.002 versus 0.001). The paper gives no cost-effectiveness curve and no comparison against simply using externally supervised data; the H200-hours are reserved budgets including waiting time, and the external audit service's GPU usage is not counted.</p>
   </section>
+
+  <section id="critique" class="workflow-section">
+    <h2 data-lang-content="zh">批判性评估</h2>
+    <h2 data-lang-content="en">Critical assessment</h2>
+    <div class="perspective-list">
+      <div class="perspective">
+        <strong data-lang-content="zh">强证据</strong>
+        <strong data-lang-content="en">Strong evidence</strong>
+        <span data-lang-content="zh">诊断与训练完全解耦：审计器不参与准入、更新或奖励，测的是训练信号背后的原始样本。机制消融给出三个失败对照（同源、全量、问题级随机划分）与一个成功对照，把「只是多了一个模型」的解释排除干净。固定回放库把反馈来源与课程变化分离，并带 5 seeds 方差，是全文最扎实的一环。七个 benchmark 增益全为正、两种规模方向一致、多跳任务受益更明显。作者还主动写出最危险的反解释（假一致下降可能来自拒绝难任务），并给出配套指标。</span>
+        <span data-lang-content="en">The diagnosis is fully decoupled from training: the auditor never touches admission, updates or reward, so it measures the samples behind the training signal. The mechanism ablation supplies three failing controls (same-source, full-data, question-level random split) and one succeeding control, ruling out the explanation that it was merely an extra model. The fixed replay bank separates feedback provenance from curriculum change and carries five-seed variance, the most solid element in the paper. Gains are positive on all seven benchmarks, consistent across two scales, and larger on multi-hop tasks. The authors also volunteer the most dangerous counter-explanation, that lower false agreement may come from rejecting harder tasks, and pair it with the metrics needed to check.</span>
+      </div>
+      <div class="perspective">
+        <strong data-lang-content="zh">中等或弱证据</strong>
+        <strong data-lang-content="en">Weaker evidence</strong>
+        <span data-lang-content="zh">外部正确性的锚点仍是 LLM：审计由 gpt-6-astra/high 构造参考并判定，全文未报告人工验证样本，而核心指标 F 的可靠性正建立在审计者之上。主表每格是单次运行，没有方差或置信区间（只有固定回放消融给了 5 seeds）。只有 Qwen3.5 一个模型家族的两个规模、三轮演化，无第三方复现。成本没有曲线化，也没有与外部监督路线的总成本对比。审计覆盖率约 85% 到 86%，未解决样本不计入正确率，若其系统性偏向难例则 T_P 会被高估。对「相连来源」（同一网页集群、互相引用的文档）的稳健性未验证，作者自己列为下一步。</span>
+        <span data-lang-content="en">External correctness still rests on an LLM: the audit is built and judged by gpt-6-astra/high, no human validation sample is reported, and the reliability of the core metric F depends on that auditor. Each main-table cell is a single run with no variance or interval, and only the replay ablation reports five seeds. The study covers one model family at two scales over three rounds with no third-party replication. Cost is never turned into a curve, nor compared against the total cost of an externally supervised route. Audit coverage is about 85 to 86 percent and unresolved items are excluded from correctness, so a systematic bias toward hard items would inflate T_P. Robustness to connected sources, meaning the same page cluster or mutually citing documents, is untested and named by the authors as future work.</span>
+      </div>
+      <div class="perspective">
+        <strong data-lang-content="zh">结论是否超出证据</strong>
+        <strong data-lang-content="en">Does the claim exceed the evidence</strong>
+        <span data-lang-content="zh">「共谋作弊存在且随轮次加深」成立；「CrossFit 比只优化伪标签质量更有效」成立（MSV 只提升 0.7 到 0.8，CrossFit 提升 8.8 与 8.4）；「增益来自反馈血缘而非课程变化」也成立，固定回放库是最直接的证据——同库同标签，仅换反馈来源就把 F 从 0.058 与 0.073 降到 0.004 与 0.001。作者对「扩展到相连来源」与「更低的端到端成本」明确标为尚未建立，措辞克制。唯一需要限定的是术语：co-cheating 描述的是统计现象，作者自己也补充了「不代表有意协调」。</span>
+        <span data-lang-content="en">The existence of co-cheating and its growth by round hold. So does the claim that CrossFit beats merely improving pseudo-label quality, since MSV adds 0.7 to 0.8 points while CrossFit adds 8.8 and 8.4. The attribution claim also holds, with the fixed replay bank as the cleanest evidence: same bank, same labels, only the feedback source changed, and F falls from 0.058 and 0.073 to 0.004 and 0.001. The authors explicitly mark extension to connected sources and lower end-to-end cost as not yet established, which is restrained. The one thing to qualify is the term itself: co-cheating describes a statistical outcome, and the authors note it does not imply intentional coordination.</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="meaning" class="workflow-section">
+    <h2 data-lang-content="zh">对本机两个项目的意义</h2>
+    <h2 data-lang-content="en">What it means for two local projects</h2>
+    <p data-lang-content="zh">这篇论文与我本机的两个项目都直接相关，而且指向同一件事：<strong>当系统既是数据生产者又是评测者时，必须审计评测者自己的血缘。</strong></p>
+    <p data-lang-content="en">This paper relates directly to both local projects, and both point at the same thing: <strong>when a system both produces the data and judges it, the provenance of the judge itself has to be audited.</strong></p>
+    <div class="editorial-grid">
+      <article class="editorial-card">
+        <h3 data-lang-content="zh">本地 Agent Harness：给验收闸门装上血缘字段</h3>
+        <h3 data-lang-content="en">Local Agent Harness: give the acceptance gate a provenance field</h3>
+        <p data-lang-content="zh">harness 的自演化循环与本文同构：任务产生数据、validators 产生判定、判定又反过来塑造后续任务。可借鉴的有三点。第一，给每条准入样本与每条校验记录加上<strong>来源标识</strong>（源仓库、源任务族、源日期），让「这个校验器有没有见过这个来源」可以被程序化判断——没有这个字段，源级交叉拟合无法实施。第二，把「一致率」拆开：现在 verification_eval.py 测的是漏检率与误杀率，建议再加一个「同一错误上的一致率」，也就是闸门与生成器一起判错的比例，这正是 F 在 harness 语境下的对应物。第三，<strong>审计要与循环解耦</strong>：用一批冻结样本离线复核闸门，而不是让闸门自己判自己。</p>
+        <p data-lang-content="en">The harness self-evolution loop is isomorphic to the one here: tasks produce data, validators produce verdicts, and verdicts reshape later tasks. Three things transfer. First, attach a <strong>source identifier</strong> (repo, task family, date) to every admitted sample and every validation record so that whether a validator has seen a source becomes a programmatic question; without that field, source-level cross-fitting cannot be implemented at all. Second, split the agreement rate: verification_eval.py currently measures misses and false kills, so add agreement on the same error, the share of cases where the gate and the generator are wrong together, which is the harness analogue of F. Third, <strong>keep the audit decoupled</strong>: re-check the gate offline on a frozen sample instead of letting it judge itself.</p>
+      </article>
+      <article class="editorial-card">
+        <h3 data-lang-content="zh">Jev 备考：出题者与判分者是同一个闭环</h3>
+        <h3 data-lang-content="en">Jev Exam Prep: the question writer and the grader form one loop</h3>
+        <p data-lang-content="zh">这个项目里，模型既出题（生成题干与 rubric 得分点）又判分，是本文闭环的教科书实例：如果某个得分点的参考答案来自对材料的一次系统性误读，它既会写进 rubric，又会在判分时被同一套理解认下来——出题与判分互相印证，但两边都错。可落地的做法是给每个得分点保留它所属的<strong>材料片段标识</strong>，评测时区分「同一材料派生的题」与「其他材料的题」，比较两组的判分准确率；如果同源组显著更低，就说明存在本文意义上的假一致。这与上一篇 JEV-as-a-Judge 里「文风对抗会击穿置信度」的结论互补：那篇说评测者会失灵，这篇说怎么发现并切断失灵的回流。</p>
+        <p data-lang-content="en">In that project one model both writes the questions (stems and rubric points) and grades the answers, making it a textbook instance of this loop: if a rubric point reference answer comes from a systematic misreading of the material, that misreading is written into the rubric and then confirmed at grading time, so writer and grader corroborate each other while both are wrong. Concretely, keep the <strong>material-span identifier</strong> for every rubric point, then compare grading accuracy between questions derived from the same material and questions from other material; a materially lower same-source accuracy indicates false agreement in this paper sense. This complements the earlier JEV-as-a-Judge finding that adversarial style breaks confidence: that paper shows the evaluator fails, this one shows how to detect and cut the return path that hides the failure.</p>
+      </article>
+    </div>
+    <div class="quote-panel">
+      <p data-lang-content="zh">两个项目共用一条结论：<strong>自生成的训练信号必须按血缘审计</strong>——同源不一定同错，但同错往往同源。</p>
+      <p data-lang-content="en">Both projects share one conclusion: <strong>self-generated training signals have to be audited by provenance</strong> — the same source does not guarantee the same error, but the same error usually shares a source.</p>
+    </div>
+  </section>
+
+  <div class="story-ending">
+    <p data-lang-content="zh">这篇论文的价值在于把「自演化闭环会自我欺骗」变成可测量的东西：它没有停在「奖励可能被黑」的一般论述，而是隔离出一条具体回流路径，给出可区分真一致与假一致的指标，并用机制消融与固定回放把归因做干净。</p>
+    <p data-lang-content="en">The value here is turning self-deception in self-evolution into something measurable. It does not stop at the general claim that rewards can be hacked; it isolates one concrete return path, defines metrics that separate real from false agreement, and uses mechanism ablations plus fixed replay to keep the attribution clean.</p>
+    <strong data-lang-content="zh">一句话：只检查标签不够，关键是评测者有没有见过这个来源；而且要小心——把这条回流路径修好之后，内部一致率会下降，那是正常的。</strong>
+    <strong data-lang-content="en">In one line: checking labels is not enough, what matters is whether the evaluator has seen that source; and be careful, because fixing the return path makes internal agreement go down, and that is expected.</strong>
+  </div>
+
+  <div class="editorial-actions">
+    <a class="button button--dark" href="https://arxiv.org/abs/2609.39102" target="_blank" rel="noopener external nofollow noreferrer"><span data-lang-content="zh">阅读原文（arXiv）</span><span data-lang-content="en">Read the paper (arXiv)</span></a>
+    <a class="button button--outline" href="/tech/agent/local-agent-harness/"><span data-lang-content="zh">本地 Agent Harness</span><span data-lang-content="en">Local Agent Harness</span></a>
+    <a class="button button--outline" href="/tech/tools/jev-exam/"><span data-lang-content="zh">Jev 备考项目</span><span data-lang-content="en">Jev Exam Prep</span></a>
+  </div>
+</div>
 </div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By Simon</div><div class="framework-info"><span data-i18n="footer.framework">框架</span><span>&nbsp;</span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span data-i18n="footer.theme">主题</span><span>&nbsp;</span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div><div class="footer_custom_text"><span data-lang-content="zh">把复杂技术讲清楚，也把它做成可验证的系统。</span><span data-lang-content="en">Explain complex systems clearly, then make them verifiable.</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><div class="js-pjax"></div><script src="/js/icons.js" defer></script><script src="/js/site.js" defer></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
