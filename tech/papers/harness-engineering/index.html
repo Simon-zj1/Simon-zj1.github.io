@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg">
 <meta property="article:published_time" content="2026-10-07T17:00:00.000Z">
-<meta property="article:modified_time" content="2026-10-07T16:12:13.839Z">
+<meta property="article:modified_time" content="2026-10-07T16:27:39.653Z">
 <meta property="article:author" content="Simon">
 <meta property="article:tag" content="机器人,具身智能,Agent,ROS,论文阅读,知识漫游,AI提效,面经,Robotics,Embodied AI">
 <meta name="twitter:card" content="summary">
@@ -189,7 +189,6 @@
     <a href="#recommendations"><span data-lang-content="zh">18 条设计建议与 90 行骨架</span><span data-lang-content="en">18 recommendations and a 90-line scaffold</span></a>
     <a href="#evolution"><span data-lang-content="zh">90 天纵向与平台化</span><span data-lang-content="en">Ninety days of evolution, and the platform turn</span></a>
     <a href="#critique"><span data-lang-content="zh">批判性评估</span><span data-lang-content="en">Critical assessment</span></a>
-    <a href="#meaning"><span data-lang-content="zh">对本机两个项目的意义</span><span data-lang-content="en">What it means for two local projects</span></a>
   </div>
 
   <div class="story-facts">
@@ -492,31 +491,6 @@
         <span data-lang-content="zh">「七子系统是规范解剖」作为组织框架成立且自洽，但它是分析工具而非自然规律。「循环复杂度不预测能力」方向成立，有 Mini-SWE-Agent 的存在性证明支撑；但它用的是各系统自报数字、模型与日期都不同，不能读成严格的等价性。「两条缺席」成立且保守，作者把检验范围与盲区都写清楚了。「平台化转变已完成」的证据是具名产物清单，这类清单声明会随时间过期，作者也把它标为「清单类」，方向上站得住但应带日期引用。「与 Anthropic 工程系列高度吻合」被作者自己标为因果未定。</span>
         <span data-lang-content="en">The seven-subsystem anatomy holds as an organising frame, but it is an analytical tool rather than a law of nature. The claim that loop sophistication does not predict capability is directionally supported by the Mini-SWE-Agent existence proof, but it rests on self-reported numbers from different models and dates and cannot be read as strict equivalence. The twin absences hold and are conservative, with both the scope of the check and its blind spots stated. The claim that the platform turn is complete rests on a list of named artifacts — list-shaped claims decay, the authors label it as such, and it should be cited with a date. The alignment with Anthropic's engineering series is marked by the authors themselves as causally unestablished.</span>
       </div>
-    </div>
-  </section>
-
-  <section id="meaning" class="workflow-section">
-    <h2 data-lang-content="zh">对本机两个项目的意义</h2>
-    <h2 data-lang-content="en">What it means for two local projects</h2>
-    <p data-lang-content="zh">这篇论文与本机的「本地 Agent Harness」是同一个研究对象，可以直接当自查表用；与「Jev 备考」的关系则落在两条缺席结论上。</p>
-    <p data-lang-content="en">This paper studies the same object as the local Agent Harness project, so it works as a direct self-audit; its relation to Jev Exam Prep runs through the twin absences.</p>
-    <div class="editorial-grid">
-      <article class="editorial-card">
-        <h3 data-lang-content="zh">本地 Agent Harness：七个子系统逐格自查</h3>
-        <h3 data-lang-content="en">Local Agent Harness: audit yourself cell by cell</h3>
-        <p data-lang-content="zh">把该项目的内核按论文的七格摆一遍：循环（runtime 与 loop）、LLM 集成（providers）、工具与动作（tools 与权限模型）、记忆与上下文（memory 的 runs 与 notes 分层）、安全与权限（可写路径与命令白名单）、编排（目前是刻意单 agent）、扩展性（任务声明与技能）。三处值得动手：一是<strong>给七个格子各写一句「当前形态」</strong>，把只有最小实现的格子标出来；二是按 R7 检查上下文策略——是否做到了阈值触发、逐字保留近期尾部、增量合并摘要；三是按 R11 检查安全规则的载体——AGENTS.md 里的规则目前是散文，论文的证据支持把它们下沉成可独立审计的策略文件，并明确 YOLO 式的旁路之下还留什么底线。另外两条缺席正好是本项目已有的架构选择（不用框架、不建代码 RAG），可以当作外部佐证写进项目说明。</p>
-        <p data-lang-content="en">Lay the kernel out on the paper's seven cells: loop (runtime and loop), LLM integration (providers), tools and actions (tools plus the permission model), memory and context (the runs/notes split), safety and permissions (writable paths and command allow-list), orchestration (deliberately single-agent today), and extensibility (task declarations and skills). Three things are worth doing: <strong>write one line per cell describing the current form</strong> and mark the ones that only have a minimal implementation; check the context strategy against R7, meaning threshold triggering, a verbatim recent tail and incremental summary merging; and check where safety rules live — the rules in AGENTS.md are prose today, and the paper's evidence supports sinking them into separately auditable policy files with an explicit floor beneath any bypass mode. The twin absences also happen to match choices this project already made (no framework, no code RAG), so they can serve as external corroboration in its documentation.</p>
-      </article>
-      <article class="editorial-card">
-        <h3 data-lang-content="zh">Jev 备考：两条缺席直接命中技术选型</h3>
-        <h3 data-lang-content="en">Jev Exam Prep: the absences land on tech choices</h3>
-        <p data-lang-content="zh">这个项目的检索面由材料片段与题目定位构成，正是论文所称的「JIT 仓库上下文」那一类：分层文件加按需挂载，而不是语义相似度。论文的证据支持两件事：一是<strong>不要为材料引入向量检索作为主路径</strong>，确定性定位（片段 ID、章节、页码）在这种规模下更可解释也更稳；二是按 R6 的形态组织上下文——顶层约定放靠前位置，嵌套材料在工具真正触达时即时挂载。此外该项目的评测基建（golden set、eval 脚本、门槛）与论文的「清单声明带日期、结构声明预期持久」是同一种纪律：把会随材料更新的判定标上日期，把结构性结论单独记。MCP 与 Skills 的优先级排序（R14）也提示：如果以后要给项目加外部集成，优先扩技能模板而不是把每个上游 API 包成工具。</p>
-        <p data-lang-content="en">The retrieval surface in this project is built from material spans and question anchors — exactly what the paper calls JIT repo context: hierarchical files mounted on demand rather than semantic similarity. Two things follow from the evidence: <strong>do not introduce vector retrieval as the primary path</strong> for material, since deterministic anchors (span IDs, sections, page numbers) are more explainable and more stable at this scale; and organise context along R6's shape, with top-level conventions near the top and nested material mounted just-in-time when a tool actually reaches it. The project's evaluation infrastructure (golden set, eval scripts, thresholds) also follows the same discipline the paper describes — date the inventory claims that move with the material, and keep structural conclusions separate. The ordering in R14 (skills over MCP) is a further hint: if external integrations are added later, extend skill templates before wrapping each upstream API as its own tool.</p>
-      </article>
-    </div>
-    <div class="quote-panel">
-      <p data-lang-content="zh">两个项目共用一条结论：<strong>先把七格填满，再谈优化</strong>——论文的证据显示，能力下限主要由模型决定，而循环之外的工程投入决定的是生产就绪度。</p>
-      <p data-lang-content="en">Both projects share one conclusion: <strong>fill the seven cells before optimising them</strong> — the paper's evidence suggests the capability floor is set largely by the model, while the engineering spent outside the loop is what determines production readiness.</p>
     </div>
   </section>
 

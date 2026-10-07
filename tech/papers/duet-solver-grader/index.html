@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg">
 <meta property="article:published_time" content="2026-10-06T19:00:00.000Z">
-<meta property="article:modified_time" content="2026-10-07T06:38:39.312Z">
+<meta property="article:modified_time" content="2026-10-07T16:27:39.651Z">
 <meta property="article:author" content="Simon">
 <meta property="article:tag" content="机器人,具身智能,Agent,ROS,论文阅读,知识漫游,AI提效,面经,Robotics,Embodied AI">
 <meta name="twitter:card" content="summary">
@@ -189,7 +189,6 @@
     <a href="#grader"><span data-lang-content="zh">评测者真的变好了吗</span><span data-lang-content="en">Did the grader actually improve</span></a>
     <a href="#ablation"><span data-lang-content="zh">消融：三组对照</span><span data-lang-content="en">Ablations: three controls</span></a>
     <a href="#critique"><span data-lang-content="zh">批判性评估</span><span data-lang-content="en">Critical assessment</span></a>
-    <a href="#meaning"><span data-lang-content="zh">对本机两个项目的意义</span><span data-lang-content="en">What it means for two local projects</span></a>
   </div>
 
   <div class="story-facts">
@@ -461,31 +460,6 @@
         <span data-lang-content="zh">「四个 benchmark 上一致超过固定 grader 的基线」完全成立。「超过使用参考评测器的基线」需要限定到具体 benchmark：成立的是与基线的比较，且在 Finance 与 τ²-Bench 上；GDPval 上它低于自己的 oracle 变体。「可以降低对精心设计初始 grader 的依赖」证据偏中等——空提示起点确实能超过基线，但论文没有对比「精心设计的初始 grader 加 DUET」，而它自己的知情初始化实验里终点反而更低（95.0 对空提示的 96.5）。「不做验证集选择与早停也有相当表现」口径偏宽：solver 相当，但 grader 一致率下降了 4.5 分。</span>
         <span data-lang-content="en">"Consistently beats fixed-grader baselines on all four benchmarks" holds. "Exceeds baselines that use the reference evaluator" needs a benchmark qualifier: it holds against the baselines on Finance and τ²-Bench, and on GDPval it sits below its own oracle variant. "Reduces the need for a carefully designed initial grader" is moderate at best — the empty-prompt start does beat the baselines, but the paper never compares against a well-designed initial grader plus DUET, and in its own informed-initialisation experiment the endpoint is lower (95.0 against 96.5). "Comparable performance without validation-based selection" overstates things: the solver is comparable, but grader agreement drops 4.5 points.</span>
       </div>
-    </div>
-  </section>
-
-  <section id="meaning" class="workflow-section">
-    <h2 data-lang-content="zh">对本机两个项目的意义</h2>
-    <h2 data-lang-content="en">What it means for two local projects</h2>
-    <p data-lang-content="zh">这篇论文与我本机的两个项目各有一处直接对应：一个是「验收标准应该被优化」，一个是「判分质量需要自己的指标」。</p>
-    <p data-lang-content="en">This paper lines up with two of my local projects in two different ways: one is about optimising acceptance criteria, the other about giving grading quality its own metric.</p>
-    <div class="editorial-grid">
-      <article class="editorial-card">
-        <h3 data-lang-content="zh">本地 Agent Harness：让验收闸门也成为被优化对象</h3>
-        <h3 data-lang-content="en">Local Agent Harness: make the acceptance gate an optimisation target</h3>
-        <p data-lang-content="zh">harness 目前把验收标准写进 validators 并挂到任务声明上，但它由人工维护、是静态的。DUET 给的做法是让验收标准随被验收对象一起演化，并用三条纪律控制它：每次只改一边（先改闸门还是先改任务要明确）、用「同一任务相邻两次评测的分数变化」挑出还值得重跑的任务、限制单次修订的规模。最值得直接借用的是消融里那条反直觉结论——固定被评对象时，优化评测者几乎没有用，两者必须一起动。</p>
-        <p data-lang-content="en">The harness currently writes acceptance criteria into validators and attaches them to task declarations, but those criteria are human-maintained and static. DUET's move is to let the criteria evolve with the thing they judge, under three rules: change only one side per round, pick the tasks still worth re-running by how much their score moved between consecutive runs, and cap the size of each revision. The most directly transferable finding is the counter-intuitive one from the ablation: with the judged object frozen, optimising the judge does almost nothing.</p>
-      </article>
-      <article class="editorial-card">
-        <h3 data-lang-content="zh">点睛：判分质量需要自己的指标与更新机制</h3>
-        <h3 data-lang-content="en">Eyedot: grading quality needs its own metric and update loop</h3>
-        <p data-lang-content="zh">项目现在的评测只覆盖判分结果（逐点准确率、校准、待复核），没有评测「判分器本身在成对比较上有没有分辨力」。DUET 的成对一致率（胜 1、平 0.5、反向 0）与难例构造方式（多生成几个候选、用参考标准定相对质量、专挑表面线索偏向较差输出的对）可以直接搬过来；而「更新模块只做证据支持的最小修订」这条约束，正好对应评分标准迭代时最容易失控的地方——越改越细、越改越像在背题。</p>
-        <p data-lang-content="en">The project's current evaluation covers grading outcomes — per-point accuracy, calibration, needs-review flags — but not whether the grader itself can tell two candidate answers apart. DUET's pairwise agreement (1 for the preferred output, 0.5 for a tie, 0 for an inversion) and its hard-pair construction (generate several candidates, rank them with a reference standard, then keep the pairs where surface cues favour the worse one) transfer directly. And the constraint that the update module makes the smallest evidence-supported revision addresses exactly where rubric iteration goes wrong: ever finer, ever more aligned to the training items.</p>
-      </article>
-    </div>
-    <div class="quote-panel">
-      <p data-lang-content="zh">两个项目共用一条结论：<strong>验收标准不是一次写好的常量，而是一个需要被评测、也需要被更新的对象</strong>——但每次只改一边，否则改好了也不知道是谁的功劳。</p>
-      <p data-lang-content="en">Both projects share one conclusion: <strong>acceptance criteria are not a constant written once, but an object that needs its own evaluation and its own update loop</strong> — changing one side at a time, or you will not know what deserves the credit.</p>
     </div>
   </section>
 
