@@ -988,7 +988,7 @@ body.type-tech-robotics {
 }
 
 body.type-tech-tools,
-body.type-tech-tools-jev-exam {
+body.type-tech-tools-eyedot {
   --page-accent: #855d94;
   --page-soft: #eae0ee;
 }
@@ -1024,7 +1024,7 @@ html[data-theme='dark'] body.type-tech,
 html[data-theme='dark'] body.type-tech-agent,
 html[data-theme='dark'] body.type-tech-robotics,
 html[data-theme='dark'] body.type-tech-tools,
-html[data-theme='dark'] body.type-tech-tools-jev-exam,
+html[data-theme='dark'] body.type-tech-tools-eyedot,
 html[data-theme='dark'] body.type-robotics,
 html[data-theme='dark'] body.type-tech-papers,
 html[data-theme='dark'] body.type-tech-tools-paper-reading,

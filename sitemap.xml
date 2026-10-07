@@ -2,18 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://www.simon-zj.top/tech/papers/</loc>
-    
-    <lastmod>2026-10-06</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.simon-zj.top/tech/papers/cocheating-search-agents/</loc>
     
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-10-07</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -21,6 +12,42 @@
   
   <url>
     <loc>https://www.simon-zj.top/tech/tools/</loc>
+    
+    <lastmod>2026-10-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.simon-zj.top/tech/papers/duet-solver-grader/</loc>
+    
+    <lastmod>2026-10-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.simon-zj.top/tech/papers/jev-as-a-judge/</loc>
+    
+    <lastmod>2026-10-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.simon-zj.top/tech/tools/eyedot/</loc>
+    
+    <lastmod>2026-10-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.simon-zj.top/tech/papers/</loc>
     
     <lastmod>2026-10-06</lastmod>
     
@@ -56,34 +83,7 @@
   </url>
   
   <url>
-    <loc>https://www.simon-zj.top/tech/tools/jev-exam/</loc>
-    
-    <lastmod>2026-10-06</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.simon-zj.top/tech/papers/duet-solver-grader/</loc>
-    
-    <lastmod>2026-10-06</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.simon-zj.top/demo/jev-exam-report</loc>
-    
-    <lastmod>2026-10-06</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.simon-zj.top/tech/papers/jev-as-a-judge/</loc>
+    <loc>https://www.simon-zj.top/demo/eyedot-report</loc>
     
     <lastmod>2026-10-06</lastmod>
     
@@ -175,7 +175,7 @@
 
   <url>
     <loc>https://www.simon-zj.top/</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
