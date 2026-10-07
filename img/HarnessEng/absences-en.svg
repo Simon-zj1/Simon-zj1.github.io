@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 530" width="1240" height="530" role="img">
+<rect x="0" y="0" width="1240" height="530" rx="0" fill="#eeeee8"/>
+<text x="60" y="66" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="27" font-weight="650" fill="#151515" text-anchor="start">Two absences that survived re-auditing</text>
+<text x="60" y="96" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="400" fill="#666862" text-anchor="start">Dependency manifests and import greps across three languages, run twice three months apart over twelve trees.</text>
+<rect x="60" y="140" width="560" height="150" rx="10" fill="#ffffff" stroke="#e05a36" stroke-width="1.4"/>
+<text x="88" y="186" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="32" font-weight="700" fill="#e05a36" text-anchor="start">0 / 11</text>
+<text x="232" y="176" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="650" fill="#151515" text-anchor="start">No general-purpose agentic framework</text>
+<text x="232" y="200" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="start">LangChain, LangGraph, AutoGen,</text>
+<text x="232" y="217" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="start">CrewAI, Pydantic AI, Google ADK and more</text>
+<text x="232" y="234" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="start">Gemini CLI skips Google’s own</text>
+<rect x="60" y="306" width="560" height="150" rx="10" fill="#ffffff" stroke="#e05a36" stroke-width="1.4"/>
+<text x="88" y="352" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="32" font-weight="700" fill="#e05a36" text-anchor="start">0 / 11</text>
+<text x="232" y="342" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="650" fill="#151515" text-anchor="start">No vector-embedding retrieval over code</text>
+<text x="232" y="366" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="start">All rely on ripgrep, tree-sitter, glob and</text>
+<text x="232" y="383" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="start">auto-discovered Markdown context files</text>
+<text x="232" y="400" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="start">Embeddings serve chat memory, never the source tree</text>
+<text x="88" y="430" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="start">The production ceiling for session recall is SQLite FTS5 (Hermes)</text>
+<rect x="650" y="140" width="530" height="316" rx="10" fill="#f7f6f1" stroke="none" stroke-width="1"/>
+<text x="674" y="172" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="650" fill="#151515" text-anchor="start">Adoption (out of 11 systems)</text>
+<text x="674" y="212" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#151515" text-anchor="start">SKILL.md skills</text>
+<rect x="674" y="220" width="310.90909090909093" height="16" rx="4" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="992.909090909091" y="233" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="620" fill="#1f6f68" text-anchor="start">9/11</text>
+<text x="674" y="258" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#151515" text-anchor="start">MCP</text>
+<rect x="674" y="266" width="276.3636363636364" height="16" rx="4" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="958.3636363636364" y="279" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="620" fill="#1f6f68" text-anchor="start">8/11</text>
+<text x="674" y="304" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#151515" text-anchor="start">ACP protocol</text>
+<rect x="674" y="312" width="207.27272727272725" height="16" rx="4" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="889.2727272727273" y="325" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="620" fill="#666862" text-anchor="start">6/11</text>
+<text x="674" y="350" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#151515" text-anchor="start">OS-level sandbox</text>
+<rect x="674" y="358" width="69.0909090909091" height="16" rx="4" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="751.0909090909091" y="371" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="620" fill="#666862" text-anchor="start">2/11</text>
+<text x="674" y="396" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="650" fill="#151515" text-anchor="start">What they use instead</text>
+<rect x="674" y="408" width="120" height="20" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="734" y="422" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#666862" text-anchor="middle">Hand-rolled async loops</text>
+<rect x="802" y="408" width="120" height="20" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="862" y="422" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#666862" text-anchor="middle">ripgrep</text>
+<rect x="930" y="408" width="120" height="20" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="990" y="422" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#666862" text-anchor="middle">tree-sitter</text>
+<rect x="1058" y="408" width="120" height="20" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="1118" y="422" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#666862" text-anchor="middle">glob</text>
+<rect x="674" y="434" width="120" height="20" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="734" y="448" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#666862" text-anchor="middle">AGENTS.md / CLAUDE.md</text>
+<rect x="802" y="434" width="120" height="20" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="862" y="448" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#666862" text-anchor="middle">Policy files</text>
+<rect x="930" y="434" width="120" height="20" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="990" y="448" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#666862" text-anchor="middle">SQLite FTS5</text>
+<text x="60" y="486" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start">Source: Observations 8, 9 (/13.2) and 11. The authors call the finding structurally conservative: internal forks, dynamically imported plugins and transpiled distributions were not traced.</text>
+</svg>

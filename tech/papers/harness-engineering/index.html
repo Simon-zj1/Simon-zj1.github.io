@@ -1,0 +1,536 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><script>(() => {
+  try {
+    const requestedLanguage = new URLSearchParams(window.location.search).get('lang')
+    const storedLanguage = localStorage.getItem('simon-language')
+    const language = requestedLanguage === 'en' || requestedLanguage === 'zh'
+      ? requestedLanguage
+      : storedLanguage === 'en' ? 'en' : 'zh'
+    document.documentElement.lang = language === 'en' ? 'en' : 'zh-CN'
+    document.documentElement.dataset.language = language
+  } catch (error) {
+    document.documentElement.lang = 'zh-CN'
+    document.documentElement.dataset.language = 'zh'
+  }
+})()</script><title>harness 解剖学 | Simon</title><meta name="author" content="Simon"><meta name="copyright" content="Simon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="论文精读：十一个编码 harness 的源码级解剖——七个子系统、13 条跨系统观察、29 个复用模式，以及两条经受住复核的缺席结论：没有通用 agent 框架，也没有向量检索查代码。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="harness 解剖学">
+<meta property="og:url" content="https://www.simon-zj.top/tech/papers/harness-engineering/">
+<meta property="og:site_name" content="Simon">
+<meta property="og:description" content="论文精读：十一个编码 harness 的源码级解剖——七个子系统、13 条跨系统观察、29 个复用模式，以及两条经受住复核的缺席结论：没有通用 agent 框架，也没有向量检索查代码。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg">
+<meta property="article:published_time" content="2026-10-07T17:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-07T16:12:13.839Z">
+<meta property="article:author" content="Simon">
+<meta property="article:tag" content="机器人,具身智能,Agent,ROS,论文阅读,知识漫游,AI提效,面经,Robotics,Embodied AI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg"><link rel="shortcut icon" href="/img/favicon-robot-v3.ico?v=3"><link rel="canonical" href="https://www.simon-zj.top/tech/papers/harness-engineering/"><meta name="google-site-verification" content="v8upAgqbj73wNa2JwNefCRjNHGTmyXKN1v9xIx-xsTY"/><meta name="msvalidate.01" content="998791418970E8CF5EBDB5F160F2BD89"/><meta name="baidu-site-verification" content="codeva-ePm0SowACw"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: '/pluginsSrc/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'harness 解剖学',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><script type="speculationrules">{"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"a[target='_blank'],a[href^='#'],a[href^='mailto:'],a[download]"}}]},"eagerness":"moderate"}]}</script><link rel="stylesheet" href="/css/site.css"><link rel="manifest" href="/site.webmanifest"><link rel="icon" type="image/svg+xml" href="/img/favicon-robot-v3.svg?v=3"><link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-robot-v3-32.png?v=3"><link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-robot-v3-16.png?v=3"><link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon-robot-v3.png?v=3"><link rel="mask-icon" href="/img/favicon-robot-v3.svg?v=3" color="#151515"><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Simon" type="application/atom+xml">
+</head><body class="page type-tech-papers-harnesseng page" data-page-title-zh="harness 解剖学" data-page-title-en="Anatomy of a Harness" data-page-description-zh="论文精读：十一个编码 harness 的源码级解剖——七个子系统、13 条跨系统观察、29 个复用模式，以及两条经受住复核的缺席结论：没有通用 agent 框架，也没有向量检索查代码。" data-page-description-en="A deep read: a source-code anatomy of eleven coding harnesses, with seven subsystems, 13 cross-cutting observations, 29 patterns, and two absences that survived re-auditing."><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/optimized/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="language-switch language-switch--sidebar" role="group" aria-label="Language"><button class="language-switch__button" type="button" data-language-option="zh" aria-pressed="true">中文</button><button class="language-switch__button" type="button" data-language-option="en" aria-pressed="false">EN</button></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-house"></i><span data-i18n="nav.home"> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tech/"><i class="fa-fw fas fa-lightbulb"></i><span data-i18n="nav.tech"> 技术</span></a></div><div class="menus_item"><a class="site-page" href="/trends/"><i class="fa-fw fas fa-newspaper"></i><span data-i18n="nav.news"> AI资讯速递</span></a></div><div class="menus_item"><a class="site-page" href="/knowledge/"><i class="fa-fw fas fa-compass"></i><span data-i18n="nav.knowledge"> 知识漫游</span></a></div><div class="menus_item"><a class="site-page" href="/experience/"><i class="fa-fw fas fa-lock"></i><span data-i18n="nav.experience"> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span data-i18n="nav.about"> 关于</span></a></div></div></div></div><div class="page type-tech-papers-harnesseng" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav id="nav"><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span data-i18n="nav.search"> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-house"></i><span data-i18n="nav.home"> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tech/"><i class="fa-fw fas fa-lightbulb"></i><span data-i18n="nav.tech"> 技术</span></a></div><div class="menus_item"><a class="site-page" href="/trends/"><i class="fa-fw fas fa-newspaper"></i><span data-i18n="nav.news"> AI资讯速递</span></a></div><div class="menus_item"><a class="site-page" href="/knowledge/"><i class="fa-fw fas fa-compass"></i><span data-i18n="nav.knowledge"> 知识漫游</span></a></div><div class="menus_item"><a class="site-page" href="/experience/"><i class="fa-fw fas fa-lock"></i><span data-i18n="nav.experience"> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span data-i18n="nav.about"> 关于</span></a></div></div><div class="language-switch" role="group" aria-label="Language"><button class="language-switch__button" type="button" data-language-option="zh" aria-pressed="true">中文</button><button class="language-switch__button" type="button" data-language-option="en" aria-pressed="false">EN</button></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav></header><main class="layout hide-aside" id="content-inner"><div class="page-masthead"><div class="page-masthead__grid"><div class="page-masthead__meta"><span class="page-masthead__eyebrow">Paper Reading / Harness Engineering</span><div class="page-masthead__rule"></div><p data-i18n-zh="论文精读：十一个编码 harness 的源码级解剖——七个子系统、13 条跨系统观察、29 个复用模式，以及两条经受住复核的缺席结论：没有通用 agent 框架，也没有向量检索查代码。" data-i18n-en="A deep read: a source-code anatomy of eleven coding harnesses, with seven subsystems, 13 cross-cutting observations, 29 patterns, and two absences that survived re-auditing.">论文精读：十一个编码 harness 的源码级解剖——七个子系统、13 条跨系统观察、29 个复用模式，以及两条经受住复核的缺席结论：没有通用 agent 框架，也没有向量检索查代码。</p></div><div class="page-masthead__body"><h1 data-i18n-zh="harness 解剖学" data-i18n-en="Anatomy of a Harness">harness 解剖学</h1><p class="page-masthead__caption" data-i18n-zh="把十一个生产级编码 harness 的源码拆开，看它们到底由什么组成。" data-i18n-en="Eleven production coding harnesses, opened up at the source level.">把十一个生产级编码 harness 的源码拆开，看它们到底由什么组成。</p></div><div class="page-masthead__art" aria-hidden="true"><span class="page-masthead__index">01.3.5</span><div class="page-masthead__marks"><i></i><i></i><i></i></div><span class="page-masthead__note">Structure over scores</span></div></div></div><div id="page"><div class="container" id="article-container"><div class="editorial-page paper-reading-page">
+  <nav class="topic-breadcrumb" aria-label="当前位置">
+    <a href="/tech/"><span data-lang-content="zh">技术笔记</span><span data-lang-content="en">Technology Notes</span></a>
+    <span>/</span>
+    <a href="/tech/papers/"><span data-lang-content="zh">论文阅读</span><span data-lang-content="en">Paper Reading</span></a>
+    <span>/</span>
+    <span><span data-lang-content="zh">harness 解剖学</span><span data-lang-content="en">Anatomy of a Harness</span></span>
+  </nav>
+
+  <div class="editorial-page__lead">
+    <div data-lang-content="zh">
+      <p>这篇论文做了一件此前没人做过的事：把十一个生产级编码 harness 的源码全部拆开，用同一张图纸摆好零件，然后告诉你<strong>哪些零件所有人都装了、哪些只有一家装、哪些看起来重要其实没人装</strong>。它的两条结论最反直觉——循环的复杂度不预测能力，而约四百万行代码里没有任何系统使用通用 agent 框架或向量检索查代码。</p>
+    </div>
+    <div data-lang-content="en">
+      <p>The paper does something nobody had done: it opens up eleven production coding harnesses at the source level and lays the parts out on one diagram, so you can see <strong>which parts everyone installs, which only one vendor installs, and which look important but nobody uses</strong>. Two findings are counter-intuitive — loop sophistication does not predict capability, and across roughly four million lines no system uses a general-purpose agentic framework or vector retrieval over code.</p>
+    </div>
+    <div class="page-facts">
+      <span data-lang-content="zh">阅读结论</span>
+      <span data-lang-content="en">Verdict</span>
+      <strong data-lang-content="zh">设计自查表 / 不是性能依据</strong>
+      <strong data-lang-content="en">A design checklist, not a performance claim</strong>
+      <small data-lang-content="zh">七子系统与 18 条建议可直接对照自己的代码逐条自查；但全文只看源码、不做运行时测量，也没有同任务横评。</small>
+      <small data-lang-content="en">The seven subsystems and 18 recommendations map cleanly onto your own code; but the study reads source rather than measuring runtimes, and never runs the eleven systems on one task set.</small>
+    </div>
+  </div>
+
+  <div class="content-index">
+    <span class="content-index__label" data-lang-content="zh">目录</span>
+    <span class="content-index__label" data-lang-content="en">Contents</span>
+    <a href="#problem"><span data-lang-content="zh">问题：agent 是模型加 harness</span><span data-lang-content="en">Problem: an agent is a model plus a harness</span></a>
+    <a href="#anatomy"><span data-lang-content="zh">七个子系统与实现区间</span><span data-lang-content="en">Seven subsystems and their range</span></a>
+    <a href="#observations"><span data-lang-content="zh">十三条跨系统观察</span><span data-lang-content="en">Thirteen cross-cutting observations</span></a>
+    <a href="#absences"><span data-lang-content="zh">两条经受过复核的缺席</span><span data-lang-content="en">Two absences that survived re-auditing</span></a>
+    <a href="#recommendations"><span data-lang-content="zh">18 条设计建议与 90 行骨架</span><span data-lang-content="en">18 recommendations and a 90-line scaffold</span></a>
+    <a href="#evolution"><span data-lang-content="zh">90 天纵向与平台化</span><span data-lang-content="en">Ninety days of evolution, and the platform turn</span></a>
+    <a href="#critique"><span data-lang-content="zh">批判性评估</span><span data-lang-content="en">Critical assessment</span></a>
+    <a href="#meaning"><span data-lang-content="zh">对本机两个项目的意义</span><span data-lang-content="en">What it means for two local projects</span></a>
+  </div>
+
+  <div class="story-facts">
+    <div>
+      <strong>11 + 1</strong>
+      <span data-lang-content="zh">十一个编码 harness（四家厂商自有与七个开源）加一个元 harness 对照点</span>
+      <span data-lang-content="en">Eleven coding harnesses (four vendor-native, seven open source) plus one meta-harness as a contrast point</span>
+    </div>
+    <div>
+      <strong>7 / 13 / 29 / 18</strong>
+      <span data-lang-content="zh">七个子系统、13 条跨系统观察、29 个复用模式、18 条设计建议</span>
+      <span data-lang-content="en">Seven subsystems, 13 cross-cutting observations, 29 recurring patterns, 18 design recommendations</span>
+    </div>
+    <div>
+      <strong>0 / 11</strong>
+      <span data-lang-content="zh">使用通用 agent 框架的系统数，以及用向量嵌入检索代码的系统数</span>
+      <span data-lang-content="en">Systems using a general-purpose agentic framework, and systems using vector embeddings to retrieve code</span>
+    </div>
+  </div>
+
+  <div class="research-meta">
+    <div class="research-meta__card">
+      <span data-lang-content="zh">论文</span>
+      <span data-lang-content="en">Paper</span>
+      <h3>Harness Engineering: Anatomy, Architecture, and Evolution of Coding Agents</h3>
+      <p data-lang-content="zh">Paul Barbaste（负责人与通讯作者）、Tristan Darrigol、Germain Vu、Tom Wiltberger；Inclusive Brains 与 Wavestone AI Lab。</p>
+      <p data-lang-content="en">Paul Barbaste (lead and corresponding author), Tristan Darrigol, Germain Vu and Tom Wiltberger, from Inclusive Brains and Wavestone AI Lab.</p>
+    </div>
+    <a class="research-meta__card" href="https://arxiv.org/abs/2609.00006" target="_blank" rel="noopener external nofollow noreferrer">
+      <span data-lang-content="zh">来源</span>
+      <span data-lang-content="en">Source</span>
+      <h3>arXiv:2609.00006v1</h3>
+      <p data-lang-content="zh">2026-07-15 提交，83 页、7 图、18 表；2026 年 4 月版（8 个系统）的实质性扩展版。</p>
+      <p data-lang-content="en">Submitted 2026-07-15, 83 pages, 7 figures, 18 tables; a substantially expanded second edition of an April 2026 study over eight systems.</p>
+    </a>
+    <div class="research-meta__card">
+      <span data-lang-content="zh">官方资源</span>
+      <span data-lang-content="en">Artifacts</span>
+      <h3 data-lang-content="zh">论文未给出代码或数据</h3>
+      <h3 data-lang-content="en">No code or data link provided</h3>
+      <p data-lang-content="zh">但每个系统都固定到 release tag 与 commit，并保留 4 月快照，读者可自行复核源码。</p>
+      <p data-lang-content="en">Every system is pinned to a release tag and commit, and the April snapshots are retained, so the source claims can be re-checked independently.</p>
+    </div>
+  </div>
+
+  <section id="problem" class="workflow-section">
+    <h2 data-lang-content="zh">问题：agent 是模型加 harness</h2>
+    <h2 data-lang-content="en">Problem: an agent is a model plus a harness</h2>
+    <p data-lang-content="zh">论文的出发点是那句代数式：<strong>Agent = Model + Harness</strong>。模型提供智能，harness 把这份智能转成工作——通过循环、工具、上下文管理、安全控制、编排与扩展面。「harness engineering」这个词在 2026 年 2 月进入流通，五个月内就长成了有实践指南、形式定义与自动演化系统的学科。</p>
+    <p data-lang-content="en">The paper starts from the algebra: <strong>Agent = Model + Harness</strong>. The model supplies the intelligence; the harness turns it into work through a loop, tools, context management, safety controls, orchestration and extension surfaces. The term harness engineering entered circulation in February 2026 and became a discipline with practitioner guides, formal definitions and automated-evolution systems within five months.</p>
+    <p data-lang-content="zh">缺的是一份<strong>参照物</strong>：基于生产源码说明 harness 到底是什么、由什么组成、领先实现差在哪里。既有文献都没做到——benchmark 榜单只报分数不碰架构，概念性分类只讲模式没有实现，已有的源码级分类又排除了定义前沿的厂商原生系统。</p>
+    <p data-lang-content="en">What was missing is a <strong>reference</strong>: an account grounded in production source code of what a harness is, what it is made of, and where leading implementations differ. Existing literature reaches neither — benchmark surveys report scores without touching architecture, conceptual taxonomies describe patterns without implementations, and the one concurrent source-level taxonomy excludes the vendor-native systems that define the frontier.</p>
+    <div class="quote-panel">
+      <p data-lang-content="zh">论文给了四个边界情形来固定研究对象：harness <strong>不是</strong> scaffold（scaffold 指结构性代码，harness 指交付的运行时产物）、<strong>不是</strong> agentic framework（框架是你导入的库，harness 是你在里面工作的运行时）、<strong>不是</strong> evaluation harness（那个的方向是包住 agent 去跑任务）、<strong>不是</strong> orchestrator（编排器协调别人，自己并不实现编辑循环）。</p>
+      <p data-lang-content="en">Four boundary cases fix the object of study. A harness is <strong>not</strong> a scaffold (scaffold names the structural code, harness the shipped runtime artifact), <strong>not</strong> an agentic framework (a framework is a library you import, a harness is a runtime you work inside), <strong>not</strong> an evaluation harness (that wraps an agent to run tasks, the opposite direction), and <strong>not</strong> an orchestrator (which coordinates others and implements no editing loop).</p>
+    </div>
+  </section>
+
+  <section id="anatomy" class="workflow-section">
+    <h2 data-lang-content="zh">七个子系统与实现区间</h2>
+    <h2 data-lang-content="en">Seven subsystems and their range</h2>
+    <p data-lang-content="zh">论文主张：从约百行的研究基线到百万行的生产 CLI，<strong>每个系统都必须对这七件事表态</strong>——哪怕表态是刻意缺席（Aider 的编排就是如此）。</p>
+    <p data-lang-content="en">The claim is that from a 100-line research baseline to a million-line production CLI, <strong>every system must take a position on the same seven things</strong> — even when the position is deliberate absence, as with Aider's orchestration.</p>
+    <figure class="story-figure">
+      <img data-lang-content="zh" src="/img/HarnessEng/anatomy-zh.svg" alt="harness 的七个子系统：agent 循环居中，LLM 集成、记忆与上下文、工具与动作、安全与权限、编排、扩展性环绕，另有接口层与会话基底两个横切面">
+      <img data-lang-content="en" src="/img/HarnessEng/anatomy-en.svg" alt="The seven subsystems of a harness: the agent loop at the centre, with LLM integration, memory and context, tools and actions, safety and permissions, orchestration and extensibility around it, plus interface and session surfaces">
+      <figcaption data-lang-content="zh">图 1 · 七个子系统，外加两个横切面：接口层（TUI / CLI / IDE / SDK / HTTP 服务）与会话基底（transcript、持久化、resume 与 fork）。依据原文 Sec.2.3、Figure 1 与 Table 1 重绘。</figcaption>
+      <figcaption data-lang-content="en">Figure 1 - Seven subsystems plus two cross-cutting surfaces: the interface layer (TUI, CLI, IDE, SDK, HTTP server) and the session substrate (transcripts, persistence, resume and fork). Redrawn from Sec.2.3, Figure 1 and Table 1.</figcaption>
+    </figure>
+    <figure class="story-figure">
+      <img data-lang-content="zh" src="/img/HarnessEng/range-zh.svg" alt="七个子系统各自的最小实现与最大实现对照">
+      <img data-lang-content="en" src="/img/HarnessEng/range-en.svg" alt="Minimal and maximal observed implementations for each of the seven subsystems">
+      <figcaption data-lang-content="zh">图 2 · 同一格子上的两端差三个数量级。最小实现几乎全部落在 Mini-SWE-Agent（约 100 行），最大实现分散在不同系统——说明不同系统在同一个决策面上选了不同的投资点。数据来源：原文 Table 1。</figcaption>
+      <figcaption data-lang-content="en">Figure 2 - Three orders of magnitude between the two ends of the same cell. Minimal implementations land almost entirely on Mini-SWE-Agent (~100 lines) while maximals spread across systems, showing different systems invest in different places along the same decision surface. Source: Table 1.</figcaption>
+    </figure>
+    <div class="troubleshooting-table">
+      <table>
+        <thead>
+          <tr>
+            <th data-lang-content="zh">子系统</th>
+            <th data-lang-content="en">Subsystem</th>
+            <th data-lang-content="zh">职责</th>
+            <th data-lang-content="en">Role</th>
+            <th data-lang-content="zh">最大实现</th>
+            <th data-lang-content="en">Maximal form</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-lang-content="zh">Agent 循环</td>
+            <td data-lang-content="en">Agent loop</td>
+            <td data-lang-content="zh">交替推理与执行，拥有停止条件与失败恢复</td>
+            <td data-lang-content="en">Alternates inference with action; owns stop conditions and recovery</td>
+            <td data-lang-content="zh">OpenHands：事件溯源对话，持久事件日志与并行动作批次</td>
+            <td data-lang-content="en">OpenHands: event-sourced conversation over a persistent log, with parallel action batches</td>
+          </tr>
+          <tr>
+            <td data-lang-content="zh">LLM 集成</td>
+            <td data-lang-content="en">LLM integration</td>
+            <td data-lang-content="zh">讲 provider 协议，组装提示，管理缓存与路由</td>
+            <td data-lang-content="en">Speaks provider protocols; assembles prompts; caching and routing</td>
+            <td data-lang-content="zh">Hermes：五套自有传输与 29 个 provider 档案；Codex：服务端下发模型目录</td>
+            <td data-lang-content="en">Hermes: five owned transports and 29 provider profiles; Codex: server-delivered model catalog</td>
+          </tr>
+          <tr>
+            <td data-lang-content="zh">工具与动作</td>
+            <td data-lang-content="en">Tools and actions</td>
+            <td data-lang-content="zh">定义并执行 agent 能做的事，首要是文件编辑</td>
+            <td data-lang-content="en">Defines and executes what the agent can do, file editing above all</td>
+            <td data-lang-content="zh">Claude Code：43 个类型化工具与延迟加载；Codex：工具调用作为 V8 执行代码</td>
+            <td data-lang-content="en">Claude Code: 43 typed tools with deferred loading; Codex: tool calls as V8-executed code</td>
+          </tr>
+          <tr>
+            <td data-lang-content="zh">记忆与上下文</td>
+            <td data-lang-content="en">Memory and context</td>
+            <td data-lang-content="zh">配给上下文窗口，跨回合与会话持久知识</td>
+            <td data-lang-content="en">Rations the context window; persists knowledge across sessions</td>
+            <td data-lang-content="zh">Codex：agent 维护的跨会话记忆管线；Gemini CLI：图式上下文蒸馏</td>
+            <td data-lang-content="en">Codex: agent-maintained cross-session memory pipeline; Gemini CLI: graph-based context distillation</td>
+          </tr>
+          <tr>
+            <td data-lang-content="zh">安全与权限</td>
+            <td data-lang-content="en">Safety and permissions</td>
+            <td data-lang-content="zh">决定什么能跑、什么要问、什么禁止，并隔离执行</td>
+            <td data-lang-content="en">Decides what runs, what asks, what is forbidden; isolates execution</td>
+            <td data-lang-content="zh">Codex：策略规则与审批评审，加三平台 OS 沙箱</td>
+            <td data-lang-content="en">Codex: policy rules, an LLM approval reviewer, and a three-platform OS sandbox</td>
+          </tr>
+          <tr>
+            <td data-lang-content="zh">编排</td>
+            <td data-lang-content="en">Orchestration</td>
+            <td data-lang-content="zh">派生并协调子 agent，连接其他 agent</td>
+            <td data-lang-content="en">Spawns and coordinates sub-agents; connects to other agents</td>
+            <td data-lang-content="zh">Claude Code：递归组合；Omnigent：跨厂商协调（元层）</td>
+            <td data-lang-content="en">Claude Code: recursive composition; Omnigent: cross-vendor coordination at the meta layer</td>
+          </tr>
+          <tr>
+            <td data-lang-content="zh">扩展性</td>
+            <td data-lang-content="en">Extensibility</td>
+            <td data-lang-content="zh">让用户与生态增加能力：配置、hooks、技能、插件、MCP</td>
+            <td data-lang-content="en">Lets users and ecosystems add capability: config, hooks, skills, plugins, MCP</td>
+            <td data-lang-content="zh">Pi：一切皆扩展的运行时；Codex：市场分发的插件</td>
+            <td data-lang-content="en">Pi: an everything-is-an-extension runtime; Codex: marketplace-distributed plugins</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="observations" class="workflow-section">
+    <h2 data-lang-content="zh">十三条跨系统观察</h2>
+    <h2 data-lang-content="en">Thirteen cross-cutting observations</h2>
+    <p data-lang-content="zh">观察的排序大致按子系统的顺序，每条都指向具体系统与源码位置。下面挑出对工程决策影响最大的几条。</p>
+    <p data-lang-content="en">The observations roughly follow the subsystem order, and each points at named systems and source locations. Here are the ones that most affect engineering decisions.</p>
+    <div class="troubleshooting-table">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th data-lang-content="zh">观察</th>
+            <th data-lang-content="en">Observation</th>
+            <th data-lang-content="zh">关键证据</th>
+            <th data-lang-content="en">Key evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td data-lang-content="zh">循环复杂度不预测能力；代码量主要花在循环之外</td>
+            <td data-lang-content="en">Loop sophistication does not predict capability; the mass sits outside the loop</td>
+            <td data-lang-content="zh">Mini-SWE-Agent 约百行循环与 OpenHands 事件溯源引擎报告结果同区间；OpenCode 非测试源码约五分之三是客户端</td>
+            <td data-lang-content="en">Mini-SWE-Agent's ~100-line loop reports results in the same range as OpenHands' event-sourced engine; roughly three-fifths of OpenCode's non-test source is clients</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td data-lang-content="zh">厂商原生优化的门槛是谁承担逐 provider 的条件代码成本</td>
+            <td data-lang-content="en">Provider-native optimisations hinge on who pays the per-provider conditional-code cost</td>
+            <td data-lang-content="zh">Hermes 手写五套传输与 29 个 provider 档案；Pi 把每轮缓存未命中的美元浪费当一等指标；OpenCode 同时发出六家缓存方言</td>
+            <td data-lang-content="en">Hermes hand-rolls five transports and 29 provider profiles; Pi treats per-turn cache-miss dollar waste as a first-class metric; OpenCode emits six cache dialects at once</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td data-lang-content="zh">提示修辞在经验收敛处收敛，随后随信任校准变薄；十一系统都没有政策级拒绝语言</td>
+            <td data-lang-content="en">Prompt rhetoric converges where experience converges and thins as trust calibrates; no policy-level refusal language anywhere</td>
+            <td data-lang-content="zh">「不要镀金」在六个独立 scaffold 里措辞近乎同构；4 月的禁止自动提交规则到 7 月被反转或删除</td>
+            <td data-lang-content="en">Anti-gold-plating language appears near-isomorphically in six independently developed scaffolds; the April no-commit rule was reversed or dropped by July</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td data-lang-content="zh">文件编辑策略是代码修改准确率的最重要决定因素之一，且按模型多态</td>
+            <td data-lang-content="en">File-editing strategy is a top determinant of accuracy, and is model-aware</td>
+            <td data-lang-content="zh">Aider 的 prompt-class 工厂；OpenCode 按模型换工具集；Mistral Vibe 一个季度内从模糊匹配转向精确匹配</td>
+            <td data-lang-content="en">Aider's prompt-class factory; OpenCode swapping toolsets per model; Mistral Vibe moving from fuzzy to exact matching within one quarter</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td data-lang-content="zh">持久记忆取代上下文压缩成为前沿；四类记忆写入路径并存</td>
+            <td data-lang-content="en">Persistent memory replaced compaction as the frontier; four write-path governance models coexist</td>
+            <td data-lang-content="zh">压缩已收敛（7/11 阈值触发 LLM 摘要）；路径分为 agent 自主维护、人工把关、模型直写但有界、回合前召回</td>
+            <td data-lang-content="en">Compaction has converged (7/11 use threshold-triggered summarisation); paths split into agent-maintained, human-gated, bounded-direct and pre-turn recall</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td data-lang-content="zh">OS 级沙箱昂贵，而且是选择而非规模的必然结果</td>
+            <td data-lang-content="en">OS sandboxing is expensive, and a choice rather than a consequence of scale</td>
+            <td data-lang-content="zh">4 月的「规模蕴含沙箱」相关性被打破：Hermes 与 OpenCode 属最大系统却零 OS 级隔离</td>
+            <td data-lang-content="en">April's size-implies-sandbox correlation broke: Hermes and OpenCode are among the largest systems with zero OS-level isolation</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td data-lang-content="zh">coordinator-worker 形态独立涌现；子 agent 协调大多仍在进程内</td>
+            <td data-lang-content="en">Coordinator-worker emerged independently; sub-agent coordination mostly stays in-process</td>
+            <td data-lang-content="zh">四个厂商系统全部出现该形态；九分之八的多 agent 系统其子 agent 协调用进程内原语</td>
+            <td data-lang-content="en">All four vendor systems show the shape; eight of nine multi-agent systems coordinate sub-agents with in-process primitives</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td data-lang-content="zh">Skills 超过 MCP 成为采用最广的扩展标准</td>
+            <td data-lang-content="en">Skills overtook MCP as the most-adopted extensibility standard</td>
+            <td data-lang-content="zh">SKILL.md 9/11 对 MCP 8/11；延迟加载 8/9；出现注册表、信任层级、隔离与 agent 自撰技能</td>
+            <td data-lang-content="en">SKILL.md 9/11 against MCP 8/11; deferred loading 8/9; registries, trust tiers, quarantine and the first agent-authored skills</td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td data-lang-content="zh">协议位置从两角色变三角色：ACP 新增 harness 托管</td>
+            <td data-lang-content="en">Protocol placement went from two roles to three: ACP added harness hosting</td>
+            <td data-lang-content="zh">ACP 6/11；OpenHands 把 Claude Code、Codex、Gemini CLI 当可互换后端；A2A 仍只有 Gemini CLI</td>
+            <td data-lang-content="en">ACP ships in 6/11; OpenHands runs Claude Code, Codex or Gemini CLI as interchangeable backends; A2A remains Gemini CLI's bet alone</td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td data-lang-content="zh">平台化转变已完成：竞争单位从循环移到循环之外的生态面</td>
+            <td data-lang-content="en">The platform turn is complete: the competitive unit moved from the loop to the ecosystem around it</td>
+            <td data-lang-content="zh">SDK 化发布、框架厂商发 harness、市场与信任层级、跨厂商会话导入、MDM 治理、元 harness 编排十一家厂商</td>
+            <td data-lang-content="en">SDK-shaped releases, framework vendors shipping harnesses, marketplaces and trust tiers, cross-vendor session importers, MDM governance, and a meta-harness orchestrating eleven vendors</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="absences" class="workflow-section">
+    <h2 data-lang-content="zh">两条经受过复核的缺席</h2>
+    <h2 data-lang-content="en">Two absences that survived re-auditing</h2>
+    <p data-lang-content="zh">这两条是全文最可执行的结论，因为它们说的是<strong>不要做什么</strong>。作者检查了每个依赖清单，并在三种语言里 grep 了十余个通用框架的 import——跨十二棵树复核两次，相隔三个月；语料还经历了一次三倍扩展。结论没有被撼动。</p>
+    <p data-lang-content="en">These are the most actionable findings because they are about what not to build. Every dependency manifest was inspected and every tree grepped for imports of a dozen general-purpose frameworks — across twelve trees, twice, three months apart, with the corpus tripling in between. The result held.</p>
+    <figure class="story-figure">
+      <img data-lang-content="zh" src="/img/HarnessEng/absences-zh.svg" alt="两条缺席：没有系统使用通用 agent 框架，也没有系统用向量嵌入检索代码；右侧为采用率与替代方案">
+      <img data-lang-content="en" src="/img/HarnessEng/absences-en.svg" alt="Two absences: no system uses a general-purpose agentic framework, and none uses vector embeddings to retrieve code; adoption rates and substitutes on the right">
+      <figcaption data-lang-content="zh">图 3 · 两条缺席与它们实际采用的技术栈。检查覆盖 LangChain、LangGraph、AutoGen、CrewAI、Pydantic AI、Genkit、Semantic Kernel、Google ADK 等；检索一律是 ripgrep、tree-sitter、glob 与自动发现的 Markdown 上下文。数据来源：原文 Observation 8、9（13.2）与 11。</figcaption>
+      <figcaption data-lang-content="en">Figure 3 - The two absences and the stack actually in use. The sweep covered LangChain, LangGraph, AutoGen, CrewAI, Pydantic AI, Genkit, Semantic Kernel, Google ADK and more; retrieval is consistently ripgrep, tree-sitter, glob and auto-discovered Markdown context. Source: Observations 8, 9 (13.2) and 11.</figcaption>
+    </figure>
+    <p data-lang-content="zh">作者给出的解释是失败模式的权重：生产 harness 会修改真实代码，因此<strong>可调试性与提示透明度压过框架复用带来的便利</strong>。他们也把这条结论明确标为「结构上保守」——没有追内部 fork、动态 importlib 与 require 加载的插件、以及转译产物，所以不能说这种用法不存在，只能说没被这轮审计发现。</p>
+    <p data-lang-content="en">The explanation given is the weight of the failure mode: production harnesses mutate real code, so <strong>debuggability and prompt transparency outweigh the convenience of framework reuse</strong>. The authors also label the finding structurally conservative — internal forks, dynamically imported plugins and transpiled distributions were not traced, so the claim is that such use was not found, not that it does not exist.</p>
+  </section>
+
+  <section id="recommendations" class="workflow-section">
+    <h2 data-lang-content="zh">18 条设计建议与 90 行骨架</h2>
+    <h2 data-lang-content="en">18 recommendations and a 90-line scaffold</h2>
+    <p data-lang-content="zh">论文的最后一节是给从业者的清单：每条建议都引用支持它的观察、点名实现它的系统，并指出可能让人做出不同选择的取舍。</p>
+    <p data-lang-content="en">The last section is a practitioner's guide: each recommendation cites the observations that support it, names the systems that implement it, and identifies the trade-off that might justify a different choice.</p>
+    <figure class="story-figure">
+      <img data-lang-content="zh" src="/img/HarnessEng/recommendations-zh.svg" alt="18 条设计建议按子系统分组，红框为与行业常态相反的红线式建议">
+      <img data-lang-content="en" src="/img/HarnessEng/recommendations-en.svg" alt="The 18 design recommendations grouped by subsystem, with red-line recommendations outlined">
+      <figcaption data-lang-content="zh">图 4 · 18 条建议按子系统分组。红框三条是「与常见做法相反」的红线：不要为代码建 RAG、不要在运行时用通用 agent 框架、不要为代码建向量检索层。数据来源：原文 Sec.16。</figcaption>
+      <figcaption data-lang-content="en">Figure 4 - The 18 recommendations grouped by subsystem. The outlined three run against common practice: no RAG over code, no general-purpose framework in the runtime, and no vector-embedding retrieval layer for code. Source: Sec.16.</figcaption>
+    </figure>
+    <p data-lang-content="zh">论文还给了一个约 <strong>90 行的最小可用 harness</strong>，直接实现 18 条中的 10 条、其余兼容。它没有框架依赖、没有 RAG、没有向量库、没有多 agent 编排、也没有沙箱——正好与两条缺席结论一致。作者明确说这是推测（无证明）：这个骨架在前沿模型上会接近 Mini-SWE-Agent 的数字，而再往上走主要是模型能力问题，不是 scaffold 问题。</p>
+    <p data-lang-content="en">The paper also ships a roughly <strong>90-line minimum-viable harness</strong> that realises ten of the eighteen recommendations directly and stays compatible with the rest. It has no framework dependency, no RAG, no vector store, no multi-agent orchestration and no sandbox — exactly in line with the twin absences. The authors are explicit that the follow-on claim is a conjecture, not a proof: that this scaffold would approach Mini-SWE-Agent's numbers on a frontier model, and that moving beyond those numbers is mostly a model-capability question rather than a scaffold question.</p>
+  </section>
+
+  <section id="evolution" class="workflow-section">
+    <h2 data-lang-content="zh">90 天纵向与平台化</h2>
+    <h2 data-lang-content="en">Ninety days of evolution, and the platform turn</h2>
+    <p data-lang-content="zh">因为 4 月版的八个系统是<strong>重新钉版本而非被替换</strong>，论文手里有一份受控的纵向样本：同一批 harness 的源码 diff 跨越一个季度。结论是「收敛变成了模仿」——Codex 逐字采用 Claude Code 的 hook 词汇并发布会话与设置导入器；OpenHands 读取 Claude Code 的插件格式；行为政策从提示散文迁移到配置（feature flag 与服务端 A/B 测试）。4 月版的三条观察被新证据实质修订。</p>
+    <p data-lang-content="en">Because the eight systems from the April edition were re-pinned rather than replaced, the study holds a controlled longitudinal sample: the same harnesses, source-diffed across one quarter. The result is convergence becoming imitation — Codex adopts Claude Code's hook vocabulary verbatim and ships session and settings importers, OpenHands reads Claude Code's plugin format, and behavioural policy migrates from prompt prose into configuration and server-side A/B tests. Three of the April observations were substantively revised on new evidence.</p>
+    <p data-lang-content="zh">由此得出的判断是：<strong>编码 harness 在 2026 年上半年完成了从工具到平台的转变</strong>。证据是具名产物：harness 以可导入 SDK 的形式发布，而框架厂商反过来发布自己的 harness；能力分发有了市场、注册表与信任层级；厂商为彼此的磁盘状态写导入器；出现了 MDM 级别的治理层；agent 本身以 OpenAI 兼容端点暴露；一个元 harness 在一个 API 后面编排十一家厂商的 harness，重新实现其中昂贵的部分、套利专有的部分。作者因此把竞争单位从 agent 循环重新定位到循环之外的生态面。</p>
+    <p data-lang-content="en">The resulting judgement is that the coding harness <strong>completed its turn from tool to platform in the first half of 2026</strong>. The evidence is a list of named artifacts: harnesses ship as importable SDKs while framework vendors ship harnesses; capability distribution gained marketplaces, registries and trust tiers; vendors write importers for each other's on-disk state; MDM-grade governance appeared; the agent itself became addressable behind an OpenAI-compatible endpoint; and one meta-harness orchestrates eleven vendor harnesses behind a single API, re-implementing the expensive parts and arbitraging the proprietary ones. The authors therefore relocate the competitive unit from the agent loop to the ecosystem around it.</p>
+  </section>
+
+  <section id="critique" class="workflow-section">
+    <h2 data-lang-content="zh">批判性评估</h2>
+    <h2 data-lang-content="en">Critical assessment</h2>
+    <div class="perspective-list">
+      <div class="perspective">
+        <strong data-lang-content="zh">强证据</strong>
+        <strong data-lang-content="en">Strong evidence</strong>
+        <span data-lang-content="zh">每条观察、模式与建议都锚定到具体模块与版本，作者刻意不做行号引用以避免快速过期，改为把 release tag 与 commit 固定下来，读者可自行复核。两条缺席结论经受住了三重检验：三倍语料扩展、三种语言的依赖清单与 import grep、以及相隔三个月的两次复核。纵向对比是同语料两次快照，而非不同系统的横向拼接，这让「模仿」这一结论有可控的比较基础。采用率是可数的（Skills 9/11、MCP 8/11、延迟加载 8/9），比纯定性描述更可检验。作者还主动披露了方法论局限，包括最弱的一支。</span>
+        <span data-lang-content="en">Every observation, pattern and recommendation is anchored to a named module and version. The authors deliberately avoid line-number citations because they decay, and instead pin release tags and commits so readers can re-check the claims. The twin absences survived three tests: a threefold corpus expansion, dependency manifests plus import greps across three languages, and two re-audits three months apart. The longitudinal comparison uses two snapshots of the same corpus rather than a stitched cross-section, which gives the imitation finding a controlled basis. Adoption rates are countable (skills 9/11, MCP 8/11, deferred loading 8/9), making them more checkable than prose. The authors also volunteer their methodological limits, including their weakest link.</span>
+      </div>
+      <div class="perspective">
+        <strong data-lang-content="zh">中等或弱证据</strong>
+        <strong data-lang-content="en">Weaker evidence</strong>
+        <span data-lang-content="zh">全文只看源码，不做运行时测量，因此无法回答「哪套架构更快、更省、更可靠」；引用的 benchmark 数字全部来自各系统自己的文档，作者也提醒最后一位小数不是重点。架构评分包含主观判断，作者自己承认并欢迎异议；七子系统的归格（记忆与上下文合并为一格）会掩盖系统间的真实差异。两条缺席结论是结构上保守的，未追内部 fork、动态加载的插件与转译产物。没有同任务横向执行实验，跨系统比较无法转化为性能排序——作者把这一步列为未来工作并承认成本高一个数量级。Claude Code 一支依赖 2026 年 3 月公开流出的源码快照，与另外十个可从公开 Git 历史重建的系统存在不对称。此外全文在 Claude Code CLI 的实质性协助下完成，是「研究编码 harness 的论文由编码 harness 辅助产出」的案例，作者按会议政策做了披露。</span>
+        <span data-lang-content="en">The study reads source rather than measuring runtimes, so it cannot say which architecture is faster, cheaper or more reliable; every benchmark figure quoted comes from the systems' own documentation, and the authors note that the last decimal place is not the point. Architectural scoring involves judgement calls, which the authors acknowledge and invite disagreement on; collapsing memory and context into one cell also hides real differences between systems. The absences are structurally conservative, since internal forks, dynamically loaded plugins and transpiled distributions were not traced. There is no head-to-head execution study, so cross-system comparisons cannot become a performance ranking — the authors list it as future work and concede it costs an order of magnitude more effort. The Claude Code analysis rests on a publicly circulated March 2026 source snapshot, an asymmetry with the ten systems rebuildable from public Git history. Finally, the paper was written with substantial assistance from the Claude Code CLI, making it a case of a harness study produced with a harness, disclosed in line with conference policies.</span>
+      </div>
+      <div class="perspective">
+        <strong data-lang-content="zh">结论是否超出证据</strong>
+        <strong data-lang-content="en">Does the claim exceed the evidence</strong>
+        <span data-lang-content="zh">「七子系统是规范解剖」作为组织框架成立且自洽，但它是分析工具而非自然规律。「循环复杂度不预测能力」方向成立，有 Mini-SWE-Agent 的存在性证明支撑；但它用的是各系统自报数字、模型与日期都不同，不能读成严格的等价性。「两条缺席」成立且保守，作者把检验范围与盲区都写清楚了。「平台化转变已完成」的证据是具名产物清单，这类清单声明会随时间过期，作者也把它标为「清单类」，方向上站得住但应带日期引用。「与 Anthropic 工程系列高度吻合」被作者自己标为因果未定。</span>
+        <span data-lang-content="en">The seven-subsystem anatomy holds as an organising frame, but it is an analytical tool rather than a law of nature. The claim that loop sophistication does not predict capability is directionally supported by the Mini-SWE-Agent existence proof, but it rests on self-reported numbers from different models and dates and cannot be read as strict equivalence. The twin absences hold and are conservative, with both the scope of the check and its blind spots stated. The claim that the platform turn is complete rests on a list of named artifacts — list-shaped claims decay, the authors label it as such, and it should be cited with a date. The alignment with Anthropic's engineering series is marked by the authors themselves as causally unestablished.</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="meaning" class="workflow-section">
+    <h2 data-lang-content="zh">对本机两个项目的意义</h2>
+    <h2 data-lang-content="en">What it means for two local projects</h2>
+    <p data-lang-content="zh">这篇论文与本机的「本地 Agent Harness」是同一个研究对象，可以直接当自查表用；与「Jev 备考」的关系则落在两条缺席结论上。</p>
+    <p data-lang-content="en">This paper studies the same object as the local Agent Harness project, so it works as a direct self-audit; its relation to Jev Exam Prep runs through the twin absences.</p>
+    <div class="editorial-grid">
+      <article class="editorial-card">
+        <h3 data-lang-content="zh">本地 Agent Harness：七个子系统逐格自查</h3>
+        <h3 data-lang-content="en">Local Agent Harness: audit yourself cell by cell</h3>
+        <p data-lang-content="zh">把该项目的内核按论文的七格摆一遍：循环（runtime 与 loop）、LLM 集成（providers）、工具与动作（tools 与权限模型）、记忆与上下文（memory 的 runs 与 notes 分层）、安全与权限（可写路径与命令白名单）、编排（目前是刻意单 agent）、扩展性（任务声明与技能）。三处值得动手：一是<strong>给七个格子各写一句「当前形态」</strong>，把只有最小实现的格子标出来；二是按 R7 检查上下文策略——是否做到了阈值触发、逐字保留近期尾部、增量合并摘要；三是按 R11 检查安全规则的载体——AGENTS.md 里的规则目前是散文，论文的证据支持把它们下沉成可独立审计的策略文件，并明确 YOLO 式的旁路之下还留什么底线。另外两条缺席正好是本项目已有的架构选择（不用框架、不建代码 RAG），可以当作外部佐证写进项目说明。</p>
+        <p data-lang-content="en">Lay the kernel out on the paper's seven cells: loop (runtime and loop), LLM integration (providers), tools and actions (tools plus the permission model), memory and context (the runs/notes split), safety and permissions (writable paths and command allow-list), orchestration (deliberately single-agent today), and extensibility (task declarations and skills). Three things are worth doing: <strong>write one line per cell describing the current form</strong> and mark the ones that only have a minimal implementation; check the context strategy against R7, meaning threshold triggering, a verbatim recent tail and incremental summary merging; and check where safety rules live — the rules in AGENTS.md are prose today, and the paper's evidence supports sinking them into separately auditable policy files with an explicit floor beneath any bypass mode. The twin absences also happen to match choices this project already made (no framework, no code RAG), so they can serve as external corroboration in its documentation.</p>
+      </article>
+      <article class="editorial-card">
+        <h3 data-lang-content="zh">Jev 备考：两条缺席直接命中技术选型</h3>
+        <h3 data-lang-content="en">Jev Exam Prep: the absences land on tech choices</h3>
+        <p data-lang-content="zh">这个项目的检索面由材料片段与题目定位构成，正是论文所称的「JIT 仓库上下文」那一类：分层文件加按需挂载，而不是语义相似度。论文的证据支持两件事：一是<strong>不要为材料引入向量检索作为主路径</strong>，确定性定位（片段 ID、章节、页码）在这种规模下更可解释也更稳；二是按 R6 的形态组织上下文——顶层约定放靠前位置，嵌套材料在工具真正触达时即时挂载。此外该项目的评测基建（golden set、eval 脚本、门槛）与论文的「清单声明带日期、结构声明预期持久」是同一种纪律：把会随材料更新的判定标上日期，把结构性结论单独记。MCP 与 Skills 的优先级排序（R14）也提示：如果以后要给项目加外部集成，优先扩技能模板而不是把每个上游 API 包成工具。</p>
+        <p data-lang-content="en">The retrieval surface in this project is built from material spans and question anchors — exactly what the paper calls JIT repo context: hierarchical files mounted on demand rather than semantic similarity. Two things follow from the evidence: <strong>do not introduce vector retrieval as the primary path</strong> for material, since deterministic anchors (span IDs, sections, page numbers) are more explainable and more stable at this scale; and organise context along R6's shape, with top-level conventions near the top and nested material mounted just-in-time when a tool actually reaches it. The project's evaluation infrastructure (golden set, eval scripts, thresholds) also follows the same discipline the paper describes — date the inventory claims that move with the material, and keep structural conclusions separate. The ordering in R14 (skills over MCP) is a further hint: if external integrations are added later, extend skill templates before wrapping each upstream API as its own tool.</p>
+      </article>
+    </div>
+    <div class="quote-panel">
+      <p data-lang-content="zh">两个项目共用一条结论：<strong>先把七格填满，再谈优化</strong>——论文的证据显示，能力下限主要由模型决定，而循环之外的工程投入决定的是生产就绪度。</p>
+      <p data-lang-content="en">Both projects share one conclusion: <strong>fill the seven cells before optimising them</strong> — the paper's evidence suggests the capability floor is set largely by the model, while the engineering spent outside the loop is what determines production readiness.</p>
+    </div>
+  </section>
+
+  <div class="story-ending">
+    <p data-lang-content="zh">这篇论文的价值在于把「harness 到底是什么」从讨论变成了可核对的清单：七子系统给了设计自查的格子，29 个模式给了实现选项的目录，18 条建议给了起步顺序，两条缺席给了两个常被默认接受的做法以强反例。</p>
+    <p data-lang-content="en">The value here is turning "what is a harness" from a discussion into a checkable inventory: seven subsystems give the audit cells, 29 patterns give the option catalogue, 18 recommendations give the starting order, and two absences give strong counterexamples to two widely assumed practices.</p>
+    <strong data-lang-content="zh">一句话：循环的复杂度不预测能力，代码量主要花在循环之外；生产编码 harness 不用通用框架，也不用向量检索查代码——按这三条去检查自己的 harness，比按榜单排名去抄更有效。</strong>
+    <strong data-lang-content="en">In one line: loop sophistication does not predict capability, the mass sits outside the loop, and production coding harnesses use neither a general-purpose framework nor vector retrieval over code — auditing your own harness against those three beats copying a leaderboard.</strong>
+  </div>
+
+  <div class="editorial-actions">
+    <a class="button button--dark" href="https://arxiv.org/abs/2609.00006" target="_blank" rel="noopener external nofollow noreferrer"><span data-lang-content="zh">阅读原文（arXiv）</span><span data-lang-content="en">Read the paper (arXiv)</span></a>
+    <a class="button button--outline" href="/tech/agent/local-agent-harness/"><span data-lang-content="zh">本地 Agent Harness</span><span data-lang-content="en">Local Agent Harness</span></a>
+    <a class="button button--outline" href="/tech/tools/jev-exam/"><span data-lang-content="zh">Jev 备考项目</span><span data-lang-content="en">Jev Exam Prep</span></a>
+  </div>
+</div>
+</div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By Simon</div><div class="framework-info"><span data-i18n="footer.framework">框架</span><span>&nbsp;</span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span data-i18n="footer.theme">主题</span><span>&nbsp;</span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div><div class="footer_custom_text"><span data-lang-content="zh">把复杂技术讲清楚，也把它做成可验证的系统。</span><span data-lang-content="en">Explain complex systems clearly, then make them verifiable.</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><div class="js-pjax"></div><script src="/js/icons.js" defer></script><script src="/js/site.js" defer></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

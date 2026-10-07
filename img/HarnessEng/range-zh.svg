@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 700" width="1240" height="700" role="img">
+<rect x="0" y="0" width="1240" height="700" rx="0" fill="#eeeee8"/>
+<text x="60" y="66" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="27" font-weight="650" fill="#151515" text-anchor="start">同一个子系统，两端差三个数量级</text>
+<text x="60" y="96" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="400" fill="#666862" text-anchor="start">左端是语料中观测到的最小实现，右端是最大实现。</text>
+<text x="60" y="148" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="620" fill="#666862" text-anchor="start">最小实现</text>
+<text x="560" y="148" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="620" fill="#e05a36" text-anchor="start">最大实现</text>
+<rect x="60" y="172" width="1120" height="56" rx="8" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="80" y="196" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="650" fill="#151515" text-anchor="start">Agent 循环</text>
+<rect x="80" y="204" width="12" height="12" rx="3" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="100" y="215" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#666862" text-anchor="start">Mini-SWE-Agent：线性 while + 一个 bash 工具</text>
+<rect x="560" y="204" width="12" height="12" rx="3" fill="#e05a36" stroke="none" stroke-width="1"/>
+<text x="580" y="215" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#e05a36" text-anchor="start">OpenHands：事件溯源对话 + 并行动作批次</text>
+<rect x="60" y="238" width="1120" height="56" rx="8" fill="none" stroke="none" stroke-width="1"/>
+<text x="80" y="262" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="650" fill="#151515" text-anchor="start">LLM 集成</text>
+<rect x="80" y="270" width="12" height="12" rx="3" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="100" y="281" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#666862" text-anchor="start">Mini-SWE-Agent：一次调用 + 一个模板</text>
+<rect x="560" y="270" width="12" height="12" rx="3" fill="#e05a36" stroke="none" stroke-width="1"/>
+<text x="580" y="281" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#e05a36" text-anchor="start">Hermes：五套传输 + 29 个 provider 档案</text>
+<rect x="60" y="304" width="1120" height="56" rx="8" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="80" y="328" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="650" fill="#151515" text-anchor="start">工具与动作</text>
+<rect x="80" y="336" width="12" height="12" rx="3" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="100" y="347" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#666862" text-anchor="start">Mini-SWE-Agent：只有 bash</text>
+<rect x="560" y="336" width="12" height="12" rx="3" fill="#e05a36" stroke="none" stroke-width="1"/>
+<text x="580" y="347" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#e05a36" text-anchor="start">Claude Code：43 个类型化工具 + 延迟加载</text>
+<rect x="60" y="370" width="1120" height="56" rx="8" fill="none" stroke="none" stroke-width="1"/>
+<text x="80" y="394" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="650" fill="#151515" text-anchor="start">记忆与上下文</text>
+<rect x="80" y="402" width="12" height="12" rx="3" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="100" y="413" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#666862" text-anchor="start">Mini-SWE-Agent：无界线性历史</text>
+<rect x="560" y="402" width="12" height="12" rx="3" fill="#e05a36" stroke="none" stroke-width="1"/>
+<text x="580" y="413" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#e05a36" text-anchor="start">Codex：agent 维护的跨会话记忆管线</text>
+<rect x="60" y="436" width="1120" height="56" rx="8" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="80" y="460" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="650" fill="#151515" text-anchor="start">安全与权限</text>
+<rect x="80" y="468" width="12" height="12" rx="3" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="100" y="479" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#666862" text-anchor="start">Mini-SWE-Agent：成本与步数上限</text>
+<rect x="560" y="468" width="12" height="12" rx="3" fill="#e05a36" stroke="none" stroke-width="1"/>
+<text x="580" y="479" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#e05a36" text-anchor="start">Codex：策略 + 审批评审 + 三平台沙箱</text>
+<rect x="60" y="502" width="1120" height="56" rx="8" fill="none" stroke="none" stroke-width="1"/>
+<text x="80" y="526" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="650" fill="#151515" text-anchor="start">编排</text>
+<rect x="80" y="534" width="12" height="12" rx="3" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="100" y="545" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#666862" text-anchor="start">Aider：刻意没有（设计上单 agent）</text>
+<rect x="560" y="534" width="12" height="12" rx="3" fill="#e05a36" stroke="none" stroke-width="1"/>
+<text x="580" y="545" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#e05a36" text-anchor="start">Claude Code：递归组合；Omnigent：跨厂商</text>
+<rect x="60" y="568" width="1120" height="56" rx="8" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="80" y="592" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="650" fill="#151515" text-anchor="start">扩展性</text>
+<rect x="80" y="600" width="12" height="12" rx="3" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="100" y="611" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#666862" text-anchor="start">Mini-SWE-Agent：结构化类型</text>
+<rect x="560" y="600" width="12" height="12" rx="3" fill="#e05a36" stroke="none" stroke-width="1"/>
+<text x="580" y="611" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#e05a36" text-anchor="start">Pi：一切皆扩展；Codex：市场分发插件</text>
+<text x="60" y="654" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start">数据来源：原文 Table 1。最小实现几乎全部落在 Mini-SWE-Agent（约 100 行），最大实现分散在不同系统——说明不同系统在同一个决策面上选了不同的投资点。</text>
+</svg>

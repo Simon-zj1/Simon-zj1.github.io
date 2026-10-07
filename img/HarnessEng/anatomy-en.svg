@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 740" width="1240" height="740" role="img">
+<rect x="0" y="0" width="1240" height="740" rx="0" fill="#eeeee8"/>
+<text x="60" y="66" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="27" font-weight="650" fill="#151515" text-anchor="start">The seven canonical subsystems of a harness</text>
+<text x="60" y="96" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="400" fill="#666862" text-anchor="start">From a 100-line research baseline to a million-line production CLI, every system takes a position on these seven — even when the position is deliberate absence.</text>
+<rect x="530" y="280" width="180" height="100" rx="12" fill="#151515" stroke="none" stroke-width="1"/>
+<text x="620" y="326" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="680" fill="#ffffff" text-anchor="middle">Agent loop</text>
+<text x="620" y="352" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#c9d4df" text-anchor="middle">inference ↔ action</text>
+<rect x="170" y="160" width="250" height="64" rx="10" fill="#ffffff" stroke="#315f86" stroke-width="1.3"/>
+<text x="188" y="187" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="650" fill="#315f86" text-anchor="start">LLM integration</text>
+<text x="188" y="208" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="start">Speaks provider protocols; assem</text>
+<rect x="170" y="470" width="250" height="64" rx="10" fill="#ffffff" stroke="#a86b18" stroke-width="1.3"/>
+<text x="188" y="497" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="650" fill="#a86b18" text-anchor="start">Tools &amp; actions</text>
+<text x="188" y="518" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="start">Defines and executes what the ag</text>
+<rect x="800" y="160" width="260" height="64" rx="10" fill="#ffffff" stroke="#1f6f68" stroke-width="1.3"/>
+<text x="818" y="187" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="650" fill="#1f6f68" text-anchor="start">Memory &amp; context</text>
+<text x="818" y="208" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="start">Rations the context window; pers</text>
+<rect x="940" y="320" width="250" height="64" rx="10" fill="#ffffff" stroke="#e05a36" stroke-width="1.3"/>
+<text x="958" y="347" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="650" fill="#e05a36" text-anchor="start">Safety &amp; permissions</text>
+<text x="958" y="368" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="start">Decides what runs, what asks, wh</text>
+<rect x="800" y="470" width="260" height="64" rx="10" fill="#ffffff" stroke="#315f86" stroke-width="1.3"/>
+<text x="818" y="497" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="650" fill="#315f86" text-anchor="start">Orchestration</text>
+<text x="818" y="518" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="start">Spawns and coordinates sub-agent</text>
+<rect x="490" y="500" width="260" height="64" rx="10" fill="#ffffff" stroke="#a86b18" stroke-width="1.3"/>
+<text x="508" y="527" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="650" fill="#a86b18" text-anchor="start">Extensibility</text>
+<text x="508" y="548" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#666862" text-anchor="start">Lets users and ecosystems add ca</text>
+<rect x="60" y="590" width="1120" height="40" rx="10" fill="#f7f6f1" stroke="rgba(21,21,21,0.24)" stroke-width="1"/>
+<text x="84" y="616" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#151515" text-anchor="start">Interface layer: TUI / CLI / IDE / SDK / HTTP server</text>
+<rect x="60" y="640" width="1120" height="34" rx="10" fill="#f7f6f1" stroke="rgba(21,21,21,0.24)" stroke-width="1"/>
+<text x="84" y="663" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#151515" text-anchor="start">Session substrate: transcripts, persistence, resume/fork</text>
+<text x="60" y="706" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start">Source: Sec.2.3, Figure 1 and Table 1, redrawn. Two cross-cutting surfaces sit alongside the seven subsystems.</text>
+</svg>

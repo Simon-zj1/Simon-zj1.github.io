@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 724" width="1240" height="724" role="img">
+<rect x="0" y="0" width="1240" height="724" rx="0" fill="#eeeee8"/>
+<text x="60" y="66" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="27" font-weight="650" fill="#151515" text-anchor="start">The 18 design recommendations, grouped by subsystem</text>
+<text x="60" y="96" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="400" fill="#666862" text-anchor="start">Each is anchored to named observations and implementations; the paper also ships a 90-line scaffold that realises ten of them directly.</text>
+<text x="60" y="136" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="680" fill="#315f86" text-anchor="start">Loop and coupling</text>
+<rect x="60" y="146" width="360" height="40" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="72" y="171" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#666862" text-anchor="start">1</text>
+<text x="94" y="171" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="520" fill="#151515" text-anchor="start">Start with a linear while loop</text>
+<rect x="440" y="146" width="360" height="40" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="452" y="171" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#666862" text-anchor="start">2</text>
+<text x="474" y="171" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="520" fill="#151515" text-anchor="start">Couple to providers based on w</text>
+<text x="60" y="216" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="680" fill="#a86b18" text-anchor="start">Tool design</text>
+<rect x="60" y="226" width="360" height="40" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="72" y="251" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#666862" text-anchor="start">3</text>
+<text x="94" y="251" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="520" fill="#151515" text-anchor="start">Start with bash only; add tool</text>
+<rect x="440" y="226" width="360" height="40" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="452" y="251" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#666862" text-anchor="start">4</text>
+<text x="474" y="251" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="520" fill="#151515" text-anchor="start">Defer tool loading past ~15 to</text>
+<rect x="820" y="226" width="360" height="40" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="832" y="251" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#666862" text-anchor="start">5</text>
+<text x="854" y="251" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="520" fill="#151515" text-anchor="start">Match the edit contract to mod</text>
+<text x="60" y="296" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="680" fill="#1f6f68" text-anchor="start">Context and memory</text>
+<rect x="60" y="306" width="360" height="40" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="72" y="331" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#666862" text-anchor="start">6</text>
+<text x="94" y="331" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="520" fill="#151515" text-anchor="start">Auto-discover hierarchical Mar</text>
+<rect x="440" y="306" width="360" height="40" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="452" y="331" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#666862" text-anchor="start">7</text>
+<text x="474" y="331" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="520" fill="#151515" text-anchor="start">Threshold compaction with verb</text>
+<rect x="820" y="306" width="360" height="40" rx="10" fill="#ffffff" stroke="#e05a36" stroke-width="1.3"/>
+<text x="832" y="331" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#e05a36" text-anchor="start">8</text>
+<text x="854" y="331" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="620" fill="#151515" text-anchor="start">Do not build RAG over code</text>
+<text x="60" y="376" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="680" fill="#e05a36" text-anchor="start">Safety and permissions</text>
+<rect x="60" y="386" width="360" height="40" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="72" y="411" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#666862" text-anchor="start">9</text>
+<text x="94" y="411" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="520" fill="#151515" text-anchor="start">Three-mode approval for develo</text>
+<rect x="440" y="386" width="360" height="40" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="452" y="411" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#666862" text-anchor="start">10</text>
+<text x="474" y="411" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="520" fill="#151515" text-anchor="start">OS sandboxing and policy-as-co</text>
+<rect x="820" y="386" width="360" height="40" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="832" y="411" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#666862" text-anchor="start">11</text>
+<text x="854" y="411" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="520" fill="#151515" text-anchor="start">Codify safety as data, keep a </text>
+<text x="60" y="456" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="680" fill="#315f86" text-anchor="start">Orchestration and protocols</text>
+<rect x="60" y="466" width="360" height="40" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="72" y="491" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#666862" text-anchor="start">12</text>
+<text x="94" y="491" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="520" fill="#151515" text-anchor="start">Stay single-agent first</text>
+<rect x="440" y="466" width="360" height="40" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="452" y="491" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#666862" text-anchor="start">13</text>
+<text x="474" y="491" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="520" fill="#151515" text-anchor="start">Ship an ACP server; keep sub-a</text>
+<text x="60" y="536" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="680" fill="#e05a36" text-anchor="start">Extensibility and red lines</text>
+<rect x="60" y="546" width="360" height="40" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="72" y="571" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#666862" text-anchor="start">14</text>
+<text x="94" y="571" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="520" fill="#151515" text-anchor="start">Skills before MCP</text>
+<rect x="440" y="546" width="360" height="40" rx="10" fill="#ffffff" stroke="#e05a36" stroke-width="1.3"/>
+<text x="452" y="571" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#e05a36" text-anchor="start">15</text>
+<text x="474" y="571" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="620" fill="#151515" text-anchor="start">No general-purpose agent frame</text>
+<rect x="820" y="546" width="360" height="40" rx="10" fill="#ffffff" stroke="#e05a36" stroke-width="1.3"/>
+<text x="832" y="571" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#e05a36" text-anchor="start">16</text>
+<text x="854" y="571" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="620" fill="#151515" text-anchor="start">No vector-embedding retrieval </text>
+<rect x="60" y="596" width="360" height="40" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="72" y="621" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#666862" text-anchor="start">17</text>
+<text x="94" y="621" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="520" fill="#151515" text-anchor="start">Do not wrap every upstream API</text>
+<rect x="440" y="596" width="360" height="40" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="452" y="621" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#666862" text-anchor="start">18</text>
+<text x="474" y="621" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="520" fill="#151515" text-anchor="start">Do not over-engineer stuck det</text>
+<text x="60" y="680" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start">Source: Sec.16. The outlined entries are the red-line recommendations that run against common practice (no RAG over code, no general-purpose framework in the runtime).</text>
+</svg>

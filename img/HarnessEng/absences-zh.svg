@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 530" width="1240" height="530" role="img">
+<rect x="0" y="0" width="1240" height="530" rx="0" fill="#eeeee8"/>
+<text x="60" y="66" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="27" font-weight="650" fill="#151515" text-anchor="start">两条经受过复核的缺席结论</text>
+<text x="60" y="96" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="400" fill="#666862" text-anchor="start">依赖清单与三种语言的 import 检索，跨 12 棵树复核两次，相隔三个月。</text>
+<rect x="60" y="140" width="560" height="150" rx="10" fill="#ffffff" stroke="#e05a36" stroke-width="1.4"/>
+<text x="88" y="186" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="32" font-weight="700" fill="#e05a36" text-anchor="start">0 / 11</text>
+<text x="232" y="176" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="650" fill="#151515" text-anchor="start">没有系统使用通用 agent 框架</text>
+<text x="232" y="200" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="start">检查了 LangChain、LangGraph、AutoGen、</text>
+<text x="232" y="217" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="start">CrewAI、Pydantic AI、Google ADK 等十余个</text>
+<text x="232" y="234" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="start">Gemini CLI 连 Google 自家的 ADK 都没用</text>
+<rect x="60" y="306" width="560" height="150" rx="10" fill="#ffffff" stroke="#e05a36" stroke-width="1.4"/>
+<text x="88" y="352" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="32" font-weight="700" fill="#e05a36" text-anchor="start">0 / 11</text>
+<text x="232" y="342" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="650" fill="#151515" text-anchor="start">没有系统用向量嵌入检索代码</text>
+<text x="232" y="366" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="start">全部依赖 ripgrep、tree-sitter、glob 与</text>
+<text x="232" y="383" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="start">自动发现的 Markdown 上下文文件</text>
+<text x="232" y="400" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="start">嵌入只用于会话记忆，从不用于源码树</text>
+<text x="88" y="430" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="400" fill="#666862" text-anchor="start">会话级召回的生产上限是 SQLite FTS5（Hermes）</text>
+<rect x="650" y="140" width="530" height="316" rx="10" fill="#f7f6f1" stroke="none" stroke-width="1"/>
+<text x="674" y="172" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="650" fill="#151515" text-anchor="start">采用率（共 11 个系统）</text>
+<text x="674" y="212" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#151515" text-anchor="start">SKILL.md 技能</text>
+<rect x="674" y="220" width="310.90909090909093" height="16" rx="4" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="992.909090909091" y="233" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="620" fill="#1f6f68" text-anchor="start">9/11</text>
+<text x="674" y="258" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#151515" text-anchor="start">MCP</text>
+<rect x="674" y="266" width="276.3636363636364" height="16" rx="4" fill="#1f6f68" stroke="none" stroke-width="1"/>
+<text x="958.3636363636364" y="279" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="620" fill="#1f6f68" text-anchor="start">8/11</text>
+<text x="674" y="304" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#151515" text-anchor="start">ACP 协议</text>
+<rect x="674" y="312" width="207.27272727272725" height="16" rx="4" fill="#315f86" stroke="none" stroke-width="1"/>
+<text x="889.2727272727273" y="325" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="620" fill="#666862" text-anchor="start">6/11</text>
+<text x="674" y="350" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#151515" text-anchor="start">OS 级沙箱</text>
+<rect x="674" y="358" width="69.0909090909091" height="16" rx="4" fill="#9d9c96" stroke="none" stroke-width="1"/>
+<text x="751.0909090909091" y="371" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="620" fill="#666862" text-anchor="start">2/11</text>
+<text x="674" y="396" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="650" fill="#151515" text-anchor="start">他们实际用的是什么</text>
+<rect x="674" y="408" width="120" height="20" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="734" y="422" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#666862" text-anchor="middle">手写异步循环</text>
+<rect x="802" y="408" width="120" height="20" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="862" y="422" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#666862" text-anchor="middle">ripgrep</text>
+<rect x="930" y="408" width="120" height="20" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="990" y="422" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#666862" text-anchor="middle">tree-sitter</text>
+<rect x="1058" y="408" width="120" height="20" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="1118" y="422" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#666862" text-anchor="middle">glob</text>
+<rect x="674" y="434" width="120" height="20" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="734" y="448" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#666862" text-anchor="middle">AGENTS.md / CLAUDE.md</text>
+<rect x="802" y="434" width="120" height="20" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="862" y="448" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#666862" text-anchor="middle">策略文件</text>
+<rect x="930" y="434" width="120" height="20" rx="10" fill="#ffffff" stroke="rgba(21,21,21,0.12)" stroke-width="1"/>
+<text x="990" y="448" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="10.5" font-weight="400" fill="#666862" text-anchor="middle">SQLite FTS5</text>
+<text x="60" y="486" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#666862" text-anchor="start">数据来源：原文 Observation 8、9（/13.2）与 11。作者自陈该结论「结构上保守」：未追内部 fork、动态 importlib/require 加载的插件与转译产物。</text>
+</svg>
