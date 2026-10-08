@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.simon-zj.top/img/optimized/avatar.jpg">
 <meta property="article:published_time" content="2026-09-22T18:00:00.000Z">
-<meta property="article:modified_time" content="2026-10-08T16:33:45.913Z">
+<meta property="article:modified_time" content="2026-10-08T16:42:29.862Z">
 <meta property="article:author" content="Simon">
 <meta property="article:tag" content="机器人,具身智能,Agent,ROS,论文阅读,知识漫游,AI提效,面经,Robotics,Embodied AI">
 <meta name="twitter:card" content="summary">
@@ -251,6 +251,7 @@
     <div class="editorial-grid">
       <article class="editorial-card"><h3 data-lang-content="zh">错题本与掌握度</h3><h3 data-lang-content="en">Mistake log and mastery</h3><p data-lang-content="zh">错题按知识点聚合，一键重考；重考答对后自动移出。待复核的题目不参与掌握度计算。</p><p data-lang-content="en">Mistakes are grouped by topic and can be retaken; a correct retake removes them. Flagged questions never affect mastery.</p></article>
       <article class="editorial-card"><h3 data-lang-content="zh">复习按遗忘曲线排期</h3><h3 data-lang-content="en">Review on a forgetting curve</h3><p data-lang-content="zh">复习卡片带题型、上次得分、已复习次数与遗忘次数，到期才出现在队列里。</p><p data-lang-content="en">Due cards show question type, last score, review count and lapse count — and only appear when they are due.</p></article>
+      <article class="editorial-card"><h3 data-lang-content="zh">没把握的题不污染进度</h3><h3 data-lang-content="en">Doubt never pollutes progress</h3><p data-lang-content="zh">待复核的题目只影响分数区间，不写进掌握度，也不进复习队列——宁可少算，也不给错方向。</p><p data-lang-content="en">Flagged questions only widen the score range: they never update mastery or enter the review queue.</p></article>
     </div>
     <figure class="story-figure">
       <picture>
@@ -273,9 +274,8 @@
     <div class="editorial-grid">
       <article class="editorial-card"><h3 data-lang-content="zh">用平台额度</h3><h3 data-lang-content="en">Platform credits</h3><p data-lang-content="zh">注册送 300 积分（约 30 万 token 等值），按 token 消耗扣积分：1 积分 = 1000 token 等值，按官方价 1.5 倍计费。余额与每一笔扣费都能在设置页逐笔核对。</p><p data-lang-content="en">300 credits on signup (about 300k tokens of value), spent by token usage: 1 credit = 1,000 tokens, billed at 1.5× the official price. Every debit is itemised in settings.</p></article>
       <article class="editorial-card"><h3 data-lang-content="zh">用你自己的 Key</h3><h3 data-lang-content="en">Bring your own key</h3><p data-lang-content="zh">支持 DeepSeek、智谱 GLM、通义千问、Kimi、OpenAI、Claude 等；Key 加密存储，只在你的请求里使用，不消耗平台积分。</p><p data-lang-content="en">DeepSeek, GLM, Qwen, Kimi, OpenAI, Claude and more. The key is encrypted, used only for your own requests, and spends no credits.</p></article>
+      <article class="editorial-card"><h3 data-lang-content="zh">两条路不互相越界</h3><h3 data-lang-content="en">No silent switching</h3><p data-lang-content="zh">选了平台额度，就不会偷用你存着的 Key；选了自己的 Key，也不会悄悄扣你的积分。</p><p data-lang-content="en">Pick platform credits and your stored key is left untouched; pick your own key and no credits are spent.</p></article>
     </div>
-    <p data-lang-content="zh">选了哪条路就是哪条路：选平台额度不会偷用你存的 Key，选自己的 Key 也不会悄悄扣你的积分。</p>
-    <p data-lang-content="en">Whichever you pick is what runs: platform credits never touch your stored key, and your own key never silently spends credits.</p>
     <figure class="story-figure">
       <picture>
         <source media="(max-width: 760px)" srcset="/img/eyedot/credits-m.jpg">
@@ -297,8 +297,7 @@
     <div class="editorial-grid">
       <article class="editorial-card"><h3 data-lang-content="zh">材料事实必须可定位</h3><h3 data-lang-content="en">Material facts are locatable</h3><p data-lang-content="zh">题目出处与每个得分点的依据必须逐字出现在材料里，字段都带标签：材料原文 / 模型补充。图解里的引文同样要过这一关，定位不到就降级标记。</p><p data-lang-content="en">Sources and rubric evidence must appear verbatim in the material, and every field is tagged material or model-added. Explainer citations pass the same check.</p></article>
       <article class="editorial-card"><h3 data-lang-content="zh">覆盖率不假装完整</h3><h3 data-lang-content="en">Coverage is not faked</h3><p data-lang-content="zh">材料会被切成要点单位，没被出题覆盖的部分如实列出（例如「覆盖 11/14」）。</p><p data-lang-content="en">The material is split into units and anything no question covers is listed (for example "11/14 covered").</p></article>
-      <article class="editorial-card"><h3 data-lang-content="zh">判错有出口</h3><h3 data-lang-content="en">Wrong grades have an exit</h3><p data-lang-content="zh">每题下面有「这题判错了？」，上报会冻结当时的判定现场并进入复核。</p><p data-lang-content="en">Every question has a "graded wrong?" form; a report freezes the judgment as it was and goes to review.</p></article>
-      <article class="editorial-card"><h3 data-lang-content="zh">数据是你的</h3><h3 data-lang-content="en">Your data, your call</h3><p data-lang-content="zh">可导出 Markdown、Anki CSV 与完整备份 JSON；删材料会连带删掉派生试卷与判定，账号可一键删除。</p><p data-lang-content="en">Export Markdown, Anki CSV or a full JSON backup; deleting a material removes its exams and judgments, and the account can be deleted outright.</p></article>
+      <article class="editorial-card"><h3 data-lang-content="zh">判错有出口，数据带得走</h3><h3 data-lang-content="en">An exit, and a way out</h3><p data-lang-content="zh">每题下面有「这题判错了？」，上报会冻结当时的判定现场并进入复核。数据可导出 Markdown、Anki CSV 与完整备份 JSON；删材料会连带删掉派生试卷与判定，账号可一键删除。</p><p data-lang-content="en">Every question has a "graded wrong?" form that freezes the judgment for review. Data exports as Markdown, Anki CSV or a full JSON backup; deleting a material removes its exams and judgments, and the account can be deleted outright.</p></article>
     </div>
     <figure class="story-figure">
       <picture>
